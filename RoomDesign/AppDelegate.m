@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "WaterFallViewController.h"
 
 @implementation AppDelegate
 
@@ -20,6 +21,10 @@
 {
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     // Override point for customization after application launch.
+    WaterFallViewController *waterfallVC = [[WaterFallViewController alloc] init];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:waterfallVC];
+    self.window.rootViewController = nav;
+    [nav setNavigationBarHidden:YES];
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;
@@ -50,6 +55,11 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    return (interfaceOrientation == UIInterfaceOrientationLandscapeLeft || interfaceOrientation == UIInterfaceOrientationLandscapeRight);
 }
 
 @end
