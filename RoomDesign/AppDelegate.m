@@ -8,21 +8,24 @@
 
 #import "AppDelegate.h"
 #import "WaterFallViewController.h"
+#import "HomePageViewController.h"
 
 @implementation AppDelegate
 
-- (void)dealloc
-{
-    [_window release];
-    [super dealloc];
-}
+//- (void)dealloc
+//{
+//    [_window release];
+//    [super dealloc];
+//}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
+    [[UIApplication sharedApplication] setStatusBarHidden:NO];
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-    WaterFallViewController *waterfallVC = [[WaterFallViewController alloc] init];
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:waterfallVC];
+//    WaterFallViewController *waterfallVC = [[WaterFallViewController alloc] init];
+    HomePageViewController *homePageVC = [[HomePageViewController alloc] init];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:homePageVC];
     self.window.rootViewController = nav;
     [nav setNavigationBarHidden:YES];
     self.window.backgroundColor = [UIColor whiteColor];

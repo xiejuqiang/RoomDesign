@@ -10,6 +10,7 @@
 #import "EGOImageView.h"
 #import "UIImage+thumUIImage.h"
 #import <CoreText/CoreText.h>
+#import "UIView+UIViewEx.h"
 
 @interface WaterFallDetailViewController ()
 {
@@ -33,53 +34,20 @@
     return self;
 }
 
-- (NSMutableAttributedString *)getAttributedString
-{
-    NSMutableAttributedString *attriString = [[[NSMutableAttributedString alloc] initWithString:@"this is test!"] autorelease];
-    
-    //把this的字体颜色变为红色
-    [attriString addAttribute:(NSString *)kCTForegroundColorAttributeName
-                        value:(id)[UIColor redColor].CGColor
-                        range:NSMakeRange(0, 4)];
-    //把is变为黄色
-    [attriString addAttribute:(NSString *)kCTForegroundColorAttributeName
-                        value:(id)[UIColor yellowColor].CGColor
-                        range:NSMakeRange(5, 2)];
-    //改变this的字体，value必须是一个CTFontRef
-    [attriString addAttribute:(NSString *)kCTFontAttributeName
-                        value:(id)CTFontCreateWithName((CFStringRef)[UIFont boldSystemFontOfSize:14].fontName,
-                                                       14,
-                                                       NULL)
-                        range:NSMakeRange(0, 4)];
-    //给this加上下划线，value可以在指定的枚举中选择
-    [attriString addAttribute:(NSString *)kCTUnderlineStyleAttributeName
-                        value:(id)[NSNumber numberWithInt:kCTUnderlineStyleDouble]
-                        range:NSMakeRange(0, 4)];
 
-    return attriString;
-}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-   
-    UITextView *textView= [[UITextView alloc] initWithFrame:CGRectMake(300, 10, 300, 200)];
-    textView.allowsEditingTextAttributes = YES;
-    
-//    NSAttributedString *title = [[NSAttributedString alloc] initWithString:@"Visual Guide for NSAttributedString" attributes:@{ NSFontAttributeName : [UIFont fontWithName:@"Noteworthy-Bold" size:16], NSUnderlineStyleAttributeName : @1 , NSStrokeColorAttributeName : [UIColor blackColor]}];
-    
-    textView.attributedText = [self getAttributedString];
-    
-    [self.view addSubview:textView];
-   
-    
-    leftScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(150, 50, 550, 600)];
+    [self createTopView];
+
+    leftScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(150, 100, 550, 600)];
     leftScrollView.tag = 100;
     leftScrollView.delegate = self;
     [self.view addSubview:leftScrollView];
     
-    rightScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(705, 50, 768-605, 600)];
+    rightScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(705, 100, 768-605, 600)];
     rightScrollView.tag = 200;
     rightScrollView.delegate = self;
     [self.view addSubview:rightScrollView];
@@ -120,13 +88,60 @@
     rightScrollView.contentOffset = CGPointMake(0, 162*offset_H);
     leftScrollView.contentSize = CGSizeMake(550, left_offsetH+600);
     leftScrollView.contentOffset = CGPointMake(0, 600*offset_H);
-    UIButton *backButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    backButton.frame = CGRectMake(5, 5, 100, 40);
+    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 5, 50, 30)];
     [backButton setTitle:@"返回" forState:UIControlStateNormal];
+    [backButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:backButton];
     
 }
+
+- (void)createTopView
+{
+
+    
+    UILabel *titleLabel1 = [[UILabel alloc] initWithFrame:CGRectMake(445, 30, 50, 30)];
+    titleLabel1.text = @"设计";
+    titleLabel1.textAlignment = NSTextAlignmentCenter;
+    titleLabel1.textColor = [UIColor blackColor];
+    
+    UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"home_stone@2x.png"]];
+    imgView.frame = CGRectMake(titleLabel1.right-10, 10, 50, 50);
+    
+    
+    UILabel *titleLabel2 = [[UILabel alloc] initWithFrame:CGRectMake(425+30+65, 30, 50, 30)];
+    titleLabel2.text = @"帮手";
+    titleLabel2.textAlignment = NSTextAlignmentCenter;
+    titleLabel2.textColor = [UIColor blackColor];
+    
+    UILabel *lineLabel = [[UILabel alloc] initWithFrame:CGRectMake(60, 90, 1024-120, 2)];
+    lineLabel.backgroundColor = [UIColor blackColor];
+    [self.view addSubview:lineLabel];
+    
+    UILabel *cookLabel = [[UILabel alloc] initWithFrame:CGRectMake(90, lineLabel.top-30, 90, 30)];
+    cookLabel.text = @"现代风格";
+    cookLabel.textAlignment = NSTextAlignmentCenter;
+    cookLabel.textColor = [UIColor blackColor];
+    
+    UILabel *houseLabel = [[UILabel alloc] initWithFrame:CGRectMake(425+60, lineLabel.top-30, 90, 30)];
+    houseLabel.text = @"欧式风格";
+    houseLabel.textAlignment = NSTextAlignmentCenter;
+    houseLabel.textColor = [UIColor blackColor];
+    
+    UILabel *officeLabel = [[UILabel alloc] initWithFrame:CGRectMake(904-90, lineLabel.top-30, 90, 30)];
+    officeLabel.text = @"田园风格";
+    officeLabel.textAlignment = NSTextAlignmentCenter;
+    officeLabel.textColor = [UIColor blackColor];
+    
+    [self.view addSubview:titleLabel1];
+    [self.view addSubview:titleLabel2];
+    [self.view addSubview:cookLabel];
+    [self.view addSubview:houseLabel];
+    [self.view addSubview:officeLabel];
+    [self.view addSubview:imgView];
+    
+}
+
 
 //点击图片移动背景
 - (void)tapBg:(UITapGestureRecognizer *)recongnizer

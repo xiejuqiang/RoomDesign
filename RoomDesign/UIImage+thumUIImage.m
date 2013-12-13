@@ -27,7 +27,7 @@
             h = height/2;
             w = h * r;
         } else {
-            w = width*2;
+            w = width/2;
             h = w / r;
         }
     }

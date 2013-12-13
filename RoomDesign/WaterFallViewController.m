@@ -15,6 +15,7 @@
 #import "SVPullToRefresh.h"
 #import "WaterFallDetailViewController.h"
 #import "UIImage+thumUIImage.h"
+#import "UIView+UIViewEx.h"
 
 @interface WaterFallViewController ()<TMQuiltViewDataSource,TMQuiltViewDelegate>
 {
@@ -32,7 +33,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-
+//        self.view.backgroundColor = [UIColor grayColor];
         imageArr = [[NSArray alloc] initWithObjects:@"http://f.hiphotos.baidu.com/image/w%3D2048/sign=5492a2f38b13632715edc533a5b7a1ec/d8f9d72a6059252d9167232b359b033b5bb5b9a8.jpg",
                     @"http://h.hiphotos.baidu.com/image/w%3D2048/sign=621e5d519358d109c4e3aeb2e560cdbf/b812c8fcc3cec3fd4349995ad788d43f879427ad.jpg",
                     @"http://h.hiphotos.baidu.com/image/w%3D2048/sign=8710cb4c9e3df8dca63d8891f929708b/9f510fb30f2442a72eec381ed043ad4bd01302af.jpg",
@@ -54,7 +55,8 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    qtmquitView = [[TMQuiltView alloc] initWithFrame:CGRectMake(0, 0, 1024, 768)];
+    [self createTopView];
+    qtmquitView = [[TMQuiltView alloc] initWithFrame:CGRectMake(60, 100, 1024-120, 768-100)];
 	qtmquitView.delegate = self;
 	qtmquitView.dataSource = self;
 //	qtmquitView.backgroundColor = [UIColor grayColor];
@@ -69,6 +71,62 @@
 	[self performSelector:@selector(testFinishedLoadData) withObject:nil afterDelay:0.0f];
 
     
+}
+
+- (void)createTopView
+{
+    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 5, 50, 30)];
+    [backButton setTitle:@"返回" forState:UIControlStateNormal];
+    [backButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:backButton];
+    
+    UILabel *titleLabel1 = [[UILabel alloc] initWithFrame:CGRectMake(445, 30, 50, 30)];
+    titleLabel1.text = @"设计";
+    titleLabel1.textAlignment = NSTextAlignmentCenter;
+    titleLabel1.textColor = [UIColor blackColor];
+    
+    UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"home_stone@2x.png"]];
+    imgView.frame = CGRectMake(titleLabel1.right-10, 10, 50, 50);
+    
+    
+    UILabel *titleLabel2 = [[UILabel alloc] initWithFrame:CGRectMake(425+30+65, 30, 50, 30)];
+    titleLabel2.text = @"帮手";
+    titleLabel2.textAlignment = NSTextAlignmentCenter;
+    titleLabel2.textColor = [UIColor blackColor];
+    
+    UILabel *lineLabel = [[UILabel alloc] initWithFrame:CGRectMake(60, 90, 1024-120, 2)];
+    lineLabel.backgroundColor = [UIColor blackColor];
+    [self.view addSubview:lineLabel];
+    
+    UILabel *cookLabel = [[UILabel alloc] initWithFrame:CGRectMake(90, lineLabel.top-30, 50, 30)];
+    cookLabel.text = @"餐饮";
+    cookLabel.textAlignment = NSTextAlignmentCenter;
+    cookLabel.textColor = [UIColor blackColor];
+    
+    UILabel *houseLabel = [[UILabel alloc] initWithFrame:CGRectMake(425+60, lineLabel.top-30, 50, 30)];
+    houseLabel.text = @"家居";
+    houseLabel.textAlignment = NSTextAlignmentCenter;
+    houseLabel.textColor = [UIColor blackColor];
+    
+    UILabel *officeLabel = [[UILabel alloc] initWithFrame:CGRectMake(904-40, lineLabel.top-30, 50, 30)];
+    officeLabel.right = 1024-90;
+    officeLabel.text = @"办公";
+    officeLabel.textAlignment = NSTextAlignmentCenter;
+    officeLabel.textColor = [UIColor blackColor];
+    
+    [self.view addSubview:titleLabel1];
+    [self.view addSubview:titleLabel2];
+    [self.view addSubview:cookLabel];
+    [self.view addSubview:houseLabel];
+    [self.view addSubview:officeLabel];
+    [self.view addSubview:imgView];
+    
+}
+
+- (void)back
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝

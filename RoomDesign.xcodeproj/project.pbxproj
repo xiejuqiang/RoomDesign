@@ -11,6 +11,14 @@
 		182711001834B79A00FBD6EA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 182710FF1834B79A00FBD6EA /* Foundation.framework */; };
 		182711021834B79A00FBD6EA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 182711011834B79A00FBD6EA /* CoreGraphics.framework */; };
 		182711621834BBD900FBD6EA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 182711611834BBD900FBD6EA /* QuartzCore.framework */; };
+		18603EDD1852FE72004519C4 /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 18603EDC1852FE72004519C4 /* Default-Landscape~ipad.png */; };
+		18603EE01852FE79004519C4 /* Default-Landscape@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 18603EDF1852FE79004519C4 /* Default-Landscape@2x~ipad.png */; };
+		18603EE318530116004519C4 /* HomePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18603EE218530116004519C4 /* HomePageViewController.m */; };
+		18603EEE185303AE004519C4 /* home_bg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 18603EEC185303AE004519C4 /* home_bg.jpg */; };
+		18603EEF185303AE004519C4 /* home_bg@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 18603EED185303AE004519C4 /* home_bg@2x.jpg */; };
+		18603EF2185309A9004519C4 /* UIView+UIViewEx.m in Sources */ = {isa = PBXBuildFile; fileRef = 18603EF1185309A9004519C4 /* UIView+UIViewEx.m */; };
+		18603EF518530F84004519C4 /* home_stone.png in Resources */ = {isa = PBXBuildFile; fileRef = 18603EF318530F84004519C4 /* home_stone.png */; };
+		18603EF618530F84004519C4 /* home_stone@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18603EF418530F84004519C4 /* home_stone@2x.png */; };
 		18750358183F049900FAF311 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1875031F183F049900FAF311 /* AppDelegate.m */; };
 		18750359183F049900FAF311 /* blackArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 18750320183F049900FAF311 /* blackArrow.png */; };
 		1875035A183F049900FAF311 /* blackArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18750321183F049900FAF311 /* blackArrow@2x.png */; };
@@ -19,25 +27,25 @@
 		1875035D183F049900FAF311 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18750324183F049900FAF311 /* Default-568h@2x.png */; };
 		1875035E183F049900FAF311 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 18750325183F049900FAF311 /* Default.png */; };
 		1875035F183F049900FAF311 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18750326183F049900FAF311 /* Default@2x.png */; };
-		18750360183F049900FAF311 /* EGOCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 1875032A183F049900FAF311 /* EGOCache.m */; };
-		18750362183F049900FAF311 /* EGOImageLoadConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 18750330183F049900FAF311 /* EGOImageLoadConnection.m */; };
-		18750363183F049900FAF311 /* EGOImageLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 18750332183F049900FAF311 /* EGOImageLoader.m */; };
-		18750364183F049900FAF311 /* EGOImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18750335183F049900FAF311 /* EGOImageView.m */; };
+		18750360183F049900FAF311 /* EGOCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 1875032A183F049900FAF311 /* EGOCache.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		18750362183F049900FAF311 /* EGOImageLoadConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 18750330183F049900FAF311 /* EGOImageLoadConnection.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		18750363183F049900FAF311 /* EGOImageLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 18750332183F049900FAF311 /* EGOImageLoader.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		18750364183F049900FAF311 /* EGOImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18750335183F049900FAF311 /* EGOImageView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		18750365183F049900FAF311 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 18750336183F049900FAF311 /* InfoPlist.strings */; };
 		18750366183F049900FAF311 /* grayArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 18750338183F049900FAF311 /* grayArrow.png */; };
 		18750367183F049900FAF311 /* grayArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18750339183F049900FAF311 /* grayArrow@2x.png */; };
 		18750368183F049900FAF311 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1875033A183F049900FAF311 /* main.m */; };
 		18750369183F049900FAF311 /* RoomDesign-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1875033B183F049900FAF311 /* RoomDesign-Info.plist */; };
-		1875036A183F049900FAF311 /* EGORefreshTableFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1875033F183F049900FAF311 /* EGORefreshTableFooterView.m */; };
-		1875036B183F049900FAF311 /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18750341183F049900FAF311 /* EGORefreshTableHeaderView.m */; };
+		1875036A183F049900FAF311 /* EGORefreshTableFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1875033F183F049900FAF311 /* EGORefreshTableFooterView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		1875036B183F049900FAF311 /* EGORefreshTableHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 18750341183F049900FAF311 /* EGORefreshTableHeaderView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		1875036C183F049900FAF311 /* UIScrollView+SVInfiniteScrolling.m in Sources */ = {isa = PBXBuildFile; fileRef = 18750345183F049900FAF311 /* UIScrollView+SVInfiniteScrolling.m */; };
 		1875036D183F049900FAF311 /* UIScrollView+SVPullToRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 18750347183F049900FAF311 /* UIScrollView+SVPullToRefresh.m */; };
-		1875036E183F049900FAF311 /* TMPhotoQuiltViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18750349183F049900FAF311 /* TMPhotoQuiltViewCell.m */; };
-		1875036F183F049900FAF311 /* TMQuiltView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1875034D183F049900FAF311 /* TMQuiltView.m */; };
-		18750370183F049900FAF311 /* TMQuiltViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1875034F183F049900FAF311 /* TMQuiltViewCell.m */; };
-		18750371183F049900FAF311 /* TMQuiltViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18750351183F049900FAF311 /* TMQuiltViewController.m */; };
+		1875036E183F049900FAF311 /* TMPhotoQuiltViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 18750349183F049900FAF311 /* TMPhotoQuiltViewCell.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		1875036F183F049900FAF311 /* TMQuiltView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1875034D183F049900FAF311 /* TMQuiltView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		18750370183F049900FAF311 /* TMQuiltViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1875034F183F049900FAF311 /* TMQuiltViewCell.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		18750371183F049900FAF311 /* TMQuiltViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18750351183F049900FAF311 /* TMQuiltViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		18750372183F049900FAF311 /* WaterFallDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18750353183F049900FAF311 /* WaterFallDetailViewController.m */; };
-		18750373183F049900FAF311 /* WaterFallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18750355183F049900FAF311 /* WaterFallViewController.m */; };
+		18750373183F049900FAF311 /* WaterFallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18750355183F049900FAF311 /* WaterFallViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		18750374183F049900FAF311 /* whiteArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 18750356183F049900FAF311 /* whiteArrow.png */; };
 		18750375183F049900FAF311 /* whiteArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18750357183F049900FAF311 /* whiteArrow@2x.png */; };
 		18750379183F056D00FAF311 /* UIImage+thumUIImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 18750378183F056D00FAF311 /* UIImage+thumUIImage.m */; };
@@ -50,6 +58,16 @@
 		182710FF1834B79A00FBD6EA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		182711011834B79A00FBD6EA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		182711611834BBD900FBD6EA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		18603EDC1852FE72004519C4 /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape~ipad.png"; sourceTree = "<group>"; };
+		18603EDF1852FE79004519C4 /* Default-Landscape@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape@2x~ipad.png"; sourceTree = "<group>"; };
+		18603EE118530116004519C4 /* HomePageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomePageViewController.h; sourceTree = "<group>"; };
+		18603EE218530116004519C4 /* HomePageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomePageViewController.m; sourceTree = "<group>"; };
+		18603EEC185303AE004519C4 /* home_bg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = home_bg.jpg; sourceTree = "<group>"; };
+		18603EED185303AE004519C4 /* home_bg@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "home_bg@2x.jpg"; sourceTree = "<group>"; };
+		18603EF0185309A9004519C4 /* UIView+UIViewEx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+UIViewEx.h"; sourceTree = "<group>"; };
+		18603EF1185309A9004519C4 /* UIView+UIViewEx.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+UIViewEx.m"; sourceTree = "<group>"; };
+		18603EF318530F84004519C4 /* home_stone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home_stone.png; sourceTree = "<group>"; };
+		18603EF418530F84004519C4 /* home_stone@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "home_stone@2x.png"; sourceTree = "<group>"; };
 		1875031E183F049900FAF311 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1875031F183F049900FAF311 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		18750320183F049900FAF311 /* blackArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blackArrow.png; sourceTree = "<group>"; };
@@ -122,6 +140,8 @@
 		182710EE1834B79A00FBD6EA = {
 			isa = PBXGroup;
 			children = (
+				18603EDF1852FE79004519C4 /* Default-Landscape@2x~ipad.png */,
+				18603EDC1852FE72004519C4 /* Default-Landscape~ipad.png */,
 				1875037E183F3FD700FAF311 /* CoreText.framework */,
 				1875031D183F049900FAF311 /* RoomDesign */,
 				182710FC1834B79A00FBD6EA /* Frameworks */,
@@ -148,23 +168,59 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		1875031D183F049900FAF311 /* RoomDesign */ = {
+		18603EE418530130004519C4 /* MineViewController */ = {
 			isa = PBXGroup;
 			children = (
-				18750376183F04E400FAF311 /* Function */,
-				1875031E183F049900FAF311 /* AppDelegate.h */,
-				1875031F183F049900FAF311 /* AppDelegate.m */,
+				18750352183F049900FAF311 /* WaterFallDetailViewController.h */,
+				18750353183F049900FAF311 /* WaterFallDetailViewController.m */,
+				18750354183F049900FAF311 /* WaterFallViewController.h */,
+				18750355183F049900FAF311 /* WaterFallViewController.m */,
+				18603EE118530116004519C4 /* HomePageViewController.h */,
+				18603EE218530116004519C4 /* HomePageViewController.m */,
+			);
+			name = MineViewController;
+			sourceTree = "<group>";
+		};
+		18603EE518530189004519C4 /* img */ = {
+			isa = PBXGroup;
+			children = (
+				18603EEB18530381004519C4 /* home */,
 				18750320183F049900FAF311 /* blackArrow.png */,
 				18750321183F049900FAF311 /* blackArrow@2x.png */,
 				18750322183F049900FAF311 /* blueArrow.png */,
 				18750323183F049900FAF311 /* blueArrow@2x.png */,
+				18750338183F049900FAF311 /* grayArrow.png */,
+				18750339183F049900FAF311 /* grayArrow@2x.png */,
+				18750356183F049900FAF311 /* whiteArrow.png */,
+				18750357183F049900FAF311 /* whiteArrow@2x.png */,
+			);
+			name = img;
+			sourceTree = "<group>";
+		};
+		18603EEB18530381004519C4 /* home */ = {
+			isa = PBXGroup;
+			children = (
+				18603EF318530F84004519C4 /* home_stone.png */,
+				18603EF418530F84004519C4 /* home_stone@2x.png */,
+				18603EEC185303AE004519C4 /* home_bg.jpg */,
+				18603EED185303AE004519C4 /* home_bg@2x.jpg */,
+			);
+			name = home;
+			sourceTree = "<group>";
+		};
+		1875031D183F049900FAF311 /* RoomDesign */ = {
+			isa = PBXGroup;
+			children = (
+				18603EE518530189004519C4 /* img */,
+				18603EE418530130004519C4 /* MineViewController */,
+				18750376183F04E400FAF311 /* Function */,
+				1875031E183F049900FAF311 /* AppDelegate.h */,
+				1875031F183F049900FAF311 /* AppDelegate.m */,
 				18750324183F049900FAF311 /* Default-568h@2x.png */,
 				18750325183F049900FAF311 /* Default.png */,
 				18750326183F049900FAF311 /* Default@2x.png */,
 				18750327183F049900FAF311 /* EGO */,
 				18750336183F049900FAF311 /* InfoPlist.strings */,
-				18750338183F049900FAF311 /* grayArrow.png */,
-				18750339183F049900FAF311 /* grayArrow@2x.png */,
 				1875033A183F049900FAF311 /* main.m */,
 				1875033B183F049900FAF311 /* RoomDesign-Info.plist */,
 				1875033C183F049900FAF311 /* RoomDesign-Prefix.pch */,
@@ -172,12 +228,6 @@
 				18750348183F049900FAF311 /* TMPhotoQuiltViewCell.h */,
 				18750349183F049900FAF311 /* TMPhotoQuiltViewCell.m */,
 				1875034A183F049900FAF311 /* TMQuiltView */,
-				18750352183F049900FAF311 /* WaterFallDetailViewController.h */,
-				18750353183F049900FAF311 /* WaterFallDetailViewController.m */,
-				18750354183F049900FAF311 /* WaterFallViewController.h */,
-				18750355183F049900FAF311 /* WaterFallViewController.m */,
-				18750356183F049900FAF311 /* whiteArrow.png */,
-				18750357183F049900FAF311 /* whiteArrow@2x.png */,
 			);
 			path = RoomDesign;
 			sourceTree = "<group>";
@@ -255,6 +305,8 @@
 		18750376183F04E400FAF311 /* Function */ = {
 			isa = PBXGroup;
 			children = (
+				18603EF0185309A9004519C4 /* UIView+UIViewEx.h */,
+				18603EF1185309A9004519C4 /* UIView+UIViewEx.m */,
 				18750377183F056D00FAF311 /* UIImage+thumUIImage.h */,
 				18750378183F056D00FAF311 /* UIImage+thumUIImage.m */,
 			);
@@ -325,6 +377,12 @@
 				18750369183F049900FAF311 /* RoomDesign-Info.plist in Resources */,
 				18750374183F049900FAF311 /* whiteArrow.png in Resources */,
 				18750375183F049900FAF311 /* whiteArrow@2x.png in Resources */,
+				18603EDD1852FE72004519C4 /* Default-Landscape~ipad.png in Resources */,
+				18603EE01852FE79004519C4 /* Default-Landscape@2x~ipad.png in Resources */,
+				18603EEE185303AE004519C4 /* home_bg.jpg in Resources */,
+				18603EEF185303AE004519C4 /* home_bg@2x.jpg in Resources */,
+				18603EF518530F84004519C4 /* home_stone.png in Resources */,
+				18603EF618530F84004519C4 /* home_stone@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -352,6 +410,8 @@
 				18750372183F049900FAF311 /* WaterFallDetailViewController.m in Sources */,
 				18750373183F049900FAF311 /* WaterFallViewController.m in Sources */,
 				18750379183F056D00FAF311 /* UIImage+thumUIImage.m in Sources */,
+				18603EE318530116004519C4 /* HomePageViewController.m in Sources */,
+				18603EF2185309A9004519C4 /* UIView+UIViewEx.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -422,7 +482,7 @@
 		182711181834B79A00FBD6EA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RoomDesign/RoomDesign-Prefix.pch";
 				INFOPLIST_FILE = "RoomDesign/RoomDesign-Info.plist";
@@ -436,7 +496,7 @@
 		182711191834B79A00FBD6EA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RoomDesign/RoomDesign-Prefix.pch";
 				INFOPLIST_FILE = "RoomDesign/RoomDesign-Info.plist";
