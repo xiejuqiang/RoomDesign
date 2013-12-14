@@ -24,7 +24,7 @@
         w = h * r;
     } else {
         if (r <= width/height) {
-            h = height/2;
+            h = height/4;
             w = h * r;
         } else {
             w = width/2;

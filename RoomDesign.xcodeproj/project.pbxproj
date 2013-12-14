@@ -19,6 +19,9 @@
 		18603EF2185309A9004519C4 /* UIView+UIViewEx.m in Sources */ = {isa = PBXBuildFile; fileRef = 18603EF1185309A9004519C4 /* UIView+UIViewEx.m */; };
 		18603EF518530F84004519C4 /* home_stone.png in Resources */ = {isa = PBXBuildFile; fileRef = 18603EF318530F84004519C4 /* home_stone.png */; };
 		18603EF618530F84004519C4 /* home_stone@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18603EF418530F84004519C4 /* home_stone@2x.png */; };
+		1866E910185C1E1100032DD1 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1866E90F185C1E1100032DD1 /* AboutViewController.m */; };
+		1866E914185C1ED600032DD1 /* home_about.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1866E912185C1ED600032DD1 /* home_about.jpg */; };
+		1866E915185C1ED600032DD1 /* home_about@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1866E913185C1ED600032DD1 /* home_about@2x.jpg */; };
 		18750358183F049900FAF311 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1875031F183F049900FAF311 /* AppDelegate.m */; };
 		18750359183F049900FAF311 /* blackArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 18750320183F049900FAF311 /* blackArrow.png */; };
 		1875035A183F049900FAF311 /* blackArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18750321183F049900FAF311 /* blackArrow@2x.png */; };
@@ -68,6 +71,10 @@
 		18603EF1185309A9004519C4 /* UIView+UIViewEx.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+UIViewEx.m"; sourceTree = "<group>"; };
 		18603EF318530F84004519C4 /* home_stone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home_stone.png; sourceTree = "<group>"; };
 		18603EF418530F84004519C4 /* home_stone@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "home_stone@2x.png"; sourceTree = "<group>"; };
+		1866E90E185C1E1100032DD1 /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
+		1866E90F185C1E1100032DD1 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
+		1866E912185C1ED600032DD1 /* home_about.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = home_about.jpg; sourceTree = "<group>"; };
+		1866E913185C1ED600032DD1 /* home_about@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "home_about@2x.jpg"; sourceTree = "<group>"; };
 		1875031E183F049900FAF311 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1875031F183F049900FAF311 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		18750320183F049900FAF311 /* blackArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blackArrow.png; sourceTree = "<group>"; };
@@ -177,6 +184,8 @@
 				18750355183F049900FAF311 /* WaterFallViewController.m */,
 				18603EE118530116004519C4 /* HomePageViewController.h */,
 				18603EE218530116004519C4 /* HomePageViewController.m */,
+				1866E90E185C1E1100032DD1 /* AboutViewController.h */,
+				1866E90F185C1E1100032DD1 /* AboutViewController.m */,
 			);
 			name = MineViewController;
 			sourceTree = "<group>";
@@ -200,6 +209,8 @@
 		18603EEB18530381004519C4 /* home */ = {
 			isa = PBXGroup;
 			children = (
+				1866E912185C1ED600032DD1 /* home_about.jpg */,
+				1866E913185C1ED600032DD1 /* home_about@2x.jpg */,
 				18603EF318530F84004519C4 /* home_stone.png */,
 				18603EF418530F84004519C4 /* home_stone@2x.png */,
 				18603EEC185303AE004519C4 /* home_bg.jpg */,
@@ -383,6 +394,8 @@
 				18603EEF185303AE004519C4 /* home_bg@2x.jpg in Resources */,
 				18603EF518530F84004519C4 /* home_stone.png in Resources */,
 				18603EF618530F84004519C4 /* home_stone@2x.png in Resources */,
+				1866E914185C1ED600032DD1 /* home_about.jpg in Resources */,
+				1866E915185C1ED600032DD1 /* home_about@2x.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -412,6 +425,7 @@
 				18750379183F056D00FAF311 /* UIImage+thumUIImage.m in Sources */,
 				18603EE318530116004519C4 /* HomePageViewController.m in Sources */,
 				18603EF2185309A9004519C4 /* UIView+UIViewEx.m in Sources */,
+				1866E910185C1E1100032DD1 /* AboutViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -483,6 +497,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_OBJCPP_ARC_ABI = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RoomDesign/RoomDesign-Prefix.pch";
 				INFOPLIST_FILE = "RoomDesign/RoomDesign-Info.plist";
@@ -497,6 +512,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_OBJCPP_ARC_ABI = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RoomDesign/RoomDesign-Prefix.pch";
 				INFOPLIST_FILE = "RoomDesign/RoomDesign-Info.plist";

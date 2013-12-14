@@ -27,6 +27,7 @@
 
 @implementation WaterFallViewController
 @synthesize images = _images;
+@synthesize isForeign;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -56,6 +57,9 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     [self createTopView];
+    
+    
+    
     qtmquitView = [[TMQuiltView alloc] initWithFrame:CGRectMake(60, 100, 1024-120, 768-100)];
 	qtmquitView.delegate = self;
 	qtmquitView.dataSource = self;
@@ -114,6 +118,21 @@
     officeLabel.text = @"办公";
     officeLabel.textAlignment = NSTextAlignmentCenter;
     officeLabel.textColor = [UIColor blackColor];
+    if (isForeign == YES) {
+        titleLabel1.text = @"Design";
+        titleLabel2.text = @"assistant";
+        cookLabel.text = @"food and beverage";
+        houseLabel.text = @"household";
+        officeLabel.text = @"office";
+        
+        
+        titleLabel1.frame = CGRectMake(445, 30, 60, 30);
+        imgView.frame = CGRectMake(titleLabel1.right-10, 10, 50, 50);
+        titleLabel2.frame = CGRectMake(titleLabel1.right-10+40, 30, 70, 30);
+        cookLabel.frame = CGRectMake(90, lineLabel.top-30, 150, 30);
+        houseLabel.frame = CGRectMake(425+60, lineLabel.top-30, 80, 30);
+        
+    }
     
     [self.view addSubview:titleLabel1];
     [self.view addSubview:titleLabel2];
@@ -370,7 +389,7 @@
 - (CGFloat)quiltView:(TMQuiltView *)quiltView heightForCellAtIndexPath:(NSIndexPath *)indexPath
 {
 //    NSLog(@"%f",[self imageAtIndexPath:indexPath].size.height);
-    return [self imageAtIndexPath:indexPath].frame.size.height;
+    return [self imageAtIndexPath:indexPath].frame.size.height+40;
 }
 
 - (void)quiltView:(TMQuiltView *)quiltView didSelectCellAtIndexPath:(NSIndexPath *)indexPath

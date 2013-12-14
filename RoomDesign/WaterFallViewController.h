@@ -19,6 +19,10 @@
     EGORefreshTableFooterView *_refreshFooterView;
     //
     BOOL _reloading;
+    
+    UIScrollView *mScrollView;
 }
+
+@property (nonatomic,assign) BOOL isForeign;
 
 @end

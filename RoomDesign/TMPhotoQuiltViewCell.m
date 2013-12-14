@@ -69,9 +69,10 @@ const CGFloat kTMPhotoQuiltViewMargin = 1;
 - (void)layoutSubviews{
     NSLog(@"%f,%f",self.bounds.size.width,self.bounds.size.height);
     NSLog(@"%f,%f",self.bounds.origin.x,self.bounds.origin.y);
-    self.photoView.frame = CGRectInset(self.bounds, kTMPhotoQuiltViewMargin, kTMPhotoQuiltViewMargin);
-    self.titleLabel.frame = CGRectMake(kTMPhotoQuiltViewMargin, self.bounds.size.height - 20 - kTMPhotoQuiltViewMargin,
-                                       self.bounds.size.width - 2 * kTMPhotoQuiltViewMargin, 20);
+    self.photoView.frame = CGRectInset(CGRectMake(0, 0,
+                                                  self.bounds.size.width, self.bounds.size.height-40), kTMPhotoQuiltViewMargin, kTMPhotoQuiltViewMargin);
+    self.titleLabel.frame = CGRectMake(kTMPhotoQuiltViewMargin, self.bounds.size.height-40,
+                                       self.bounds.size.width - 2 * kTMPhotoQuiltViewMargin, 40);
     
 //    self.photoView.frame = CGRectInset(CGRectMake(0, 0, 145.0, self.photoView.image.size.height), kTMPhotoQuiltViewMargin, kTMPhotoQuiltViewMargin);
 //    self.titleLabel.frame = CGRectMake(kTMPhotoQuiltViewMargin, self.photoView.image.size.height - 20 - kTMPhotoQuiltViewMargin,
