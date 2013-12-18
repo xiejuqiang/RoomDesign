@@ -47,6 +47,17 @@
                     @"http://g.hiphotos.baidu.com/image/w%3D2048/sign=2eea3a0b64380cd7e61ea5ed957cac34/a6efce1b9d16fdfa31c50355b58f8c5495ee7be4.jpg",
                     @"http://d.hiphotos.baidu.com/image/w%3D2048/sign=47df0f578cb1cb133e693b13e96c574e/f9dcd100baa1cd1101fc1698b812c8fcc3ce2d3b.jpg",
                     @"http://a.hiphotos.baidu.com/image/w%3D2048/sign=d986a654d01373f0f53f689f90374afb/8ad4b31c8701a18b8f132c609f2f07082838fe20.jpg",nil];
+        
+//        imageArr = [[NSArray alloc] initWithObjects:@"http://image.zcool.com.cn/4/51/1254197540187.jpg",
+//                                                    @"http://image.zcool.com.cn/13/53/1254207528161.jpg",
+//                                                    @"http://image.zcool.com.cn/33/27/1254195229836.jpg",
+//                                                    @"http://image.zcool.com.cn/61/15/1254208808859.jpg",
+//                                                    @"http://image.zcool.com.cn/17/27/1254197284816.jpg",
+//                                                    @"http://image.zcool.com.cn/41/8/1254208151336.jpg",
+//                                                    @"http://image.zcool.com.cn/35/14/1254197278957.jpg",
+//                                                    @"http://image.zcool.com.cn/57/40/1254194821086.jpg",
+//                                                    @"http://image.zcool.com.cn/23/54/m_1254197596189.jpg",nil];
+        
     }
     return self;
 }
@@ -295,7 +306,7 @@
 - (void)insertRowAtBottom
 {
     [self getNextPageView];
-    [self performSelector:@selector(reloadImageData) withObject:nil afterDelay:2.0];
+    [self performSelector:@selector(reloadImageData) withObject:nil afterDelay:2.5];
     
 }
 
@@ -327,13 +338,19 @@
     return _images;
 }
 
-- (EGOImageView *)imageAtIndexPath:(NSIndexPath *)indexPath {
-    EGOImageView *imgView = [[EGOImageView alloc] initWithPlaceholderImage:[UIImage imageNamed:@""]];
-    imgView.imageURL = [[NSURL alloc] initWithString:[self.images objectAtIndex:indexPath.row]];
-    NSLog(@"%f,%f",imgView.image.size.width,imgView.image.size.height);
+- (UIImageView *)imageAtIndexPath:(NSIndexPath *)indexPath {
+//    EGOImageView *imgView = [[EGOImageView alloc] initWithPlaceholderImage:[UIImage imageNamed:@""]];
+//    imgView.imageURL = [[NSURL alloc] initWithString:[self.images objectAtIndex:indexPath.row]];
+//    NSLog(@"%f,%f",imgView.image.size.width,imgView.image.size.height);
+//    UIImage *img =  [imgView.image thumbWithWidth:imgView.image.size.width height:imgView.image.size.height];
+//    imgView.frame = CGRectMake(0, 0, img.size.width,img.size.height);
+//    NSLog(@"width==%f height==%f",img.size.width,img.size.height);
+    NSString *imagePath = [[NSString alloc] initWithFormat:@"%@",[self.images objectAtIndex:indexPath.row]];
+    NSString* cachesDirectory = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *imagePath1 = [[[[cachesDirectory stringByAppendingPathComponent:[[NSProcessInfo processInfo] processName]] stringByAppendingPathComponent:@"EGOCache"] copy] stringByAppendingPathComponent:[NSString stringWithFormat:@"EGOImageLoader-%u", [[imagePath description] hash]]];
+    UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageWithContentsOfFile:imagePath1]];
     UIImage *img =  [imgView.image thumbWithWidth:imgView.image.size.width height:imgView.image.size.height];
     imgView.frame = CGRectMake(0, 0, img.size.width,img.size.height);
-    NSLog(@"width==%f height==%f",img.size.width,img.size.height);
     return imgView;
 }
 
@@ -358,7 +375,7 @@
     NSString *strImg = [self.images objectAtIndex:indexPath.row];
     NSURL *url = [[NSURL alloc ] initWithString:strImg];
     cell.photoView.imageURL = url;
-    if ([quiltView heightForCellAtIndexPath:indexPath]>0)
+    if ([quiltView heightForCellAtIndexPath:indexPath]>50)
     {
         cell.titleLabel.hidden = NO;
         cell.titleLabel.text = [NSString stringWithFormat:@"%d", indexPath.row];

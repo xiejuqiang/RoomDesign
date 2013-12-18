@@ -11,6 +11,10 @@
 		182711001834B79A00FBD6EA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 182710FF1834B79A00FBD6EA /* Foundation.framework */; };
 		182711021834B79A00FBD6EA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 182711011834B79A00FBD6EA /* CoreGraphics.framework */; };
 		182711621834BBD900FBD6EA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 182711611834BBD900FBD6EA /* QuartzCore.framework */; };
+		185ADEF518617E9200C8F154 /* JsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 185ADEF218617E9200C8F154 /* JsonParser.m */; };
+		185ADEF618617E9200C8F154 /* PostThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 185ADEF418617E9200C8F154 /* PostThread.m */; };
+		185ADEFA186183BB00C8F154 /* UrlStr.m in Sources */ = {isa = PBXBuildFile; fileRef = 185ADEF9186183BB00C8F154 /* UrlStr.m */; };
+		185ADEFD1861840500C8F154 /* GetObj.m in Sources */ = {isa = PBXBuildFile; fileRef = 185ADEFC1861840400C8F154 /* GetObj.m */; };
 		18603EDD1852FE72004519C4 /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 18603EDC1852FE72004519C4 /* Default-Landscape~ipad.png */; };
 		18603EE01852FE79004519C4 /* Default-Landscape@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 18603EDF1852FE79004519C4 /* Default-Landscape@2x~ipad.png */; };
 		18603EE318530116004519C4 /* HomePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18603EE218530116004519C4 /* HomePageViewController.m */; };
@@ -61,6 +65,14 @@
 		182710FF1834B79A00FBD6EA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		182711011834B79A00FBD6EA /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		182711611834BBD900FBD6EA /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		185ADEF118617E9200C8F154 /* JsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JsonParser.h; sourceTree = "<group>"; };
+		185ADEF218617E9200C8F154 /* JsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JsonParser.m; sourceTree = "<group>"; };
+		185ADEF318617E9200C8F154 /* PostThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostThread.h; sourceTree = "<group>"; };
+		185ADEF418617E9200C8F154 /* PostThread.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostThread.m; sourceTree = "<group>"; };
+		185ADEF8186183BB00C8F154 /* UrlStr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UrlStr.h; sourceTree = "<group>"; };
+		185ADEF9186183BB00C8F154 /* UrlStr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UrlStr.m; sourceTree = "<group>"; };
+		185ADEFB1861840400C8F154 /* GetObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetObj.h; sourceTree = "<group>"; };
+		185ADEFC1861840400C8F154 /* GetObj.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetObj.m; sourceTree = "<group>"; };
 		18603EDC1852FE72004519C4 /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape~ipad.png"; sourceTree = "<group>"; };
 		18603EDF1852FE79004519C4 /* Default-Landscape@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape@2x~ipad.png"; sourceTree = "<group>"; };
 		18603EE118530116004519C4 /* HomePageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomePageViewController.h; sourceTree = "<group>"; };
@@ -316,10 +328,18 @@
 		18750376183F04E400FAF311 /* Function */ = {
 			isa = PBXGroup;
 			children = (
+				185ADEF118617E9200C8F154 /* JsonParser.h */,
+				185ADEF218617E9200C8F154 /* JsonParser.m */,
+				185ADEF318617E9200C8F154 /* PostThread.h */,
+				185ADEF418617E9200C8F154 /* PostThread.m */,
 				18603EF0185309A9004519C4 /* UIView+UIViewEx.h */,
 				18603EF1185309A9004519C4 /* UIView+UIViewEx.m */,
 				18750377183F056D00FAF311 /* UIImage+thumUIImage.h */,
 				18750378183F056D00FAF311 /* UIImage+thumUIImage.m */,
+				185ADEF8186183BB00C8F154 /* UrlStr.h */,
+				185ADEF9186183BB00C8F154 /* UrlStr.m */,
+				185ADEFB1861840400C8F154 /* GetObj.h */,
+				185ADEFC1861840400C8F154 /* GetObj.m */,
 			);
 			name = Function;
 			sourceTree = "<group>";
@@ -426,6 +446,10 @@
 				18603EE318530116004519C4 /* HomePageViewController.m in Sources */,
 				18603EF2185309A9004519C4 /* UIView+UIViewEx.m in Sources */,
 				1866E910185C1E1100032DD1 /* AboutViewController.m in Sources */,
+				185ADEF518617E9200C8F154 /* JsonParser.m in Sources */,
+				185ADEF618617E9200C8F154 /* PostThread.m in Sources */,
+				185ADEFA186183BB00C8F154 /* UrlStr.m in Sources */,
+				185ADEFD1861840500C8F154 /* GetObj.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
