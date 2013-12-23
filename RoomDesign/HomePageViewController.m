@@ -10,6 +10,8 @@
 #import "WaterFallViewController.h"
 #import "UIView+UIViewEx.h"
 #import "AboutViewController.h"
+#import "UrlStr.h"
+#import "JsonParser.h"
 
 @interface HomePageViewController ()
 
@@ -22,14 +24,65 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        HUD = [[MBProgressHUD alloc] init];
+        urlStr = [[UrlStr alloc] init];
+        jsonParser = [[JsonParser alloc] init];
     }
     return self;
+}
+
+- (void)getData
+{
+    [self showWithLoding];
+    NSString *categoryUrl = [urlStr returnURL:1 Obj:nil];
+    [jsonParser parse:categoryUrl withDelegate:self onComplete:@selector(connectionSuccess:) onErrorComplete:@selector(connectionError) onNullComplete:@selector(connectionNull)];
+    
+}
+
+- (void)connectionSuccess:(JsonParser *)jsonP
+{
+    NSArray *resultData = [jsonP getItems];
+    NSLog(@"%@",resultData);
+    [HUD hide:YES];
+}
+
+- (void)connectionError
+{
+    [self showWithTime:@"连接出错,请检查网络"];
+}
+
+- (void)connectionNull
+{
+    [self showWithTime:@"无内容"];
+}
+
+#pragma mark showHud
+
+- (void)showWithTime:(NSString *)lable
+{
+    [self.view addSubview:HUD];
+    HUD.delegate = self;
+    HUD.labelText = lable;
+    [HUD showWhileExecutingT:@selector(myTask) onTarget:self withObject:nil animated:YES];
+}
+
+- (void)showWithLoding
+{
+    [self.view addSubview:HUD];
+    HUD.delegate = self;
+    HUD.labelText = @"加载中...";
+    [HUD showWhileExecuting:@selector(myTask) onTarget:self withObject:nil animated:YES];
+}
+- (void)myTask {
+	// Do something usefull in here instead of sleeping ...
+    //	sleep(1);
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"home_bg.jpg"]];
     imageView.userInteractionEnabled = YES;
     [self.view addSubview:imageView];
@@ -50,6 +103,8 @@
     aboutButton.backgroundColor = [UIColor clearColor];
     [aboutButton addTarget:self action:@selector(aboutTap) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:aboutButton];
+    
+    [self getData];
     
 }
 

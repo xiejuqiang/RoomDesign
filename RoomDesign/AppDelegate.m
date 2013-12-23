@@ -24,6 +24,8 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
 //    WaterFallViewController *waterfallVC = [[WaterFallViewController alloc] init];
+   
+    
     HomePageViewController *homePageVC = [[HomePageViewController alloc] init];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:homePageVC];
     self.window.rootViewController = nav;
