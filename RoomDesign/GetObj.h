@@ -10,4 +10,6 @@
 
 @interface GetObj : NSObject
 
+@property (nonatomic,retain)NSString *catID;
+
 @end

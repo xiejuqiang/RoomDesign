@@ -7,7 +7,9 @@
 //
 
 #import "UrlStr.h"
+#import "GetObj.h"
 #define Default_url @"http://115.29.179.164/"
+
 @implementation UrlStr
 
 - (NSString *)returnURL:(int)urlId Obj:(GetObj *)obj
@@ -22,7 +24,7 @@
             break;
             
         case 2:
-            returnStr = [[NSString alloc]initWithFormat:@"%@app/index.php?m=Mobileapi&a=searchproduct",Default_url];
+            returnStr = [[NSString alloc]initWithFormat:@"%@app/index.php?m=Mobileapi&a=searchproduct&cat_id=%@",Default_url,obj.catID];
             NSLog(@"获取产品展示接口:%@",returnStr);
             return returnStr;
             break;

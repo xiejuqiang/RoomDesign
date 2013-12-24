@@ -15,6 +15,7 @@
     JsonParser *jsonParser;
     UrlStr *urlStr;
     MBProgressHUD *HUD;
+    NSArray *resultDataArray;
 }
 
 @end

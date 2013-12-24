@@ -27,6 +27,7 @@
         HUD = [[MBProgressHUD alloc] init];
         urlStr = [[UrlStr alloc] init];
         jsonParser = [[JsonParser alloc] init];
+        resultDataArray = [[NSArray alloc] init];
     }
     return self;
 }
@@ -42,6 +43,7 @@
 - (void)connectionSuccess:(JsonParser *)jsonP
 {
     NSArray *resultData = [jsonP getItems];
+    resultDataArray = resultData;
     NSLog(@"%@",resultData);
     [HUD hide:YES];
 }
@@ -111,6 +113,7 @@
 - (void)buttonTap:(UIButton *)btn
 {
     WaterFallViewController *waterFallVC = [[WaterFallViewController alloc] init];
+    waterFallVC.dataArray = resultDataArray;
     if (btn.tag == 100) {
         waterFallVC.isForeign = NO;
     }

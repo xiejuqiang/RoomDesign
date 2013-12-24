@@ -11,6 +11,9 @@
 #import "UIImage+thumUIImage.h"
 #import <CoreText/CoreText.h>
 #import "UIView+UIViewEx.h"
+#import "UrlStr.h"
+#import "JsonParser.h"
+#import "GetObj.h"
 
 @interface WaterFallDetailViewController ()
 {
@@ -30,11 +33,16 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        urlStr = [[UrlStr alloc] init];
+        jsonParser = [[JsonParser alloc] init];
     }
     return self;
 }
 
-
+- (void)getData
+{
+    
+}
 
 - (void)viewDidLoad
 {

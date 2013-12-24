@@ -9,5 +9,6 @@
 #import "GetObj.h"
 
 @implementation GetObj
+@synthesize catID;
 
 @end
