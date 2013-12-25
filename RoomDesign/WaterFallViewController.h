@@ -24,5 +24,6 @@
 }
 
 @property (nonatomic,assign) BOOL isForeign;
+@property (nonatomic,retain) NSArray *dataArray;
 
 @end

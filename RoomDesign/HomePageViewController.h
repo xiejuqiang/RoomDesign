@@ -7,7 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface HomePageViewController : UIViewController
+#import "MBProgressHUD.h"
+@class JsonParser;
+@class UrlStr;
+@interface HomePageViewController : UIViewController<MBProgressHUDDelegate>
+{
+    JsonParser *jsonParser;
+    UrlStr *urlStr;
+    MBProgressHUD *HUD;
+    NSArray *resultDataArray;
+}
 
 @end

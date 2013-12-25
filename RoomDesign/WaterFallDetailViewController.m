@@ -11,6 +11,9 @@
 #import "UIImage+thumUIImage.h"
 #import <CoreText/CoreText.h>
 #import "UIView+UIViewEx.h"
+#import "UrlStr.h"
+#import "JsonParser.h"
+#import "GetObj.h"
 
 @interface WaterFallDetailViewController ()
 {
@@ -30,69 +33,35 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        urlStr = [[UrlStr alloc] init];
+        jsonParser = [[JsonParser alloc] init];
     }
     return self;
 }
 
+- (void)getData
+{
+    GetObj *getObj = [[GetObj alloc] init];
+    getObj.catID = @"2";
+    NSString *productListURL = [urlStr returnURL:2 Obj: getObj];
+    [jsonParser parse:productListURL withDelegate:self onComplete:@selector(onConnectionSuccess:) onErrorComplete:@selector(onConnectionError) onNullComplete:@selector(onConnectionNull)];
+}
 
+- (void)onConnectionSuccess:(JsonParser *)jsonP
+{
+    NSDictionary *resultDicData = [jsonP getItems];
+    productsData = [[NSArray alloc] initWithArray:[resultDicData objectForKey:@"productLists"]];
+    [self createView];
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    [self getData];
     [self createTopView];
 
-    leftScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(150, 100, 550, 600)];
-    leftScrollView.tag = 100;
-    leftScrollView.delegate = self;
-    [self.view addSubview:leftScrollView];
     
-    rightScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(705, 100, 768-605, 600)];
-    rightScrollView.tag = 200;
-    rightScrollView.delegate = self;
-    [self.view addSubview:rightScrollView];
-    
-    bgTileView = [[UIView alloc] initWithFrame:CGRectMake(0, 162*offset_H, 163, 163)];
-    bgTileView.backgroundColor = [UIColor redColor];
-    [rightScrollView addSubview:bgTileView];
-    
-    int offsetH = 0;
-    int left_offsetH = 0;
-    for (int i = 0; i<[urlArray count]; i++)
-    {
-        NSString *imagePath = [[NSString alloc] initWithFormat:@"%@",[urlArray objectAtIndex:i]];
-        NSString* cachesDirectory = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-        NSString *imagePath1 = [[[[cachesDirectory stringByAppendingPathComponent:[[NSProcessInfo processInfo] processName]] stringByAppendingPathComponent:@"EGOCache"] copy] stringByAppendingPathComponent:[NSString stringWithFormat:@"EGOImageLoader-%u", [[imagePath description] hash]]];
-        NSLog(@"%u",[[imagePath description] hash]);
-        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageWithContentsOfFile:imagePath1]];
-        imageView.userInteractionEnabled = YES;
-        imageView.frame = CGRectMake(1, 1+162*i, 161, 161);
-        imageView.contentMode = UIViewContentModeScaleAspectFit;
-        imageView.backgroundColor = [UIColor whiteColor];
-        [rightScrollView addSubview:imageView];
-        offsetH = imageView.frame.origin.y;
-        
-        UIImageView *imageViewBig = [[UIImageView alloc] initWithImage:[UIImage imageWithContentsOfFile:imagePath1]];
-        imageViewBig.userInteractionEnabled = YES;
-        imageViewBig.frame = CGRectMake(0, 600*i, 550, 600);
-        imageViewBig.contentMode = UIViewContentModeScaleAspectFit;
-        [leftScrollView addSubview:imageViewBig];
-        left_offsetH = imageViewBig.frame.origin.y;
-        
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapBg:)];
-        [imageView addGestureRecognizer:tap];
-        tap.view.tag = 100+i;
-        
-    }
-    rightScrollView.contentSize = CGSizeMake(161, offsetH+161);
-    rightScrollView.contentOffset = CGPointMake(0, 162*offset_H);
-    leftScrollView.contentSize = CGSizeMake(550, left_offsetH+600);
-    leftScrollView.contentOffset = CGPointMake(0, 600*offset_H);
-    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 5, 50, 30)];
-    [backButton setTitle:@"返回" forState:UIControlStateNormal];
-    [backButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:backButton];
     
 }
 
@@ -142,6 +111,62 @@
     
 }
 
+- (void)createView
+{
+    leftScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(150, 100, 550, 600)];
+    leftScrollView.tag = 100;
+    leftScrollView.delegate = self;
+    [self.view addSubview:leftScrollView];
+    
+    rightScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(705, 100, 768-605, 600)];
+    rightScrollView.tag = 200;
+    rightScrollView.delegate = self;
+    [self.view addSubview:rightScrollView];
+    
+    bgTileView = [[UIView alloc] initWithFrame:CGRectMake(0, 162*offset_H, 163, 163)];
+    bgTileView.backgroundColor = [UIColor redColor];
+    [rightScrollView addSubview:bgTileView];
+    
+    int offsetH = 0;
+    int left_offsetH = 0;
+    for (int i = 0; i<[productsData count]; i++)
+    {
+        //        NSString *imagePath = [[NSString alloc] initWithFormat:@"%@",[urlArray objectAtIndex:i]];
+        //        NSString* cachesDirectory = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+        //        NSString *imagePath1 = [[[[cachesDirectory stringByAppendingPathComponent:[[NSProcessInfo processInfo] processName]] stringByAppendingPathComponent:@"EGOCache"] copy] stringByAppendingPathComponent:[NSString stringWithFormat:@"EGOImageLoader-%u", [[imagePath description] hash]]];
+        //        NSLog(@"%u",[[imagePath description] hash]);
+        EGOImageView *imageView = [[EGOImageView alloc] init];
+        imageView.userInteractionEnabled = YES;
+        imageView.frame = CGRectMake(1, 1+162*i, 161, 161);
+        imageView.imageURL = [[NSURL alloc] initWithString:[[productsData objectAtIndex:i] objectForKey:@"image1"]];
+        imageView.contentMode = UIViewContentModeScaleAspectFit;
+        imageView.backgroundColor = [UIColor whiteColor];
+        [rightScrollView addSubview:imageView];
+        offsetH = imageView.frame.origin.y;
+        
+        EGOImageView *imageViewBig = [[EGOImageView alloc] init];
+        imageViewBig.userInteractionEnabled = YES;
+        imageViewBig.frame = CGRectMake(0, 600*i, 550, 600);
+        imageViewBig.imageURL = [[NSURL alloc] initWithString:[[productsData objectAtIndex:i] objectForKey:@"image2"]];
+        imageViewBig.contentMode = UIViewContentModeScaleAspectFit;
+        [leftScrollView addSubview:imageViewBig];
+        left_offsetH = imageViewBig.frame.origin.y;
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapBg:)];
+        [imageView addGestureRecognizer:tap];
+        tap.view.tag = 100+i;
+        
+    }
+    rightScrollView.contentSize = CGSizeMake(161, offsetH+161);
+    rightScrollView.contentOffset = CGPointMake(0, 162*offset_H);
+    leftScrollView.contentSize = CGSizeMake(550, left_offsetH+600);
+    leftScrollView.contentOffset = CGPointMake(0, 600*offset_H);
+    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 5, 50, 30)];
+    [backButton setTitle:@"返回" forState:UIControlStateNormal];
+    [backButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:backButton];
+}
 
 //点击图片移动背景
 - (void)tapBg:(UITapGestureRecognizer *)recongnizer

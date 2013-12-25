@@ -28,6 +28,7 @@
 @implementation WaterFallViewController
 @synthesize images = _images;
 @synthesize isForeign;
+@synthesize dataArray;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -46,7 +47,16 @@
                     @"http://e.hiphotos.baidu.com/image/w%3D2048/sign=2b33c201a8ec8a13141a50e0c33b908f/500fd9f9d72a6059593207f42934349b033bba3a.jpg",
                     @"http://g.hiphotos.baidu.com/image/w%3D2048/sign=2eea3a0b64380cd7e61ea5ed957cac34/a6efce1b9d16fdfa31c50355b58f8c5495ee7be4.jpg",
                     @"http://d.hiphotos.baidu.com/image/w%3D2048/sign=47df0f578cb1cb133e693b13e96c574e/f9dcd100baa1cd1101fc1698b812c8fcc3ce2d3b.jpg",
-                    @"http://a.hiphotos.baidu.com/image/w%3D2048/sign=d986a654d01373f0f53f689f90374afb/8ad4b31c8701a18b8f132c609f2f07082838fe20.jpg",nil];
+                    @"http://a.hiphotos.baidu.com/image/w%3D2048/sign=d986a654d01373f0f53f689f90374afb/8ad4b31c8701a18b8f132c609f2f07082838fe20.jpg",
+                    @"http://image.zcool.com.cn/4/51/1254197540187.jpg",
+                    @"http://image.zcool.com.cn/13/53/1254207528161.jpg",
+                    @"http://image.zcool.com.cn/33/27/1254195229836.jpg",
+                    @"http://image.zcool.com.cn/61/15/1254208808859.jpg",
+                    @"http://image.zcool.com.cn/17/27/1254197284816.jpg",
+                    @"http://image.zcool.com.cn/41/8/1254208151336.jpg",
+                    @"http://image.zcool.com.cn/35/14/1254197278957.jpg",
+                    @"http://image.zcool.com.cn/57/40/1254194821086.jpg",
+                    @"http://image.zcool.com.cn/23/54/m_1254197596189.jpg",nil];
         
 //        imageArr = [[NSArray alloc] initWithObjects:@"http://image.zcool.com.cn/4/51/1254197540187.jpg",
 //                                                    @"http://image.zcool.com.cn/13/53/1254207528161.jpg",
@@ -114,19 +124,22 @@
     lineLabel.backgroundColor = [UIColor blackColor];
     [self.view addSubview:lineLabel];
     
+    //解析数据
+    NSDictionary *dic = [dataArray objectAtIndex:0];
+    
     UILabel *cookLabel = [[UILabel alloc] initWithFrame:CGRectMake(90, lineLabel.top-30, 50, 30)];
-    cookLabel.text = @"餐饮";
+    cookLabel.text = [dic objectForKey:@"cname"];
     cookLabel.textAlignment = NSTextAlignmentCenter;
     cookLabel.textColor = [UIColor blackColor];
     
     UILabel *houseLabel = [[UILabel alloc] initWithFrame:CGRectMake(425+60, lineLabel.top-30, 50, 30)];
-    houseLabel.text = @"家居";
+    houseLabel.text = [[dataArray objectAtIndex:1] objectForKey:@"cname"];
     houseLabel.textAlignment = NSTextAlignmentCenter;
     houseLabel.textColor = [UIColor blackColor];
     
     UILabel *officeLabel = [[UILabel alloc] initWithFrame:CGRectMake(904-40, lineLabel.top-30, 50, 30)];
     officeLabel.right = 1024-90;
-    officeLabel.text = @"办公";
+    officeLabel.text =[[dataArray objectAtIndex:2] objectForKey:@"cname"];
     officeLabel.textAlignment = NSTextAlignmentCenter;
     officeLabel.textColor = [UIColor blackColor];
     if (isForeign == YES) {

@@ -7,8 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface WaterFallDetailViewController : UIViewController<UIScrollViewDelegate>
+#import "MBProgressHUD.h"
+@class UrlStr;
+@class JsonParser;
+@interface WaterFallDetailViewController : UIViewController<UIScrollViewDelegate,MBProgressHUDDelegate>
+{
+    UrlStr *urlStr;
+    JsonParser *jsonParser;
+    NSArray *productsData;
+}
 
 @property (nonatomic,retain)NSArray *urlArray;
 @property (nonatomic,assign) int offset_H;
