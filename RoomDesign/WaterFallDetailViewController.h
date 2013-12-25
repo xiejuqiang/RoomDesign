@@ -14,6 +14,7 @@
 {
     UrlStr *urlStr;
     JsonParser *jsonParser;
+    NSArray *productsData;
 }
 
 @property (nonatomic,retain)NSArray *urlArray;
