@@ -78,28 +78,50 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     [self createTopView];
+    [self createScrollView];
+    TMQuiltView *qtmView = [(TMQuiltView *)[mainScrollView viewWithTag:101] retain];
+    [self createHeaderView:qtmView];
+    [self getNextPageView:qtmView];
     
+   
     
-    
-    qtmquitView = [[TMQuiltView alloc] initWithFrame:CGRectMake(60, 100, 1024-120, 768-100)];
-	qtmquitView.delegate = self;
-	qtmquitView.dataSource = self;
-//	qtmquitView.backgroundColor = [UIColor grayColor];
-	[self.view addSubview:qtmquitView];
-    
-    [self insertRowAtBottom];
-//    [qtmquitView addInfiniteScrollingWithActionHandler:^{
-//        [self insertRowAtBottom];
-//    }];
-    
-    [self createHeaderView];
-	[self performSelector:@selector(testFinishedLoadData) withObject:nil afterDelay:0.0f];
+}
 
-    
+- (void)createScrollView
+{
+    mainScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 100, 1024, 668)];
+    mainScrollView.pagingEnabled = YES;
+    mainScrollView.delegate = self;
+    mainScrollView.tag = 1000;
+    mainScrollView.contentSize = CGSizeMake(1024*3, 668);
+    [self.view addSubview:mainScrollView];
+    for (int i = 0; i<3; i++) {
+      TMQuiltView  *qtmView = [[TMQuiltView alloc] initWithFrame:CGRectMake(60+1024*i, 0, 1024-120, 768-100)];
+        qtmView.delegate = self;
+        qtmView.dataSource = self;
+        qtmView.tag = i+100;
+        
+        //	qtmquitView.backgroundColor = [UIColor grayColor];
+        [mainScrollView addSubview:qtmView];
+        
+        
+        tempTag = qtmView.tag;
+        
+        
+        
+        //    [qtmquitView addInfiniteScrollingWithActionHandler:^{
+        //        [self insertRowAtBottom];
+        //    }];
+        
+        
+    }
 }
 
 - (void)createTopView
 {
+//    UIScrollView *titleScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 1024, 500)];
+    
+    
     UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 5, 50, 30)];
     [backButton setTitle:@"返回" forState:UIControlStateNormal];
     [backButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -178,64 +200,64 @@
 #pragma mark
 #pragma methods for creating and removing the header view
 
--(void)createHeaderView{
+-(void)createHeaderView:(TMQuiltView *)qtmView{
     if (_refreshHeaderView && [_refreshHeaderView superview]) {
         [_refreshHeaderView removeFromSuperview];
     }
 	_refreshHeaderView = [[EGORefreshTableHeaderView alloc] initWithFrame:
-                          CGRectMake(0.0f, 0.0f - self.view.bounds.size.height,
-                                     qtmquitView.frame.size.width, self.view.bounds.size.height)];
+                          CGRectMake(0.0f, 0.0f - qtmView.bounds.size.height,
+                                     qtmView.frame.size.width, qtmView.bounds.size.height)];
     _refreshHeaderView.delegate = self;
     
-	[qtmquitView addSubview:_refreshHeaderView];
+	[qtmView addSubview:_refreshHeaderView];
     
     [_refreshHeaderView refreshLastUpdatedDate];
 }
 
--(void)testFinishedLoadData{
+-(void)testFinishedLoadData:(TMQuiltView *)qtmView{
 	
-    [self finishReloadingData];
-    [self setFooterView];
+    [self finishReloadingData:qtmView];
+    [self setFooterView:qtmView];
 }
 
 #pragma mark -
 #pragma mark method that should be called when the refreshing is finished
-- (void)finishReloadingData{
+- (void)finishReloadingData:(TMQuiltView *)qtmView{
 	
 	//  model should call this when its done loading
 	_reloading = NO;
     
 	if (_refreshHeaderView) {
-        [_refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:qtmquitView];
+        [_refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:qtmView];
     }
     
     if (_refreshFooterView) {
-        [_refreshFooterView egoRefreshScrollViewDataSourceDidFinishedLoading:qtmquitView];
-        [self setFooterView];
+        [_refreshFooterView egoRefreshScrollViewDataSourceDidFinishedLoading:qtmView];
+        [self setFooterView:qtmView];
     }
     
     // overide, the actula reloading tableView operation and reseting position operation is done in the subclass
 }
 
--(void)setFooterView{
+-(void)setFooterView:(TMQuiltView *)qtmView{
 	//    UIEdgeInsets test = self.aoView.contentInset;
     // if the footerView is nil, then create it, reset the position of the footer
-    CGFloat height = MAX(qtmquitView.contentSize.height, qtmquitView.frame.size.height);
+    CGFloat height = MAX(qtmView.contentSize.height, qtmView.frame.size.height);
     if (_refreshFooterView && [_refreshFooterView superview])
 	{
         // reset position
         _refreshFooterView.frame = CGRectMake(0.0f,
                                               height,
-                                              qtmquitView.frame.size.width,
-                                              self.view.bounds.size.height);
+                                              qtmView.frame.size.width,
+                                              qtmView.bounds.size.height);
     }else
 	{
         // create the footerView
         _refreshFooterView = [[EGORefreshTableFooterView alloc] initWithFrame:
                               CGRectMake(0.0f, height,
-                                         qtmquitView.frame.size.width, self.view.bounds.size.height)];
+                                         qtmView.frame.size.width, qtmView.bounds.size.height)];
         _refreshFooterView.delegate = self;
-        [qtmquitView addSubview:_refreshFooterView];
+        [qtmView addSubview:_refreshFooterView];
     }
     
     if (_refreshFooterView)
@@ -262,25 +284,26 @@
 	
 	//  should be calling your tableviews data source model to reload
 	_reloading = YES;
-    
+    TMQuiltView *qtmView = (TMQuiltView *)[mainScrollView viewWithTag:100];
     if (aRefreshPos == EGORefreshHeader)
 	{
         // pull down to refresh data
-        [self performSelector:@selector(refreshView) withObject:nil afterDelay:2.0];
+        
+        [self performSelector:@selector(refreshView:) withObject:qtmView afterDelay:2.0];
     }else if(aRefreshPos == EGORefreshFooter)
 	{
         // pull up to load more data
-        [self performSelector:@selector(getNextPageView) withObject:nil afterDelay:2.0];
+        [self performSelector:@selector(getNextPageView:) withObject:qtmView afterDelay:2.0];
     }
 	
 	// overide, the actual loading data operation is done in the subclass
 }
 
 //刷新调用的方法
--(void)refreshView
+-(void)refreshView:(TMQuiltView *)qtmView
 {
 	NSLog(@"刷新完成");
-    [self testFinishedLoadData];
+    [self testFinishedLoadData:qtmView];
 	
 }
 
@@ -309,31 +332,34 @@
 	
 }
 
-- (void)reloadImageData
+- (void)reloadImageData:(TMQuiltView *)qtView
 {
-    [qtmquitView reloadData];
+    [qtView reloadData];
     [self removeFooterView];
-    [self testFinishedLoadData];
+    [self testFinishedLoadData:qtView];
 }
 
-- (void)insertRowAtBottom
+- (void)insertRowAtBottom:(TMQuiltView *)qtView
 {
-    [self getNextPageView];
-    [self performSelector:@selector(reloadImageData) withObject:nil afterDelay:2.5];
+    [self getNextPageView:qtView];
+    [self performSelector:@selector(reloadImageData:) withObject:qtmquitView afterDelay:2.5];
     
 }
 
 //加载调用的方法
--(void)getNextPageView
+-(void)getNextPageView:(TMQuiltView *)qtView
 {
 //	for(int i = 0; i < 10; i++) {
 //		[_images addObject:[NSString stringWithFormat:@"%d.jpeg", i % 10 + 1]];
 //	}
 //    [qtmquitView.infiniteScrollingView stopAnimating];
+    if (qtView.tag != tempTag) {
+        [_images removeAllObjects];
+    }
     [_images addObjectsFromArray:imageArr];
-	[qtmquitView reloadData];
+	[qtView reloadData];
     [self removeFooterView];
-    [self testFinishedLoadData];
+    [self testFinishedLoadData:qtView];
    
 }
 
@@ -436,15 +462,17 @@
 #pragma mark UIScrollViewDelegate Methods
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-	if (_refreshHeaderView)
-	{
-        [_refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
-    }
-	
-	if (_refreshFooterView)
-	{
-        [_refreshFooterView egoRefreshScrollViewDidScroll:scrollView];
-    }
+
+        if (_refreshHeaderView)
+        {
+            [_refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
+        }
+
+        if (_refreshFooterView)
+        {
+            [_refreshFooterView egoRefreshScrollViewDidScroll:scrollView];
+        }
+    
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
