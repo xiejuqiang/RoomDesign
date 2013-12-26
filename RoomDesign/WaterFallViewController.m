@@ -79,11 +79,13 @@
 	// Do any additional setup after loading the view.
     [self createTopView];
     [self createScrollView];
-    TMQuiltView *qtmView = [(TMQuiltView *)[mainScrollView viewWithTag:101] retain];
+    TMQuiltView *qtmView = (TMQuiltView *)[mainScrollView viewWithTag:100];
     [self createHeaderView:qtmView];
     [self getNextPageView:qtmView];
     
-   
+    TMQuiltView *qtmView1 = (TMQuiltView *)[mainScrollView viewWithTag:101];
+    [self createHeaderView:qtmView1];
+    [self getNextPageView:qtmView1];
     
 }
 
