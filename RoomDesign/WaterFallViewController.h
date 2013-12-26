@@ -20,7 +20,8 @@
     //
     BOOL _reloading;
     
-    UIScrollView *mScrollView;
+    UIScrollView *mainScrollView;
+    int tempTag;
 }
 
 @property (nonatomic,assign) BOOL isForeign;
