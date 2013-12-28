@@ -83,9 +83,6 @@
     [self createHeaderView:qtmView];
     [self getNextPageView:qtmView];
     
-    TMQuiltView *qtmView1 = (TMQuiltView *)[mainScrollView viewWithTag:101];
-    [self createHeaderView:qtmView1];
-    [self getNextPageView:qtmView1];
     
 }
 
@@ -106,8 +103,10 @@
         //	qtmquitView.backgroundColor = [UIColor grayColor];
         [mainScrollView addSubview:qtmView];
         
+        if (i == 0) {
+            tempTag = qtmView.tag;
+        }
         
-        tempTag = qtmView.tag;
         
         
         
@@ -151,17 +150,17 @@
     //解析数据
     NSDictionary *dic = [dataArray objectAtIndex:0];
     
-    UILabel *cookLabel = [[UILabel alloc] initWithFrame:CGRectMake(90, lineLabel.top-30, 50, 30)];
+    cookLabel = [[UILabel alloc] initWithFrame:CGRectMake(90, lineLabel.top-30, 50, 30)];
     cookLabel.text = [dic objectForKey:@"cname"];
     cookLabel.textAlignment = NSTextAlignmentCenter;
     cookLabel.textColor = [UIColor blackColor];
     
-    UILabel *houseLabel = [[UILabel alloc] initWithFrame:CGRectMake(425+60, lineLabel.top-30, 50, 30)];
+    houseLabel = [[UILabel alloc] initWithFrame:CGRectMake(425+60, lineLabel.top-30, 50, 30)];
     houseLabel.text = [[dataArray objectAtIndex:1] objectForKey:@"cname"];
     houseLabel.textAlignment = NSTextAlignmentCenter;
     houseLabel.textColor = [UIColor blackColor];
     
-    UILabel *officeLabel = [[UILabel alloc] initWithFrame:CGRectMake(904-40, lineLabel.top-30, 50, 30)];
+    officeLabel = [[UILabel alloc] initWithFrame:CGRectMake(904-40, lineLabel.top-30, 50, 30)];
     officeLabel.right = 1024-90;
     officeLabel.text =[[dataArray objectAtIndex:2] objectForKey:@"cname"];
     officeLabel.textAlignment = NSTextAlignmentCenter;
@@ -282,11 +281,12 @@
 #pragma mark -
 #pragma mark data reloading methods that must be overide by the subclass
 
--(void)beginToReloadData:(EGORefreshPos)aRefreshPos{
+-(void)beginToReloadData:(EGORefreshPos)aRefreshPos qtmViewScrollView:(UIScrollView *)scrollView{
 	
 	//  should be calling your tableviews data source model to reload
 	_reloading = YES;
-    TMQuiltView *qtmView = (TMQuiltView *)[mainScrollView viewWithTag:100];
+    int flag = scrollView.tag;
+    TMQuiltView *qtmView = (TMQuiltView *)[mainScrollView viewWithTag:flag];
     if (aRefreshPos == EGORefreshHeader)
 	{
         // pull down to refresh data
@@ -312,10 +312,10 @@
 #pragma mark -
 #pragma mark EGORefreshTableDelegate Methods
 
-- (void)egoRefreshTableDidTriggerRefresh:(EGORefreshPos)aRefreshPos
+- (void)egoRefreshTableDidTriggerRefresh:(EGORefreshPos)aRefreshPos targetscrollView:(UIScrollView *)scrollView
 {
 	
-	[self beginToReloadData:aRefreshPos];
+	[self beginToReloadData:aRefreshPos qtmViewScrollView:scrollView];
 	
 }
 
@@ -357,6 +357,7 @@
 //    [qtmquitView.infiniteScrollingView stopAnimating];
     if (qtView.tag != tempTag) {
         [_images removeAllObjects];
+        tempTag = qtView.tag;
     }
     [_images addObjectsFromArray:imageArr];
 	[qtView reloadData];
@@ -369,23 +370,13 @@
 {
     if (!_images)
 	{
-//        NSMutableArray *imageNames = [NSMutableArray array];
-//        for(int i = 0; i < 10; i++) {
-//            [imageNames addObject:[NSString stringWithFormat:@"%d.jpeg", i % 10 + 1]];
-//        }
         _images = [[NSMutableArray alloc] initWithArray:imageArr];
-//        _images = [imageNames retain];
     }
     return _images;
 }
 
 - (UIImageView *)imageAtIndexPath:(NSIndexPath *)indexPath {
-//    EGOImageView *imgView = [[EGOImageView alloc] initWithPlaceholderImage:[UIImage imageNamed:@""]];
-//    imgView.imageURL = [[NSURL alloc] initWithString:[self.images objectAtIndex:indexPath.row]];
-//    NSLog(@"%f,%f",imgView.image.size.width,imgView.image.size.height);
-//    UIImage *img =  [imgView.image thumbWithWidth:imgView.image.size.width height:imgView.image.size.height];
-//    imgView.frame = CGRectMake(0, 0, img.size.width,img.size.height);
-//    NSLog(@"width==%f height==%f",img.size.width,img.size.height);
+    
     NSString *imagePath = [[NSString alloc] initWithFormat:@"%@",[self.images objectAtIndex:indexPath.row]];
     NSString* cachesDirectory = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     NSString *imagePath1 = [[[[cachesDirectory stringByAppendingPathComponent:[[NSProcessInfo processInfo] processName]] stringByAppendingPathComponent:@"EGOCache"] copy] stringByAppendingPathComponent:[NSString stringWithFormat:@"EGOImageLoader-%u", [[imagePath description] hash]]];
@@ -426,7 +417,6 @@
         cell.titleLabel.hidden = YES;
     }
     
-//    [cell layoutSubviewsFunction];
     return cell;
 }
 
@@ -465,6 +455,13 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
 
+    if (scrollView.tag == 1000)
+    {
+        
+    }
+    else
+    {
+
         if (_refreshHeaderView)
         {
             [_refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
@@ -474,18 +471,75 @@
         {
             [_refreshFooterView egoRefreshScrollViewDidScroll:scrollView];
         }
+    }
     
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
-	if (_refreshHeaderView)
-	{
-        [_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
+    if (scrollView.tag == 1000)
+    {
+        if (decelerate) {
+            
+        }
+        
+        
+    }
+    else{
+        if (_refreshHeaderView)
+        {
+            [_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView];
+        }
+        
+        if (_refreshFooterView)
+        {
+            [_refreshFooterView egoRefreshScrollViewDidEndDragging:scrollView];
+        }
     }
 	
-	if (_refreshFooterView)
-	{
-        [_refreshFooterView egoRefreshScrollViewDidEndDragging:scrollView];
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    if (scrollView.tag == 1000)
+    {
+        
+            int flag = scrollView.contentOffset.x/1024;
+            NSLog(@"%d",flag);
+        switch (flag) {
+            case 0:
+            {
+                cookLabel.text = [[dataArray objectAtIndex:0] objectForKey:@"cname"];
+                houseLabel.text = [[dataArray objectAtIndex:1] objectForKey:@"cname"];
+                officeLabel.text = [[dataArray objectAtIndex:2] objectForKey:@"cname"];
+            }
+                
+                break;
+                
+            case 1:
+            {
+                cookLabel.text = [[dataArray objectAtIndex:3] objectForKey:@"cname"];
+                houseLabel.text = @"";
+                officeLabel.text = [[dataArray objectAtIndex:4] objectForKey:@"cname"];
+            }
+                
+                break;
+            case 2:
+            {
+                cookLabel.text = [[dataArray objectAtIndex:5] objectForKey:@"cname"];
+                houseLabel.text = @"";
+                officeLabel.text = [[dataArray objectAtIndex:6] objectForKey:@"cname"];
+            }
+                
+                break;
+            default:
+                break;
+        }
+            TMQuiltView *qtmView = (TMQuiltView *)[mainScrollView viewWithTag:100+flag];
+            [self createHeaderView:qtmView];
+            [self getNextPageView:qtmView];
+        
+        
+        
     }
 }
 

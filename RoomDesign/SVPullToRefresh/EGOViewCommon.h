@@ -26,7 +26,7 @@ typedef enum{
 } EGORefreshPos;
 
 @protocol EGORefreshTableDelegate
-- (void)egoRefreshTableDidTriggerRefresh:(EGORefreshPos)aRefreshPos;
+- (void)egoRefreshTableDidTriggerRefresh:(EGORefreshPos)aRefreshPos targetscrollView:(UIScrollView *)scrollView;
 - (BOOL)egoRefreshTableDataSourceIsLoading:(UIView*)view;
 @optional
 - (NSDate*)egoRefreshTableDataSourceLastUpdated:(UIView*)view;

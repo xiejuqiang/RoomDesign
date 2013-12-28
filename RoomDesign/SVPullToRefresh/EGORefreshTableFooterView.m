@@ -220,8 +220,8 @@
 	
 	if (scrollView.contentOffset.y+(scrollView.frame.size.height) > scrollView.contentSize.height+REFRESH_REGION_HEIGHT  && !_loading) {
 		
-		if ([_delegate respondsToSelector:@selector(egoRefreshTableDidTriggerRefresh:)]) {
-			[_delegate egoRefreshTableDidTriggerRefresh:EGORefreshFooter];
+		if ([_delegate respondsToSelector:@selector(egoRefreshTableDidTriggerRefresh:targetscrollView:)]) {
+			[_delegate egoRefreshTableDidTriggerRefresh:EGORefreshFooter targetscrollView:scrollView];
 		}
 		
 		[self setState:EGOOPullRefreshLoading];

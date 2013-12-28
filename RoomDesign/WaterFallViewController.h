@@ -21,6 +21,9 @@
     BOOL _reloading;
     
     UIScrollView *mainScrollView;
+    UILabel *cookLabel;
+    UILabel *houseLabel;
+    UILabel *officeLabel;
     int tempTag;
 }
 
