@@ -31,8 +31,8 @@
     imageView.userInteractionEnabled = YES;
     [self.view addSubview:imageView];
     
-    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 5, 50, 30)];
-    [backButton setTitle:@"返回" forState:UIControlStateNormal];
+    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 33, 50, 50)];
+    [backButton setTitle:@"" forState:UIControlStateNormal];
     [backButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:backButton];

@@ -160,7 +160,7 @@
     houseLabel.textAlignment = NSTextAlignmentCenter;
     houseLabel.textColor = [UIColor blackColor];
     
-    officeLabel = [[UILabel alloc] initWithFrame:CGRectMake(904-40, lineLabel.top-30, 50, 30)];
+    officeLabel = [[UILabel alloc] initWithFrame:CGRectMake(904-40, lineLabel.top-30, 70, 30)];
     officeLabel.right = 1024-90;
     officeLabel.text =[[dataArray objectAtIndex:2] objectForKey:@"cname"];
     officeLabel.textAlignment = NSTextAlignmentCenter;
@@ -377,6 +377,9 @@
 
 - (UIImageView *)imageAtIndexPath:(NSIndexPath *)indexPath {
     
+    if (indexPath.row>[self.images count]-1) {
+        return nil;
+    }
     NSString *imagePath = [[NSString alloc] initWithFormat:@"%@",[self.images objectAtIndex:indexPath.row]];
     NSString* cachesDirectory = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     NSString *imagePath1 = [[[[cachesDirectory stringByAppendingPathComponent:[[NSProcessInfo processInfo] processName]] stringByAppendingPathComponent:@"EGOCache"] copy] stringByAppendingPathComponent:[NSString stringWithFormat:@"EGOImageLoader-%u", [[imagePath description] hash]]];
@@ -437,6 +440,7 @@
 - (CGFloat)quiltView:(TMQuiltView *)quiltView heightForCellAtIndexPath:(NSIndexPath *)indexPath
 {
 //    NSLog(@"%f",[self imageAtIndexPath:indexPath].size.height);
+    NSLog(@"Page:%d",indexPath.row);
     return [self imageAtIndexPath:indexPath].frame.size.height+40;
 }
 
