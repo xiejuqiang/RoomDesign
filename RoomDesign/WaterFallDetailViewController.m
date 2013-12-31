@@ -116,6 +116,7 @@
     leftScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(60, 120, 740, 600)];
     leftScrollView.tag = 100;
     leftScrollView.delegate = self;
+    leftScrollView.pagingEnabled = YES;
     [self.view addSubview:leftScrollView];
     
     rightScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(810, 120, 768-605, 600)];
@@ -196,6 +197,7 @@
     {
         int offsetY = scrollView.contentOffset.y/600;
         bgTileView.frame = CGRectMake(0, 162*offsetY, 163, 163);
+//        rightScrollView.contentOffset = CGPointMake(0, 162*offsetY);
         
     }
     else if (scrollView.tag == 200)

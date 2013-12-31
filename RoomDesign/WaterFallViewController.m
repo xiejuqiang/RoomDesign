@@ -35,38 +35,22 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-//        self.view.backgroundColor = [UIColor grayColor];
-        imageArr = [[NSArray alloc] initWithObjects:@"http://f.hiphotos.baidu.com/image/w%3D2048/sign=5492a2f38b13632715edc533a5b7a1ec/d8f9d72a6059252d9167232b359b033b5bb5b9a8.jpg",
-                    @"http://h.hiphotos.baidu.com/image/w%3D2048/sign=621e5d519358d109c4e3aeb2e560cdbf/b812c8fcc3cec3fd4349995ad788d43f879427ad.jpg",
-                    @"http://h.hiphotos.baidu.com/image/w%3D2048/sign=8710cb4c9e3df8dca63d8891f929708b/9f510fb30f2442a72eec381ed043ad4bd01302af.jpg",
-                    @"http://f.hiphotos.baidu.com/image/w%3D2048/sign=1438e3c3d01373f0f53f689f90374afb/8ad4b31c8701a18b42ad69f79f2f07082938fec0.jpg",
-                    @"http://b.hiphotos.baidu.com/image/w%3D2048/sign=8988a3c8faf2b211e42e824efeb86438/8435e5dde71190efef765764cf1b9d16fcfa60f8.jpg",
-                    @"http://a.hiphotos.baidu.com/image/w%3D2048/sign=272791418735e5dd902ca2df42fea6ef/810a19d8bc3eb1355b1fc6a8a41ea8d3fc1f44cc.jpg",
-                    @"http://c.hiphotos.baidu.com/image/w%3D2048/sign=1c77007b9152982205333ec3e3f27acb/11385343fbf2b211c947b9f2cb8065380cd78e24.jpg",
-                    @"http://d.hiphotos.baidu.com/image/w%3D2048/sign=47f36465f11f3a295ac8d2cead1dbd31/d0c8a786c9177f3eacae39b671cf3bc79e3d56f7.jpg",
-                    @"http://e.hiphotos.baidu.com/image/w%3D2048/sign=2b33c201a8ec8a13141a50e0c33b908f/500fd9f9d72a6059593207f42934349b033bba3a.jpg",
-                    @"http://g.hiphotos.baidu.com/image/w%3D2048/sign=2eea3a0b64380cd7e61ea5ed957cac34/a6efce1b9d16fdfa31c50355b58f8c5495ee7be4.jpg",
-                    @"http://d.hiphotos.baidu.com/image/w%3D2048/sign=47df0f578cb1cb133e693b13e96c574e/f9dcd100baa1cd1101fc1698b812c8fcc3ce2d3b.jpg",
-                    @"http://a.hiphotos.baidu.com/image/w%3D2048/sign=d986a654d01373f0f53f689f90374afb/8ad4b31c8701a18b8f132c609f2f07082838fe20.jpg",
-                    @"http://image.zcool.com.cn/4/51/1254197540187.jpg",
-                    @"http://image.zcool.com.cn/13/53/1254207528161.jpg",
-                    @"http://image.zcool.com.cn/33/27/1254195229836.jpg",
-                    @"http://image.zcool.com.cn/61/15/1254208808859.jpg",
-                    @"http://image.zcool.com.cn/17/27/1254197284816.jpg",
-                    @"http://image.zcool.com.cn/41/8/1254208151336.jpg",
-                    @"http://image.zcool.com.cn/35/14/1254197278957.jpg",
-                    @"http://image.zcool.com.cn/57/40/1254194821086.jpg",
-                    @"http://image.zcool.com.cn/23/54/m_1254197596189.jpg",nil];
-        
-//        imageArr = [[NSArray alloc] initWithObjects:@"http://image.zcool.com.cn/4/51/1254197540187.jpg",
-//                                                    @"http://image.zcool.com.cn/13/53/1254207528161.jpg",
-//                                                    @"http://image.zcool.com.cn/33/27/1254195229836.jpg",
-//                                                    @"http://image.zcool.com.cn/61/15/1254208808859.jpg",
-//                                                    @"http://image.zcool.com.cn/17/27/1254197284816.jpg",
-//                                                    @"http://image.zcool.com.cn/41/8/1254208151336.jpg",
-//                                                    @"http://image.zcool.com.cn/35/14/1254197278957.jpg",
-//                                                    @"http://image.zcool.com.cn/57/40/1254194821086.jpg",
-//                                                    @"http://image.zcool.com.cn/23/54/m_1254197596189.jpg",nil];
+        thirdTime = 2;
+        imageArr = [[NSArray alloc] initWithObjects:@"http://d.hiphotos.baidu.com/image/w%3D2048/sign=c839e1304936acaf59e091fc48e18c10/9825bc315c6034a85d091a88c9134954082376cb.jpg",
+                                                    @"http://e.hiphotos.baidu.com/image/w%3D2048/sign=5ac7acca3887e9504217f46c24005243/37d12f2eb9389b50a305435b8735e5dde6116ec5.jpg",
+                                                    @"http://c.hiphotos.baidu.com/image/w%3D2048/sign=7d423bfa7b310a55c424d9f4837d42a9/a8014c086e061d95800f963179f40ad162d9ca6a.jpg",
+                                                    @"http://d.hiphotos.baidu.com/image/w%3D2048/sign=8214425457fbb2fb342b5f127b7221a4/37d3d539b6003af3e17d9669372ac65c1138b6f0.jpg",
+                                                    @"http://d.hiphotos.baidu.com/image/w%3D2048/sign=599484b51c178a82ce3c78a0c23b728d/63d9f2d3572c11df725ec15a612762d0f703c238.jpg",
+                                                    @"http://h.hiphotos.baidu.com/image/w%3D2048/sign=64e12999f503918fd7d13aca65052797/242dd42a2834349b04fd10fccbea15ce37d3becb.jpg",
+                                                    @"http://f.hiphotos.baidu.com/image/w%3D2048/sign=7ae833780855b3199cf9857577918326/4d086e061d950a7bd72331bd08d162d9f2d3c9b1.jpg",
+                    @"http://g.hiphotos.baidu.com/image/w%3D2048/sign=b1cd9fb1a2ec08fa260014a76dd63c6d/2934349b033b5bb58f241bf034d3d539b700bcc8.jpg",
+                    @"http://b.hiphotos.baidu.com/image/w%3D2048/sign=436dd70dca95d143da76e32347c88302/dbb44aed2e738bd4b2d6893fa38b87d6267ff9cc.jpg",
+                    @"http://e.hiphotos.baidu.com/image/w%3D2048/sign=5148d1a32934349b74066985fdd214ce/2fdda3cc7cd98d10758c3c88203fb80e7bec902a.jpg",
+                    @"http://c.hiphotos.baidu.com/image/w%3D2048/sign=11b2f576f01fbe091c5ec4145f580d33/64380cd7912397ddcb3d52045b82b2b7d0a2876e.jpg",
+                    @"http://e.hiphotos.baidu.com/image/w%3D2048/sign=9f704512d60735fa91f049b9aa690eb3/f703738da977391287736268fa198618367ae266.jpg",
+                    @"http://d.hiphotos.baidu.com/image/w%3D2048/sign=65cc1e8e0d2442a7ae0efaa5e57bac4b/f9198618367adab4b1703f4e89d4b31c8701e41f.jpg",
+                    @"http://b.hiphotos.baidu.com/image/w%3D2048/sign=08f233a1f403738dde4a0b228723b151/a8ec8a13632762d046f0e8bea2ec08fa503dc6e1.jpg",
+                    @"http://e.hiphotos.baidu.com/image/w%3D2048/sign=8736bc2f9113b07ebdbd570838ef9023/e61190ef76c6a7efb2df9328fffaaf51f2de66c6.jpg",nil];
         
     }
     return self;
@@ -314,8 +298,13 @@
 
 - (void)egoRefreshTableDidTriggerRefresh:(EGORefreshPos)aRefreshPos targetscrollView:(UIScrollView *)scrollView
 {
-	
-	[self beginToReloadData:aRefreshPos qtmViewScrollView:scrollView];
+	if (scrollView.tag == 1000) {
+        
+    }
+    else
+    {
+        [self beginToReloadData:aRefreshPos qtmViewScrollView:scrollView];
+    }
 	
 }
 
@@ -538,9 +527,15 @@
             default:
                 break;
         }
+        if (thirdTime) {
             TMQuiltView *qtmView = (TMQuiltView *)[mainScrollView viewWithTag:100+flag];
             [self createHeaderView:qtmView];
             [self getNextPageView:qtmView];
+//            if (thirdTime == flag) {
+//                thirdTime = 0;
+//            }
+        }
+            
         
         
         

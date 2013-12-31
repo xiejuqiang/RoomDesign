@@ -25,6 +25,7 @@
     UILabel *houseLabel;
     UILabel *officeLabel;
     int tempTag;
+    int thirdTime;//三次的加载机会
 }
 
 @property (nonatomic,assign) BOOL isForeign;
