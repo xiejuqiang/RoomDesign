@@ -14,6 +14,10 @@
 #import "UrlStr.h"
 #import "JsonParser.h"
 #import "GetObj.h"
+#import "CollectViewController.h"
+#import "RecordDao.h"
+
+
 
 @interface WaterFallDetailViewController ()
 {
@@ -27,6 +31,7 @@
 @implementation WaterFallDetailViewController
 @synthesize urlArray;
 @synthesize offset_H;
+@synthesize isForeign;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -35,6 +40,10 @@
         // Custom initialization
         urlStr = [[UrlStr alloc] init];
         jsonParser = [[JsonParser alloc] init];
+        
+        //数据库
+        recordDB = [[RecordDao alloc]init];
+        [recordDB createDB:DATABASE_NAME];
     }
     return self;
 }
@@ -102,6 +111,18 @@
     officeLabel.textAlignment = NSTextAlignmentCenter;
     officeLabel.textColor = [UIColor blackColor];
     
+    if (isForeign) {
+        titleLabel1.text = @"Design";
+        titleLabel2.text = @"Assistant";
+        cookLabel.text = @"Smartness";
+        houseLabel.text = @"European";
+        officeLabel.text = @"Rural";
+        
+        titleLabel1.frame = CGRectMake(445, 30, 60, 30);
+        imgView.frame = CGRectMake(titleLabel1.right-10, 10, 50, 50);
+        titleLabel2.frame = CGRectMake(titleLabel1.right-10+40, 30, 70, 30);
+    }
+    
     [self.view addSubview:titleLabel1];
     [self.view addSubview:titleLabel2];
     [self.view addSubview:cookLabel];
@@ -167,6 +188,17 @@
     [backButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:backButton];
+    
+    UIButton *collectButton = [[UIButton alloc] initWithFrame:CGRectMake(1024-65, 5, 60, 30)];
+    [collectButton setTitle:@"收藏" forState:UIControlStateNormal];
+    [collectButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [collectButton addTarget:self action:@selector(collectItem:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:collectButton];
+    
+    if (isForeign) {
+        [backButton setTitle:@"back" forState:UIControlStateNormal];
+        [collectButton setTitle:@"collect" forState:UIControlStateNormal];
+    }
 }
 
 //点击图片移动背景
@@ -175,6 +207,18 @@
     int tag = recongnizer.view.tag-100;
     bgTileView.frame = CGRectMake(0, 162*tag, 163, 163);
     leftScrollView.contentOffset = CGPointMake(0, 600*tag);
+}
+
+//收藏点击事件
+- (void)collectItem:(UIButton *)btn
+{
+    
+    NSArray *collectClosArray = [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"%d",offset_H], [urlArray objectAtIndex:offset_H],nil];
+    [recordDB insertAtTable:COLLECT_TABLENAME Clos:collectClosArray];
+    NSArray *resultItem = [recordDB resultSet:COLLECT_TABLENAME Order:nil LimitCount:nil];
+    CollectViewController *collectVC = [[CollectViewController alloc] init];
+    collectVC.imageArr = resultItem;
+    [self.navigationController pushViewController:collectVC animated:YES];
 }
 
 - (void)back
@@ -204,6 +248,11 @@
     {
         
     }
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    return (interfaceOrientation == UIInterfaceOrientationLandscapeLeft || interfaceOrientation == UIInterfaceOrientationLandscapeRight);
 }
 
 @end

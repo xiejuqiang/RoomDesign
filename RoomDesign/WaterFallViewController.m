@@ -151,17 +151,19 @@
     officeLabel.textColor = [UIColor blackColor];
     if (isForeign == YES) {
         titleLabel1.text = @"Design";
-        titleLabel2.text = @"assistant";
-        cookLabel.text = @"food and beverage";
-        houseLabel.text = @"household";
-        officeLabel.text = @"office";
+        titleLabel2.text = @"Assistant";
+        cookLabel.text = @"Office";
+        houseLabel.text = @"Household";
+        officeLabel.text = @"Recreation";
+        
+        [backButton setTitle:@"back" forState:UIControlStateNormal];
         
         
         titleLabel1.frame = CGRectMake(445, 30, 60, 30);
         imgView.frame = CGRectMake(titleLabel1.right-10, 10, 50, 50);
         titleLabel2.frame = CGRectMake(titleLabel1.right-10+40, 30, 70, 30);
-        cookLabel.frame = CGRectMake(90, lineLabel.top-30, 150, 30);
-        houseLabel.frame = CGRectMake(425+60, lineLabel.top-30, 80, 30);
+        houseLabel.frame = CGRectMake(425+60, lineLabel.top-30, 100, 30);
+        officeLabel.frame = CGRectMake(lineLabel.right -100, lineLabel.top -30, 100, 30);
         
     }
     
@@ -439,6 +441,7 @@
     WaterFallDetailViewController *waterFallDetailVC = [[WaterFallDetailViewController alloc] init];
     waterFallDetailVC.offset_H = indexPath.row;
     waterFallDetailVC.urlArray = imageArr;
+    waterFallDetailVC.isForeign = self.isForeign;
     
     [self.navigationController pushViewController:waterFallDetailVC animated:YES];
 }
@@ -504,6 +507,11 @@
                 cookLabel.text = [[dataArray objectAtIndex:0] objectForKey:@"cname"];
                 houseLabel.text = [[dataArray objectAtIndex:1] objectForKey:@"cname"];
                 officeLabel.text = [[dataArray objectAtIndex:2] objectForKey:@"cname"];
+                if (isForeign) {
+                    cookLabel.text = @"Office";
+                    houseLabel.text = @"Household";
+                    officeLabel.text = @"Recreation";
+                }
             }
                 
                 break;
@@ -513,6 +521,11 @@
                 cookLabel.text = [[dataArray objectAtIndex:3] objectForKey:@"cname"];
                 houseLabel.text = @"";
                 officeLabel.text = [[dataArray objectAtIndex:4] objectForKey:@"cname"];
+                if (isForeign) {
+                    cookLabel.text = @"Retail";
+                    houseLabel.text = @"";
+                    officeLabel.text = @"Hotel";
+                }
             }
                 
                 break;
@@ -521,6 +534,11 @@
                 cookLabel.text = [[dataArray objectAtIndex:5] objectForKey:@"cname"];
                 houseLabel.text = @"";
                 officeLabel.text = [[dataArray objectAtIndex:6] objectForKey:@"cname"];
+                if (isForeign) {
+                    cookLabel.text = @"Food";
+                    houseLabel.text = @"";
+                    officeLabel.text = @"Treatment";
+                }
             }
                 
                 break;
