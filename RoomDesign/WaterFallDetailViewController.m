@@ -215,7 +215,7 @@
     
     NSArray *collectClosArray = [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"%d",offset_H], [urlArray objectAtIndex:offset_H],nil];
     [recordDB insertAtTable:COLLECT_TABLENAME Clos:collectClosArray];
-    NSArray *resultItem = [recordDB resultSet:COLLECT_TABLENAME Order:nil LimitCount:nil];
+    NSArray *resultItem = [recordDB resultSet:COLLECT_TABLENAME Order:nil LimitCount:0];
     CollectViewController *collectVC = [[CollectViewController alloc] init];
     collectVC.imageArr = resultItem;
     [self.navigationController pushViewController:collectVC animated:YES];

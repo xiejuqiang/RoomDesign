@@ -12,6 +12,8 @@
 #import "AboutViewController.h"
 #import "UrlStr.h"
 #import "JsonParser.h"
+#import "CollectViewController.h"
+#import "RecordDao.h"
 
 @interface HomePageViewController ()
 
@@ -28,6 +30,9 @@
         urlStr = [[UrlStr alloc] init];
         jsonParser = [[JsonParser alloc] init];
         resultDataArray = [[NSArray alloc] init];
+        //数据库
+        recordDB = [[RecordDao alloc]init];
+        [recordDB createDB:DATABASE_NAME];
     }
     return self;
 }
@@ -106,6 +111,12 @@
     [aboutButton addTarget:self action:@selector(aboutTap) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:aboutButton];
     
+    UIButton *collectButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 30)];
+    collectButton.bottom = 768-10;
+    collectButton.right = 1024-15;
+    [collectButton addTarget:self action:@selector(collectTap) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:collectButton];
+    
     [self getData];
     
 }
@@ -128,6 +139,15 @@
 {
     AboutViewController *aboutVC = [[AboutViewController alloc] init];
     [self.navigationController pushViewController:aboutVC animated:YES];
+}
+
+- (void)collectTap
+{
+    NSArray *resultItem = [recordDB resultSet:COLLECT_TABLENAME Order:nil LimitCount:0];
+    CollectViewController *collectVC = [[CollectViewController alloc] init];
+    collectVC.imageArr = resultItem;
+    [self.navigationController pushViewController:collectVC animated:YES];
+    
 }
 
 - (void)didReceiveMemoryWarning

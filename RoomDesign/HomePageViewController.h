@@ -10,11 +10,13 @@
 #import "MBProgressHUD.h"
 @class JsonParser;
 @class UrlStr;
+@class RecordDao;
 @interface HomePageViewController : UIViewController<MBProgressHUDDelegate>
 {
     JsonParser *jsonParser;
     UrlStr *urlStr;
     MBProgressHUD *HUD;
+    RecordDao *recordDB;
     NSArray *resultDataArray;
 }
 
