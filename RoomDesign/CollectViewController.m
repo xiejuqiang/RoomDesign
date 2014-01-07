@@ -14,6 +14,7 @@
 #import "UIImage+thumUIImage.h"
 #import "UIView+UIViewEx.h"
 #import "CollectDBItem.h"
+#import "WaterFallDetailViewController.h"
 
 @interface CollectViewController ()<TMQuiltViewDataSource,TMQuiltViewDelegate>
 {
@@ -40,14 +41,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    [self createTopView];
     UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 5, 50, 30)];
     [backButton setTitle:@"返回" forState:UIControlStateNormal];
     [backButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:backButton];
     
-    qtmquitView = [[TMQuiltView alloc] initWithFrame:CGRectMake(0, 40, 1024, 768-40)];
+    qtmquitView = [[TMQuiltView alloc] initWithFrame:CGRectMake(0, 100, 1024, 768-40)];
     qtmquitView.delegate = self;
     qtmquitView.dataSource = self;
     [self.view addSubview:qtmquitView];
@@ -55,6 +56,21 @@
     [self getNextPageView];
     [self createHeaderView];
 	// Do any additional setup after loading the view.
+}
+
+- (void)createTopView
+{
+    UILabel *lineLabel = [[UILabel alloc] initWithFrame:CGRectMake(60, 90, 1024-120, 2)];
+    lineLabel.backgroundColor = [UIColor blackColor];
+    [self.view addSubview:lineLabel];
+    
+    UILabel *collectName = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, 30)];
+    collectName.bottom = 90-2;
+    collectName.left = (1024-50)/2.0;
+    collectName.text = @"收藏";
+    collectName.textColor = [UIColor blackColor];
+    collectName.textAlignment = NSTextAlignmentCenter;
+    [self.view addSubview:collectName];
 }
 
 - (void)back
@@ -286,6 +302,12 @@
 - (void)quiltView:(TMQuiltView *)quiltView didSelectCellAtIndexPath:(NSIndexPath *)indexPath
 {
 	NSLog(@"index:%d",indexPath.row);
+    CollectDBItem *item = [self.images objectAtIndex:indexPath.row];
+    NSString *catID = item.catid;
+    WaterFallDetailViewController *waterFallDetailVC = [[WaterFallDetailViewController alloc] init];
+    waterFallDetailVC.offset_H = [catID intValue];
+    waterFallDetailVC.urlArray = imageArr;
+    [self.navigationController pushViewController:waterFallDetailVC animated:YES];
 }
 
 #pragma mark -

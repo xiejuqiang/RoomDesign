@@ -76,9 +76,9 @@
     mainScrollView.pagingEnabled = YES;
     mainScrollView.delegate = self;
     mainScrollView.tag = 1000;
-    mainScrollView.contentSize = CGSizeMake(1024*3, 668);
+    mainScrollView.contentSize = CGSizeMake(1024*[dataArray count], 668);
     [self.view addSubview:mainScrollView];
-    for (int i = 0; i<3; i++) {
+    for (int i = 0; i<[dataArray count]; i++) {
       TMQuiltView  *qtmView = [[TMQuiltView alloc] initWithFrame:CGRectMake(60+1024*i, 0, 1024-120, 768-100)];
         qtmView.delegate = self;
         qtmView.dataSource = self;
