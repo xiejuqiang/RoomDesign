@@ -48,7 +48,7 @@
     [backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:backButton];
     
-    qtmquitView = [[TMQuiltView alloc] initWithFrame:CGRectMake(0, 100, 1024, 768-40)];
+    qtmquitView = [[TMQuiltView alloc] initWithFrame:CGRectMake(60, 100, 1024-120, 768-100)];
     qtmquitView.delegate = self;
     qtmquitView.dataSource = self;
     [self.view addSubview:qtmquitView];

@@ -21,9 +21,11 @@
     BOOL _reloading;
     
     UIScrollView *mainScrollView;
+    UIScrollView *titleScrollView;
     UILabel *cookLabel;
     UILabel *houseLabel;
     UILabel *officeLabel;
+    UILabel *flagLine;
     int tempTag;
     int thirdTime;//三次的加载机会
 }

@@ -104,8 +104,6 @@
 
 - (void)createTopView
 {
-//    UIScrollView *titleScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 1024, 500)];
-    
     
     UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 5, 50, 30)];
     [backButton setTitle:@"返回" forState:UIControlStateNormal];
@@ -131,30 +129,36 @@
     lineLabel.backgroundColor = [UIColor blackColor];
     [self.view addSubview:lineLabel];
     
-    //解析数据
-    NSDictionary *dic = [dataArray objectAtIndex:0];
+    NSArray *englishName = [[NSArray alloc] initWithObjects:@"Office",@"Household",@"Recreation",@"Retail",@"Hotel",@"Food",@"Treatment", nil];
     
-    cookLabel = [[UILabel alloc] initWithFrame:CGRectMake(90, lineLabel.top-30, 50, 30)];
-    cookLabel.text = [dic objectForKey:@"cname"];
-    cookLabel.textAlignment = NSTextAlignmentCenter;
-    cookLabel.textColor = [UIColor blackColor];
+    titleScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(60, lineLabel.top-33, 1024-120, 33)];
+    titleScrollView.delegate = self;
+    titleScrollView.tag = 2000;
+    titleScrollView.scrollEnabled = NO;
+    [self.view addSubview:titleScrollView];
+    titleScrollView.contentSize = CGSizeMake(904*3, 33);
     
-    houseLabel = [[UILabel alloc] initWithFrame:CGRectMake(425+60, lineLabel.top-30, 50, 30)];
-    houseLabel.text = [[dataArray objectAtIndex:1] objectForKey:@"cname"];
-    houseLabel.textAlignment = NSTextAlignmentCenter;
-    houseLabel.textColor = [UIColor blackColor];
+    flagLine = [[UILabel alloc] initWithFrame:CGRectMake(15, titleScrollView.top-30, 100, 3)];
+    flagLine.backgroundColor = [UIColor redColor];
+    [titleScrollView addSubview:flagLine];
     
-    officeLabel = [[UILabel alloc] initWithFrame:CGRectMake(904-40, lineLabel.top-30, 70, 30)];
-    officeLabel.right = 1024-90;
-    officeLabel.text =[[dataArray objectAtIndex:2] objectForKey:@"cname"];
-    officeLabel.textAlignment = NSTextAlignmentCenter;
-    officeLabel.textColor = [UIColor blackColor];
+    for (int i = 0; i<[dataArray count]; i++) {
+        cookLabel = [[UILabel alloc] initWithFrame:CGRectMake(30+i*331, 0, 70, 30)];
+        cookLabel.text = [[dataArray objectAtIndex:i] objectForKey:@"cname"];
+        cookLabel.textAlignment = NSTextAlignmentCenter;
+        cookLabel.textColor = [UIColor blackColor];
+        cookLabel.backgroundColor = [UIColor clearColor];
+        [titleScrollView addSubview:cookLabel];
+        if (isForeign) {
+            cookLabel.frame = CGRectMake(30+i*331, 0, 90, 30);
+            flagLine.frame = CGRectMake(20, titleScrollView.top-30, 100, 3);
+            cookLabel.text = [englishName objectAtIndex:i];
+        }
+    }
+    
     if (isForeign == YES) {
         titleLabel1.text = @"Design";
         titleLabel2.text = @"Assistant";
-        cookLabel.text = @"Office";
-        houseLabel.text = @"Household";
-        officeLabel.text = @"Recreation";
         
         [backButton setTitle:@"back" forState:UIControlStateNormal];
         
@@ -169,9 +173,6 @@
     
     [self.view addSubview:titleLabel1];
     [self.view addSubview:titleLabel2];
-    [self.view addSubview:cookLabel];
-    [self.view addSubview:houseLabel];
-    [self.view addSubview:officeLabel];
     [self.view addSubview:imgView];
     
 }
@@ -455,6 +456,10 @@
     {
         
     }
+    else if (scrollView.tag = 2000)
+    {
+        
+    }
     else
     {
 
@@ -480,6 +485,10 @@
         
         
     }
+    else if (scrollView.tag = 2000)
+    {
+        
+    }
     else{
         if (_refreshHeaderView)
         {
@@ -499,52 +508,15 @@
     if (scrollView.tag == 1000)
     {
         
-            int flag = scrollView.contentOffset.x/1024;
-            NSLog(@"%d",flag);
-        switch (flag) {
-            case 0:
-            {
-                cookLabel.text = [[dataArray objectAtIndex:0] objectForKey:@"cname"];
-                houseLabel.text = [[dataArray objectAtIndex:1] objectForKey:@"cname"];
-                officeLabel.text = [[dataArray objectAtIndex:2] objectForKey:@"cname"];
-                if (isForeign) {
-                    cookLabel.text = @"Office";
-                    houseLabel.text = @"Household";
-                    officeLabel.text = @"Recreation";
-                }
+        int flag = scrollView.contentOffset.x/1024;
+        [UIView animateWithDuration:0.5 animations:^{
+            titleScrollView.contentOffset = CGPointMake(flag*331, 0);
+            flagLine.left = 15+331*flag;
+            if (isForeign) {
+                flagLine.left = 20+flag*331;
             }
-                
-                break;
-                
-            case 1:
-            {
-                cookLabel.text = [[dataArray objectAtIndex:3] objectForKey:@"cname"];
-                houseLabel.text = @"";
-                officeLabel.text = [[dataArray objectAtIndex:4] objectForKey:@"cname"];
-                if (isForeign) {
-                    cookLabel.text = @"Retail";
-                    houseLabel.text = @"";
-                    officeLabel.text = @"Hotel";
-                }
-            }
-                
-                break;
-            case 2:
-            {
-                cookLabel.text = [[dataArray objectAtIndex:5] objectForKey:@"cname"];
-                houseLabel.text = @"";
-                officeLabel.text = [[dataArray objectAtIndex:6] objectForKey:@"cname"];
-                if (isForeign) {
-                    cookLabel.text = @"Food";
-                    houseLabel.text = @"";
-                    officeLabel.text = @"Treatment";
-                }
-            }
-                
-                break;
-            default:
-                break;
-        }
+        }];
+        
         if (thirdTime) {
             TMQuiltView *qtmView = (TMQuiltView *)[mainScrollView viewWithTag:100+flag];
             [self createHeaderView:qtmView];
