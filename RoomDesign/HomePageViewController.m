@@ -14,6 +14,7 @@
 #import "JsonParser.h"
 #import "CollectViewController.h"
 #import "RecordDao.h"
+//#import "PSCollectionView.h"
 
 @interface HomePageViewController ()
 
@@ -119,6 +120,38 @@
     
     [self getData];
     
+//    collectionView = [[PSCollectionView alloc] initWithFrame:CGRectZero];
+//    collectionView.delegate = self; // This is for UIScrollViewDelegate
+//    collectionView.collectionViewDelegate = self;
+//    collectionView.collectionViewDataSource = self;
+//    collectionView.backgroundColor = [UIColor clearColor];
+//    collectionView.autoresizingMask = ~UIViewAutoresizingNone;
+//    collectionView.numColsLandscape = 4;
+//    [collectionView reloadData];
+
+}
+
+#pragma mark -
+#pragma mark PS Delegate and DataSource
+
+- (Class)collectionView:(PSCollectionView *)collectionView cellClassForRowAtIndex:(NSInteger)index {
+    return [PSCollectionViewCell class];
+}
+
+- (NSInteger)numberOfRowsInCollectionView:(PSCollectionView *)collectionView {
+    return 1;
+}
+
+
+- (CGFloat)collectionView:(PSCollectionView *)collectionView heightForRowAtIndex:(NSInteger)index {
+    return 100.0;
+}
+
+- (PSCollectionViewCell *)collectionView:(PSCollectionView *)collectionView cellForRowAtIndex:(NSInteger)index
+{
+    PSCollectionViewCell *cell = [[PSCollectionViewCell alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
+    cell.backgroundColor = [UIColor redColor];
+    return cell;
 }
 
 - (void)buttonTap:(UIButton *)btn

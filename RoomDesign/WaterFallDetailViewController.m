@@ -96,27 +96,27 @@
     lineLabel.backgroundColor = [UIColor blackColor];
     [self.view addSubview:lineLabel];
     
-    UILabel *cookLabel = [[UILabel alloc] initWithFrame:CGRectMake(90, lineLabel.top-30, 90, 30)];
-    cookLabel.text = @"现代风格";
-    cookLabel.textAlignment = NSTextAlignmentCenter;
-    cookLabel.textColor = [UIColor blackColor];
-    
-    UILabel *houseLabel = [[UILabel alloc] initWithFrame:CGRectMake(425+60, lineLabel.top-30, 90, 30)];
-    houseLabel.text = @"欧式风格";
-    houseLabel.textAlignment = NSTextAlignmentCenter;
-    houseLabel.textColor = [UIColor blackColor];
-    
-    UILabel *officeLabel = [[UILabel alloc] initWithFrame:CGRectMake(904-90, lineLabel.top-30, 90, 30)];
-    officeLabel.text = @"田园风格";
-    officeLabel.textAlignment = NSTextAlignmentCenter;
-    officeLabel.textColor = [UIColor blackColor];
+//    UILabel *cookLabel = [[UILabel alloc] initWithFrame:CGRectMake(90, lineLabel.top-30, 90, 30)];
+//    cookLabel.text = @"现代风格";
+//    cookLabel.textAlignment = NSTextAlignmentCenter;
+//    cookLabel.textColor = [UIColor blackColor];
+//    
+//    UILabel *houseLabel = [[UILabel alloc] initWithFrame:CGRectMake(425+60, lineLabel.top-30, 90, 30)];
+//    houseLabel.text = @"欧式风格";
+//    houseLabel.textAlignment = NSTextAlignmentCenter;
+//    houseLabel.textColor = [UIColor blackColor];
+//    
+//    UILabel *officeLabel = [[UILabel alloc] initWithFrame:CGRectMake(904-90, lineLabel.top-30, 90, 30)];
+//    officeLabel.text = @"田园风格";
+//    officeLabel.textAlignment = NSTextAlignmentCenter;
+//    officeLabel.textColor = [UIColor blackColor];
     
     if (isForeign) {
         titleLabel1.text = @"Design";
         titleLabel2.text = @"Assistant";
-        cookLabel.text = @"Smartness";
-        houseLabel.text = @"European";
-        officeLabel.text = @"Rural";
+//        cookLabel.text = @"Smartness";
+//        houseLabel.text = @"European";
+//        officeLabel.text = @"Rural";
         
         titleLabel1.frame = CGRectMake(445, 30, 60, 30);
         imgView.frame = CGRectMake(titleLabel1.right-10, 10, 50, 50);
@@ -125,9 +125,9 @@
     
     [self.view addSubview:titleLabel1];
     [self.view addSubview:titleLabel2];
-    [self.view addSubview:cookLabel];
-    [self.view addSubview:houseLabel];
-    [self.view addSubview:officeLabel];
+//    [self.view addSubview:cookLabel];
+//    [self.view addSubview:houseLabel];
+//    [self.view addSubview:officeLabel];
     [self.view addSubview:imgView];
     
 }

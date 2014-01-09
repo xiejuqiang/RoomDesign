@@ -22,9 +22,7 @@
     
     UIScrollView *mainScrollView;
     UIScrollView *titleScrollView;
-    UILabel *cookLabel;
-    UILabel *houseLabel;
-    UILabel *officeLabel;
+    UIButton *cookLabel;
     UILabel *flagLine;
     int tempTag;
     int thirdTime;//三次的加载机会

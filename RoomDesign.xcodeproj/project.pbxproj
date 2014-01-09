@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		180021D7187E420F008D3B7D /* PSCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 180021D4187E420F008D3B7D /* PSCollectionView.m */; };
+		180021D8187E420F008D3B7D /* PSCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 180021D6187E420F008D3B7D /* PSCollectionViewCell.m */; };
 		182710FE1834B79A00FBD6EA /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 182710FD1834B79A00FBD6EA /* UIKit.framework */; };
 		182711001834B79A00FBD6EA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 182710FF1834B79A00FBD6EA /* Foundation.framework */; };
 		182711021834B79A00FBD6EA /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 182711011834B79A00FBD6EA /* CoreGraphics.framework */; };
@@ -71,6 +73,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		180021D3187E420F008D3B7D /* PSCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSCollectionView.h; sourceTree = "<group>"; };
+		180021D4187E420F008D3B7D /* PSCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSCollectionView.m; sourceTree = "<group>"; };
+		180021D5187E420F008D3B7D /* PSCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSCollectionViewCell.h; sourceTree = "<group>"; };
+		180021D6187E420F008D3B7D /* PSCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSCollectionViewCell.m; sourceTree = "<group>"; };
 		182710F91834B79A00FBD6EA /* RoomDesign.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RoomDesign.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		182710FD1834B79A00FBD6EA /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		182710FF1834B79A00FBD6EA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -188,6 +194,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		180021D2187E41E7008D3B7D /* WaterFall */ = {
+			isa = PBXGroup;
+			children = (
+				180021D3187E420F008D3B7D /* PSCollectionView.h */,
+				180021D4187E420F008D3B7D /* PSCollectionView.m */,
+				180021D5187E420F008D3B7D /* PSCollectionViewCell.h */,
+				180021D6187E420F008D3B7D /* PSCollectionViewCell.m */,
+			);
+			name = WaterFall;
+			sourceTree = "<group>";
+		};
 		182710EE1834B79A00FBD6EA = {
 			isa = PBXGroup;
 			children = (
@@ -298,6 +315,7 @@
 		1875031D183F049900FAF311 /* RoomDesign */ = {
 			isa = PBXGroup;
 			children = (
+				180021D2187E41E7008D3B7D /* WaterFall */,
 				183191C61876AD59008FB076 /* DB */,
 				183191BA1876AC4A008FB076 /* FMDB */,
 				18603EE518530189004519C4 /* img */,
@@ -528,6 +546,8 @@
 				183191CA1876AD6A008FB076 /* DB.m in Sources */,
 				183191CD1876AD80008FB076 /* RecordDao.m in Sources */,
 				183191D01876B5F9008FB076 /* CollectDBItem.m in Sources */,
+				180021D7187E420F008D3B7D /* PSCollectionView.m in Sources */,
+				180021D8187E420F008D3B7D /* PSCollectionViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -608,8 +628,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "60306AA5-3C94-4143-BECC-C729F8733372";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "60306AA5-3C94-4143-BECC-C729F8733372";
+				PROVISIONING_PROFILE = "D3B73029-259B-42F6-9F56-8F92770A38FF";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "D3B73029-259B-42F6-9F56-8F92770A38FF";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -627,8 +647,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "60306AA5-3C94-4143-BECC-C729F8733372";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "60306AA5-3C94-4143-BECC-C729F8733372";
+				PROVISIONING_PROFILE = "D3B73029-259B-42F6-9F56-8F92770A38FF";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "D3B73029-259B-42F6-9F56-8F92770A38FF";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -63,7 +63,7 @@
 	// Do any additional setup after loading the view.
     [self createTopView];
     [self createScrollView];
-    TMQuiltView *qtmView = (TMQuiltView *)[mainScrollView viewWithTag:100];
+    TMQuiltView *qtmView = (TMQuiltView *)[mainScrollView viewWithTag:101];
     [self createHeaderView:qtmView];
     [self getNextPageView:qtmView];
     
@@ -77,6 +77,7 @@
     mainScrollView.delegate = self;
     mainScrollView.tag = 1000;
     mainScrollView.contentSize = CGSizeMake(1024*[dataArray count], 668);
+    mainScrollView.contentOffset = CGPointMake(1024, 0);
     [self.view addSubview:mainScrollView];
     for (int i = 0; i<[dataArray count]; i++) {
       TMQuiltView  *qtmView = [[TMQuiltView alloc] initWithFrame:CGRectMake(60+1024*i, 0, 1024-120, 768-100)];
@@ -135,24 +136,30 @@
     titleScrollView.delegate = self;
     titleScrollView.tag = 2000;
     titleScrollView.scrollEnabled = NO;
+    titleScrollView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:titleScrollView];
     titleScrollView.contentSize = CGSizeMake(904*3, 33);
-    
-    flagLine = [[UILabel alloc] initWithFrame:CGRectMake(15, titleScrollView.top-30, 100, 3)];
-    flagLine.backgroundColor = [UIColor redColor];
-    [titleScrollView addSubview:flagLine];
+    titleScrollView.contentOffset = CGPointMake(331, 0);
+    flagLine = [[UILabel alloc] initWithFrame:CGRectMake(15+311+75, titleScrollView.top+30, 100, 3)];
+    flagLine.backgroundColor = [UIColor blackColor];
+    [self.view addSubview:flagLine];
     
     for (int i = 0; i<[dataArray count]; i++) {
-        cookLabel = [[UILabel alloc] initWithFrame:CGRectMake(30+i*331, 0, 70, 30)];
-        cookLabel.text = [[dataArray objectAtIndex:i] objectForKey:@"cname"];
-        cookLabel.textAlignment = NSTextAlignmentCenter;
-        cookLabel.textColor = [UIColor blackColor];
+//        cookLabel = [[UILabel alloc] initWithFrame:CGRectMake(30+(i+1)*331, 0, 70, 30)];
+//        cookLabel.text = [[dataArray objectAtIndex:i] objectForKey:@"cname"];
+//        cookLabel.textAlignment = NSTextAlignmentCenter;
+//        cookLabel.textColor = [UIColor blackColor];
+        cookLabel = [[UIButton alloc] initWithFrame:CGRectMake(30+(i+1)*331, 0, 70, 30)];
+        [cookLabel setTitle:[[dataArray objectAtIndex:i] objectForKey:@"cname"] forState:UIControlStateNormal];
+        [cookLabel setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         cookLabel.backgroundColor = [UIColor clearColor];
+        cookLabel.titleLabel.font = [UIFont systemFontOfSize:15];
         [titleScrollView addSubview:cookLabel];
         if (isForeign) {
-            cookLabel.frame = CGRectMake(30+i*331, 0, 90, 30);
-            flagLine.frame = CGRectMake(20, titleScrollView.top-30, 100, 3);
-            cookLabel.text = [englishName objectAtIndex:i];
+            cookLabel.frame = CGRectMake(30+(i+1)*331, 0, 90, 30);
+            flagLine.frame = CGRectMake(20+311+80, titleScrollView.top+30, 100, 3);
+//            cookLabel.text = [englishName objectAtIndex:i];
+            [cookLabel setTitle:[englishName objectAtIndex:i] forState:UIControlStateNormal];
         }
     }
     
@@ -166,8 +173,8 @@
         titleLabel1.frame = CGRectMake(445, 30, 60, 30);
         imgView.frame = CGRectMake(titleLabel1.right-10, 10, 50, 50);
         titleLabel2.frame = CGRectMake(titleLabel1.right-10+40, 30, 70, 30);
-        houseLabel.frame = CGRectMake(425+60, lineLabel.top-30, 100, 30);
-        officeLabel.frame = CGRectMake(lineLabel.right -100, lineLabel.top -30, 100, 30);
+//        houseLabel.frame = CGRectMake(425+60, lineLabel.top-30, 100, 30);
+//        officeLabel.frame = CGRectMake(lineLabel.right -100, lineLabel.top -30, 100, 30);
         
     }
     
@@ -456,7 +463,7 @@
     {
         
     }
-    else if (scrollView.tag = 2000)
+    else if (scrollView.tag == 2000)
     {
         
     }
@@ -485,7 +492,7 @@
         
         
     }
-    else if (scrollView.tag = 2000)
+    else if (scrollView.tag == 2000)
     {
         
     }
@@ -511,10 +518,6 @@
         int flag = scrollView.contentOffset.x/1024;
         [UIView animateWithDuration:0.5 animations:^{
             titleScrollView.contentOffset = CGPointMake(flag*331, 0);
-            flagLine.left = 15+331*flag;
-            if (isForeign) {
-                flagLine.left = 20+flag*331;
-            }
         }];
         
         if (thirdTime) {
