@@ -153,7 +153,7 @@
         [cookLabel setTitle:[[dataArray objectAtIndex:i] objectForKey:@"cname"] forState:UIControlStateNormal];
         [cookLabel setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         cookLabel.backgroundColor = [UIColor clearColor];
-        cookLabel.titleLabel.font = [UIFont systemFontOfSize:15];
+        cookLabel.titleLabel.font = [UIFont systemFontOfSize:16];
         [titleScrollView addSubview:cookLabel];
         if (isForeign) {
             cookLabel.frame = CGRectMake(30+(i+1)*331, 0, 90, 30);
