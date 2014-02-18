@@ -16,6 +16,9 @@
 #import "WaterFallDetailViewController.h"
 #import "UIImage+thumUIImage.h"
 #import "UIView+UIViewEx.h"
+#import "UrlStr.h"
+#import "JsonParser.h"
+#import "GetObj.h"
 
 @interface WaterFallViewController ()<TMQuiltViewDataSource,TMQuiltViewDelegate>
 {
@@ -35,7 +38,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        thirdTime = 2;
+        thirdTime = 1;
         imageArr = [[NSArray alloc] initWithObjects:@"http://d.hiphotos.baidu.com/image/w%3D2048/sign=c839e1304936acaf59e091fc48e18c10/9825bc315c6034a85d091a88c9134954082376cb.jpg",
                                                     @"http://e.hiphotos.baidu.com/image/w%3D2048/sign=5ac7acca3887e9504217f46c24005243/37d12f2eb9389b50a305435b8735e5dde6116ec5.jpg",
                                                     @"http://c.hiphotos.baidu.com/image/w%3D2048/sign=7d423bfa7b310a55c424d9f4837d42a9/a8014c086e061d95800f963179f40ad162d9ca6a.jpg",
@@ -61,13 +64,93 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    [self initData];
     [self createTopView];
     [self createScrollView];
-    TMQuiltView *qtmView = (TMQuiltView *)[mainScrollView viewWithTag:101];
+    [self getData:2];
+    
+    
+}
+
+- (void)initData
+{
+    pageNum = 0;
+    urlStr = [[UrlStr alloc] init];
+    jsonParser = [[JsonParser alloc] init];
+    HUD = [[MBProgressHUD alloc] init];
+    _images = [[NSMutableArray alloc] init];
+}
+
+- (void)getData:(int)catid
+{
+    [self showWithLoding];
+    if (tempTag == catid+99) {
+        pageNum++;
+    }
+    else
+    {
+        pageNum = 1;
+        if ([_images count]>0) {
+                [_images removeAllObjects];
+            }
+    }
+    GetObj *getObj = [[GetObj alloc] init];
+    getObj.catID = [NSString stringWithFormat:@"%d",catid];
+    getObj.page = [NSString stringWithFormat:@"%d",pageNum];;
+    
+    tempTag = 99+catid;
+    NSString *productListURL = [urlStr returnURL:2 Obj: getObj];
+    [jsonParser parse:productListURL withDelegate:self onComplete:@selector(onConnectionSuccess:) onErrorComplete:@selector(onConnectionError) onNullComplete:@selector(onConnectionNull)];
+}
+
+- (void)onConnectionSuccess:(JsonParser *)jsonP
+{
+//    if ([_images count]>0) {
+//        [_images removeAllObjects];
+//    }
+    NSDictionary *resultDicData = [jsonP getItems];
+    NSArray *productsData = [[NSArray alloc] initWithArray:[resultDicData objectForKey:@"productLists"]];
+    [_images addObjectsFromArray:productsData];
+    
+    
+    TMQuiltView *qtmView = (TMQuiltView *)[mainScrollView viewWithTag:tempTag];
     [self createHeaderView:qtmView];
     [self getNextPageView:qtmView];
     
-    
+    [HUD hide:YES];
+}
+
+- (void)onConnectionError
+{
+    [self showWithTime:@"网络出错！"];
+
+}
+
+- (void)onConnectionNull
+{
+    [self showWithTime:@"暂无内容"];
+}
+
+#pragma mark showHud
+
+- (void)showWithTime:(NSString *)lable
+{
+    [self.view addSubview:HUD];
+    HUD.delegate = self;
+    HUD.labelText = lable;
+    [HUD showWhileExecutingT:@selector(myTask) onTarget:self withObject:nil animated:YES];
+}
+
+- (void)showWithLoding
+{
+    [self.view addSubview:HUD];
+    HUD.delegate = self;
+    HUD.labelText = @"加载中...";
+    [HUD showWhileExecuting:@selector(myTask) onTarget:self withObject:nil animated:YES];
+}
+- (void)myTask {
+	// Do something usefull in here instead of sleeping ...
+    //	sleep(1);
 }
 
 - (void)createScrollView
@@ -88,7 +171,7 @@
         //	qtmquitView.backgroundColor = [UIColor grayColor];
         [mainScrollView addSubview:qtmView];
         
-        if (i == 0) {
+        if (i == 1) {
             tempTag = qtmView.tag;
         }
         
@@ -289,7 +372,7 @@
     }else if(aRefreshPos == EGORefreshFooter)
 	{
         // pull up to load more data
-        [self performSelector:@selector(getNextPageView:) withObject:qtmView afterDelay:2.0];
+        [self performSelector:@selector(addMorePage:) withObject:qtmView afterDelay:2.0];
     }
 	
 	// overide, the actual loading data operation is done in the subclass
@@ -347,6 +430,15 @@
     
 }
 
+//翻页调用方法
+- (void)addMorePage:(TMQuiltView *)qtView
+{
+    if (qtView.tag == tempTag) {
+        
+        return [self getData:qtView.tag-99];
+    }
+}
+
 //加载调用的方法
 -(void)getNextPageView:(TMQuiltView *)qtView
 {
@@ -354,25 +446,22 @@
 //		[_images addObject:[NSString stringWithFormat:@"%d.jpeg", i % 10 + 1]];
 //	}
 //    [qtmquitView.infiniteScrollingView stopAnimating];
-    if (qtView.tag != tempTag) {
-        [_images removeAllObjects];
-        tempTag = qtView.tag;
-    }
-    [_images addObjectsFromArray:imageArr];
+    
+//    [_images addObjectsFromArray:imageArr];
 	[qtView reloadData];
     [self removeFooterView];
     [self testFinishedLoadData:qtView];
    
 }
 
-- (NSMutableArray *)images
-{
-    if (!_images)
-	{
-        _images = [[NSMutableArray alloc] initWithArray:imageArr];
-    }
-    return _images;
-}
+//- (NSMutableArray *)images
+//{
+//    if (!_images)
+//	{
+//        _images = [[NSMutableArray alloc] initWithArray:imageArr];
+//    }
+//    return _images;
+//}
 
 - (UIImageView *)imageAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -406,13 +495,17 @@
     }
     
 //    cell.photoView.image = [self imageAtIndexPath:indexPath];
-    NSString *strImg = [self.images objectAtIndex:indexPath.row];
+    NSDictionary *proDic = [self.images objectAtIndex:indexPath.row];
+    NSString *strImg = [proDic objectForKey:@"image1"];
+    NSString *titleName = [proDic objectForKey:@"sdesc"];
     NSURL *url = [[NSURL alloc ] initWithString:strImg];
     cell.photoView.imageURL = url;
     if ([quiltView heightForCellAtIndexPath:indexPath]>50)
     {
         cell.titleLabel.hidden = NO;
-        cell.titleLabel.text = [NSString stringWithFormat:@"%d", indexPath.row];
+        cell.titleLabel.text = titleName;
+        cell.titleLabel.textColor = [UIColor blackColor];
+        cell.titleLabel.backgroundColor = [UIColor colorWithRed:200/255.0 green:200/255.0 blue:200/255.0 alpha:1];
     }
     else
     {
@@ -440,7 +533,15 @@
 {
 //    NSLog(@"%f",[self imageAtIndexPath:indexPath].size.height);
     NSLog(@"Page:%d",indexPath.row);
-    return [self imageAtIndexPath:indexPath].frame.size.height+40;
+    if (indexPath.row>[self.images count]-1 || [self.images count] == 0) {
+        return 0.0;
+    }
+    NSDictionary *proDic = [self.images objectAtIndex:indexPath.row];
+    NSString *cellHeight = [proDic objectForKey:@"unit2"];
+    if ([cellHeight floatValue]<350) {
+        return [cellHeight floatValue]/1.5;
+    }
+    return [cellHeight floatValue]/3.0;
 }
 
 - (void)quiltView:(TMQuiltView *)quiltView didSelectCellAtIndexPath:(NSIndexPath *)indexPath
@@ -461,7 +562,8 @@
 
     if (scrollView.tag == 1000)
     {
-        
+        float flag = scrollView.contentOffset.x/1024.0;
+        titleScrollView.contentOffset = CGPointMake(flag*331, 0);
     }
     else if (scrollView.tag == 2000)
     {
@@ -516,19 +618,13 @@
     {
         
         int flag = scrollView.contentOffset.x/1024;
-        [UIView animateWithDuration:0.5 animations:^{
-            titleScrollView.contentOffset = CGPointMake(flag*331, 0);
-        }];
         
-        if (thirdTime) {
-            TMQuiltView *qtmView = (TMQuiltView *)[mainScrollView viewWithTag:100+flag];
-            [self createHeaderView:qtmView];
-            [self getNextPageView:qtmView];
-//            if (thirdTime == flag) {
-//                thirdTime = 0;
-//            }
+        if (thirdTime!=flag) {
+           
+            [self getData:flag+1];
+            thirdTime = flag;
         }
-            
+        
         
         
         

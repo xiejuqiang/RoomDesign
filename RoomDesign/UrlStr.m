@@ -24,7 +24,7 @@
             break;
             
         case 2:
-            returnStr = [[NSString alloc]initWithFormat:@"%@app/index.php?m=Mobileapi&a=searchproduct&cat_id=%@",Default_url,obj.catID];
+            returnStr = [[NSString alloc]initWithFormat:@"%@app/index.php?m=Mobileapi&a=searchproduct&cat_id=%@&p=%@",Default_url,obj.catID,obj.page];
             NSLog(@"获取产品展示接口:%@",returnStr);
             return returnStr;
             break;

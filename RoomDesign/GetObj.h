@@ -11,5 +11,6 @@
 @interface GetObj : NSObject
 
 @property (nonatomic,retain)NSString *catID;
+@property (nonatomic,retain)NSString *page;
 
 @end

@@ -10,5 +10,6 @@
 
 @implementation GetObj
 @synthesize catID;
+@synthesize page;
 
 @end

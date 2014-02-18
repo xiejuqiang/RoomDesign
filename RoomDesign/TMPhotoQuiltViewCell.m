@@ -47,9 +47,10 @@ const CGFloat kTMPhotoQuiltViewMargin = 1;
 
 - (EGOImageView *)photoView {
     if (!_photoView) {
-        _photoView = [[EGOImageView alloc] initWithPlaceholderImage:[UIImage imageNamed:@"8.jpeg"]];
+        _photoView = [[EGOImageView alloc] initWithPlaceholderImage:[UIImage imageNamed:@""]];
         _photoView.contentMode = UIViewContentModeScaleAspectFill;
         _photoView.clipsToBounds = YES;
+        _photoView.backgroundColor = [UIColor grayColor];
         [self addSubview:_photoView];
     }
     return _photoView;
@@ -61,14 +62,17 @@ const CGFloat kTMPhotoQuiltViewMargin = 1;
         _titleLabel.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
         _titleLabel.textColor = [UIColor whiteColor];
         _titleLabel.textAlignment = NSTextAlignmentCenter;
+        _titleLabel.numberOfLines = 2;
+        _titleLabel.font = [UIFont systemFontOfSize:14.0];
         [self addSubview:_titleLabel];
     }
     return _titleLabel;
 }
     
 - (void)layoutSubviews{
-    NSLog(@"%f,%f",self.bounds.size.width,self.bounds.size.height);
-    NSLog(@"%f,%f",self.bounds.origin.x,self.bounds.origin.y);
+
+//    NSLog(@"%f,%f",self.bounds.size.width,self.bounds.size.height);
+//    NSLog(@"%f,%f",self.bounds.origin.x,self.bounds.origin.y);
     self.photoView.frame = CGRectInset(CGRectMake(0, 0,
                                                   self.bounds.size.width, self.bounds.size.height-40), kTMPhotoQuiltViewMargin, kTMPhotoQuiltViewMargin);
     self.titleLabel.frame = CGRectMake(kTMPhotoQuiltViewMargin, self.bounds.size.height-40,

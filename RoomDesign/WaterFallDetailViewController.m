@@ -134,19 +134,19 @@
 
 - (void)createView
 {
-    leftScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(60, 120, 740, 600)];
+    leftScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(60, 120, 720, 600)];
     leftScrollView.tag = 100;
     leftScrollView.delegate = self;
     leftScrollView.pagingEnabled = YES;
     [self.view addSubview:leftScrollView];
     
-    rightScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(810, 120, 768-605, 600)];
+    rightScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(790, 120, 768-585, 600)];
     rightScrollView.tag = 200;
     rightScrollView.delegate = self;
     [self.view addSubview:rightScrollView];
     
-    bgTileView = [[UIView alloc] initWithFrame:CGRectMake(0, 162*offset_H, 163, 163)];
-    bgTileView.backgroundColor = [UIColor redColor];
+    bgTileView = [[UIView alloc] initWithFrame:CGRectMake(0, 183*offset_H, 183, 183)];
+    bgTileView.backgroundColor = [UIColor grayColor];
     [rightScrollView addSubview:bgTileView];
     
     int offsetH = 0;
@@ -159,7 +159,7 @@
         //        NSLog(@"%u",[[imagePath description] hash]);
         EGOImageView *imageView = [[EGOImageView alloc] init];
         imageView.userInteractionEnabled = YES;
-        imageView.frame = CGRectMake(1, 1+162*i, 161, 161);
+        imageView.frame = CGRectMake(5+10, 15+(162+5)*i, 161-8, 161-8);
         imageView.imageURL = [[NSURL alloc] initWithString:[[productsData objectAtIndex:i] objectForKey:@"image1"]];
         imageView.contentMode = UIViewContentModeScaleToFill;
         imageView.backgroundColor = [UIColor whiteColor];
@@ -168,7 +168,7 @@
         
         EGOImageView *imageViewBig = [[EGOImageView alloc] init];
         imageViewBig.userInteractionEnabled = YES;
-        imageViewBig.frame = CGRectMake(0, 600*i, 740, 600);
+        imageViewBig.frame = CGRectMake(0, 600*i, 720, 600);
         imageViewBig.imageURL = [[NSURL alloc] initWithString:[[productsData objectAtIndex:i] objectForKey:@"image2"]];
         imageViewBig.contentMode = UIViewContentModeScaleToFill;
         [leftScrollView addSubview:imageViewBig];
@@ -179,9 +179,9 @@
         tap.view.tag = 100+i;
         
     }
-    rightScrollView.contentSize = CGSizeMake(161, offsetH+161);
+    rightScrollView.contentSize = CGSizeMake(183, offsetH+161);
     rightScrollView.contentOffset = CGPointMake(0, 162*offset_H);
-    leftScrollView.contentSize = CGSizeMake(740, left_offsetH+600);
+    leftScrollView.contentSize = CGSizeMake(720, left_offsetH+600);
     leftScrollView.contentOffset = CGPointMake(0, 600*offset_H);
     UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 5, 50, 30)];
     [backButton setTitle:@"返回" forState:UIControlStateNormal];
@@ -205,7 +205,7 @@
 - (void)tapBg:(UITapGestureRecognizer *)recongnizer
 {
     int tag = recongnizer.view.tag-100;
-    bgTileView.frame = CGRectMake(0, 162*tag, 163, 163);
+    bgTileView.frame = CGRectMake(0, 183*tag, 183, 183);
     leftScrollView.contentOffset = CGPointMake(0, 600*tag);
 }
 
@@ -240,7 +240,7 @@
     if (scrollView.tag == 100)
     {
         int offsetY = scrollView.contentOffset.y/600;
-        bgTileView.frame = CGRectMake(0, 162*offsetY, 163, 163);
+        bgTileView.frame = CGRectMake(0, 183*offsetY, 183, 183);
 //        rightScrollView.contentOffset = CGPointMake(0, 162*offsetY);
         
     }

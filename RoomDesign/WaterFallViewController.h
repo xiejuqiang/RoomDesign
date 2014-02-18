@@ -10,8 +10,11 @@
 
 #import "EGORefreshTableHeaderView.h"
 #import "EGORefreshTableFooterView.h"
-
-@interface WaterFallViewController : UIViewController<EGORefreshTableDelegate>
+#import "MBProgressHUD.h"
+@class UrlStr;
+@class JsonParser;
+@class MBProgressHUD;
+@interface WaterFallViewController : UIViewController<EGORefreshTableDelegate,MBProgressHUDDelegate>
 {
     //EGOHeader
     EGORefreshTableHeaderView *_refreshHeaderView;
@@ -20,12 +23,17 @@
     //
     BOOL _reloading;
     
+    UrlStr *urlStr;
+    JsonParser *jsonParser;
+    MBProgressHUD *HUD;
+    
     UIScrollView *mainScrollView;
     UIScrollView *titleScrollView;
     UIButton *cookLabel;
     UILabel *flagLine;
     int tempTag;
     int thirdTime;//三次的加载机会
+    int pageNum;
 }
 
 @property (nonatomic,assign) BOOL isForeign;
