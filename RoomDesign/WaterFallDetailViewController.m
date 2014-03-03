@@ -32,6 +32,7 @@
 @synthesize urlArray;
 @synthesize offset_H;
 @synthesize isForeign;
+@synthesize cat_id = _cat_id;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -51,7 +52,8 @@
 - (void)getData
 {
     GetObj *getObj = [[GetObj alloc] init];
-    getObj.catID = @"2";
+    getObj.catID = [NSString stringWithFormat:@"%d",_cat_id];
+    getObj.page = @"1";
     NSString *productListURL = [urlStr returnURL:2 Obj: getObj];
     [jsonParser parse:productListURL withDelegate:self onComplete:@selector(onConnectionSuccess:) onErrorComplete:@selector(onConnectionError) onNullComplete:@selector(onConnectionNull)];
 }
@@ -60,7 +62,7 @@
 {
     NSDictionary *resultDicData = [jsonP getItems];
     productsData = [[NSArray alloc] initWithArray:[resultDicData objectForKey:@"productLists"]];
-    [self createView];
+    [self createView:offset_H];
 }
 
 - (void)viewDidLoad
@@ -130,9 +132,25 @@
 //    [self.view addSubview:officeLabel];
     [self.view addSubview:imgView];
     
+    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 10, 50, 30)];
+    [backButton setTitle:@"返回" forState:UIControlStateNormal];
+    [backButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:backButton];
+    
+    UIButton *collectButton = [[UIButton alloc] initWithFrame:CGRectMake(1024-65, 10, 60, 30)];
+    [collectButton setTitle:@"收藏" forState:UIControlStateNormal];
+    [collectButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [collectButton addTarget:self action:@selector(collectItem:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:collectButton];
+    
+    if (isForeign) {
+        [backButton setTitle:@"back" forState:UIControlStateNormal];
+        [collectButton setTitle:@"collect" forState:UIControlStateNormal];
+    }
 }
 
-- (void)createView
+- (void)createView:(int)nId
 {
     leftScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(60, 120, 720, 600)];
     leftScrollView.tag = 100;
@@ -145,7 +163,7 @@
     rightScrollView.delegate = self;
     [self.view addSubview:rightScrollView];
     
-    bgTileView = [[UIView alloc] initWithFrame:CGRectMake(0, 183*offset_H, 183, 183)];
+    bgTileView = [[UIView alloc] initWithFrame:CGRectMake(0, 166.5*offset_H, 183, 180)];
     bgTileView.backgroundColor = [UIColor grayColor];
     [rightScrollView addSubview:bgTileView];
     
@@ -159,54 +177,73 @@
         //        NSLog(@"%u",[[imagePath description] hash]);
         EGOImageView *imageView = [[EGOImageView alloc] init];
         imageView.userInteractionEnabled = YES;
-        imageView.frame = CGRectMake(5+10, 15+(162+5)*i, 161-8, 161-8);
+        imageView.frame = CGRectMake(5+10, 13.5+(162+4.5)*i, 161-8, 161-8);
         imageView.imageURL = [[NSURL alloc] initWithString:[[productsData objectAtIndex:i] objectForKey:@"image1"]];
         imageView.contentMode = UIViewContentModeScaleToFill;
         imageView.backgroundColor = [UIColor whiteColor];
         [rightScrollView addSubview:imageView];
         offsetH = imageView.frame.origin.y;
-        
-        EGOImageView *imageViewBig = [[EGOImageView alloc] init];
-        imageViewBig.userInteractionEnabled = YES;
-        imageViewBig.frame = CGRectMake(0, 600*i, 720, 600);
-        imageViewBig.imageURL = [[NSURL alloc] initWithString:[[productsData objectAtIndex:i] objectForKey:@"image2"]];
-        imageViewBig.contentMode = UIViewContentModeScaleToFill;
-        [leftScrollView addSubview:imageViewBig];
-        left_offsetH = imageViewBig.frame.origin.y;
-        
+
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapBg:)];
         [imageView addGestureRecognizer:tap];
         tap.view.tag = 100+i;
         
     }
-    rightScrollView.contentSize = CGSizeMake(183, offsetH+161);
-    rightScrollView.contentOffset = CGPointMake(0, 162*offset_H);
-    leftScrollView.contentSize = CGSizeMake(720, left_offsetH+600);
-    leftScrollView.contentOffset = CGPointMake(0, 600*offset_H);
-    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 5, 50, 30)];
-    [backButton setTitle:@"返回" forState:UIControlStateNormal];
-    [backButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:backButton];
     
-    UIButton *collectButton = [[UIButton alloc] initWithFrame:CGRectMake(1024-65, 5, 60, 30)];
-    [collectButton setTitle:@"收藏" forState:UIControlStateNormal];
-    [collectButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [collectButton addTarget:self action:@selector(collectItem:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:collectButton];
+    NSArray *imagesArray = [[productsData objectAtIndex:offset_H] objectForKey:@"image_array"];
     
-    if (isForeign) {
-        [backButton setTitle:@"back" forState:UIControlStateNormal];
-        [collectButton setTitle:@"collect" forState:UIControlStateNormal];
+    for (int j = 0; j <[imagesArray count]; j++) {
+        imageViewBig = [[EGOImageView alloc] init];
+        imageViewBig.userInteractionEnabled = YES;
+        imageViewBig.clipsToBounds = YES;
+        imageViewBig.contentMode = UIViewContentModeScaleAspectFill;
+        imageViewBig.frame = CGRectMake(0, 600*j, 720, 600);
+        if ([[imagesArray objectAtIndex:j] isEqualToString:@""]==NO) {
+            imageViewBig.imageURL = [[NSURL alloc] initWithString:[imagesArray objectAtIndex:j]];
+        }
+        
+        imageViewBig.contentMode = UIViewContentModeScaleToFill;
+        [leftScrollView addSubview:imageViewBig];
+        left_offsetH = imageViewBig.frame.origin.y;
     }
+    
+    rightScrollView.contentSize = CGSizeMake(183, offsetH+161);
+    if ([productsData count]<4) {
+        rightScrollView.contentOffset = CGPointMake(0, 0);
+    }
+    else
+    {
+        rightScrollView.contentOffset = CGPointMake(0, 162*offset_H);
+    }
+    
+    leftScrollView.contentSize = CGSizeMake(720, left_offsetH+600);
+    leftScrollView.contentOffset = CGPointMake(0, 0);
+    
 }
 
 //点击图片移动背景
 - (void)tapBg:(UITapGestureRecognizer *)recongnizer
 {
     int tag = recongnizer.view.tag-100;
-    bgTileView.frame = CGRectMake(0, 183*tag, 183, 183);
-    leftScrollView.contentOffset = CGPointMake(0, 600*tag);
+    int left_offsetH = 0;
+    [leftScrollView removeAllSubviews];
+    bgTileView.frame = CGRectMake(0, 166.5*tag, 183, 180);
+    NSArray *imagesArray = [[productsData objectAtIndex:tag] objectForKey:@"image_array"];
+    for (int i = 0; i<[imagesArray count]; i++) {
+        imageViewBig = [[EGOImageView alloc] init];
+        imageViewBig.userInteractionEnabled = YES;
+        imageViewBig.clipsToBounds = YES;
+        imageViewBig.contentMode = UIViewContentModeScaleAspectFill;
+        imageViewBig.frame = CGRectMake(0, 600*i, 720, 600);
+        if ([[imagesArray objectAtIndex:i] isEqualToString:@""]==NO) {
+            imageViewBig.imageURL = [[NSURL alloc] initWithString:[imagesArray objectAtIndex:i]];
+        }
+        
+        imageViewBig.contentMode = UIViewContentModeScaleToFill;
+        [leftScrollView addSubview:imageViewBig];
+        left_offsetH = imageViewBig.frame.origin.y;
+    }
+    leftScrollView.contentSize = CGSizeMake(720, left_offsetH+600);
 }
 
 //收藏点击事件
@@ -239,8 +276,8 @@
     
     if (scrollView.tag == 100)
     {
-        int offsetY = scrollView.contentOffset.y/600;
-        bgTileView.frame = CGRectMake(0, 183*offsetY, 183, 183);
+//        int offsetY = scrollView.contentOffset.y/600;
+//        bgTileView.frame = CGRectMake(0, 166.5*offsetY, 183, 180);
 //        rightScrollView.contentOffset = CGPointMake(0, 162*offsetY);
         
     }

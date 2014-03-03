@@ -31,9 +31,12 @@
     UIScrollView *titleScrollView;
     UIButton *cookLabel;
     UILabel *flagLine;
+    NSString *totalPage;
+    NSMutableArray *img_str_array;
     int tempTag;
     int thirdTime;//三次的加载机会
     int pageNum;
+    int cat_id;
 }
 
 @property (nonatomic,assign) BOOL isForeign;

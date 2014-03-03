@@ -616,16 +616,16 @@
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_OBJCPP_ARC_ABI = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: JIANFENG LIU (VGA7G3UC83)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: JIANFENG LIU (VGA7G3UC83)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Medp Studio";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Medp Studio";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RoomDesign/RoomDesign-Prefix.pch";
 				INFOPLIST_FILE = "RoomDesign/RoomDesign-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "D3B73029-259B-42F6-9F56-8F92770A38FF";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "D3B73029-259B-42F6-9F56-8F92770A38FF";
+				PROVISIONING_PROFILE = "5CEDE68A-D72F-4512-8490-8630ED542C11";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "5CEDE68A-D72F-4512-8490-8630ED542C11";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -635,16 +635,16 @@
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_OBJCPP_ARC_ABI = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: JIANFENG LIU (VGA7G3UC83)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: JIANFENG LIU (VGA7G3UC83)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Medp Studio";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Medp Studio";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RoomDesign/RoomDesign-Prefix.pch";
 				INFOPLIST_FILE = "RoomDesign/RoomDesign-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "D3B73029-259B-42F6-9F56-8F92770A38FF";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "D3B73029-259B-42F6-9F56-8F92770A38FF";
+				PROVISIONING_PROFILE = "5CEDE68A-D72F-4512-8490-8630ED542C11";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "5CEDE68A-D72F-4512-8490-8630ED542C11";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
