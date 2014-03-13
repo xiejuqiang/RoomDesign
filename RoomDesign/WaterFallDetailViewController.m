@@ -16,7 +16,8 @@
 #import "GetObj.h"
 #import "CollectViewController.h"
 #import "RecordDao.h"
-
+#import <AssetsLibrary/AssetsLibrary.h>
+#import "CollectDBItem.h"
 
 
 @interface WaterFallDetailViewController ()
@@ -250,12 +251,31 @@
 - (void)collectItem:(UIButton *)btn
 {
     
+   
+
+    
     NSArray *collectClosArray = [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"%d",offset_H], [urlArray objectAtIndex:offset_H],nil];
     [recordDB insertAtTable:COLLECT_TABLENAME Clos:collectClosArray];
     NSArray *resultItem = [recordDB resultSet:COLLECT_TABLENAME Order:nil LimitCount:0];
     CollectViewController *collectVC = [[CollectViewController alloc] init];
     collectVC.imageArr = resultItem;
     [self.navigationController pushViewController:collectVC animated:YES];
+    CollectDBItem *item = [resultItem objectAtIndex:0];
+    NSString *imagePath =item.thumb;
+    NSString* cachesDirectory = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString *imagePath1 = [[[[cachesDirectory stringByAppendingPathComponent:[[NSProcessInfo processInfo] processName]] stringByAppendingPathComponent:@"EGOCache"] copy] stringByAppendingPathComponent:[NSString stringWithFormat:@"EGOImageLoader-%u", [[imagePath description] hash]]];
+    UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageWithContentsOfFile:imagePath1]];
+    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+    
+    [library writeImageToSavedPhotosAlbum:[imgView.image CGImage] orientation:(ALAssetOrientation)[imgView.image imageOrientation] completionBlock:^(NSURL *assetURL, NSError *error){
+        if (error) {
+            // TODO: error handling
+        } else {
+            // TODO: success handling
+            NSLog(@"SUCCESS");
+        }
+    }];
+    
 }
 
 - (void)back

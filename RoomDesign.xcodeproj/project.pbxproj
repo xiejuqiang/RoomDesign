@@ -37,6 +37,8 @@
 		1866E910185C1E1100032DD1 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1866E90F185C1E1100032DD1 /* AboutViewController.m */; };
 		1866E914185C1ED600032DD1 /* home_about.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1866E912185C1ED600032DD1 /* home_about.jpg */; };
 		1866E915185C1ED600032DD1 /* home_about@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1866E913185C1ED600032DD1 /* home_about@2x.jpg */; };
+		186E2D4A18C9C8FA003CF105 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 186E2D4918C9C8FA003CF105 /* AVFoundation.framework */; };
+		186E2D4C18C9D09D003CF105 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 186E2D4B18C9D09D003CF105 /* AssetsLibrary.framework */; };
 		18750358183F049900FAF311 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1875031F183F049900FAF311 /* AppDelegate.m */; };
 		18750359183F049900FAF311 /* blackArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 18750320183F049900FAF311 /* blackArrow.png */; };
 		1875035A183F049900FAF311 /* blackArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18750321183F049900FAF311 /* blackArrow@2x.png */; };
@@ -122,6 +124,8 @@
 		1866E90F185C1E1100032DD1 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
 		1866E912185C1ED600032DD1 /* home_about.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = home_about.jpg; sourceTree = "<group>"; };
 		1866E913185C1ED600032DD1 /* home_about@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "home_about@2x.jpg"; sourceTree = "<group>"; };
+		186E2D4918C9C8FA003CF105 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		186E2D4B18C9D09D003CF105 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		1875031E183F049900FAF311 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1875031F183F049900FAF311 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		18750320183F049900FAF311 /* blackArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blackArrow.png; sourceTree = "<group>"; };
@@ -180,6 +184,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				186E2D4C18C9D09D003CF105 /* AssetsLibrary.framework in Frameworks */,
+				186E2D4A18C9C8FA003CF105 /* AVFoundation.framework in Frameworks */,
 				183191C51876ACA5008FB076 /* libsqlite3.0.dylib in Frameworks */,
 				1875037F183F3FD700FAF311 /* CoreText.framework in Frameworks */,
 				182711621834BBD900FBD6EA /* QuartzCore.framework in Frameworks */,
@@ -229,6 +235,8 @@
 		182710FC1834B79A00FBD6EA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				186E2D4B18C9D09D003CF105 /* AssetsLibrary.framework */,
+				186E2D4918C9C8FA003CF105 /* AVFoundation.framework */,
 				182711611834BBD900FBD6EA /* QuartzCore.framework */,
 				182710FD1834B79A00FBD6EA /* UIKit.framework */,
 				182710FF1834B79A00FBD6EA /* Foundation.framework */,
