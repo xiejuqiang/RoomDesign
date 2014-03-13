@@ -16,6 +16,9 @@
 #import "WaterFallDetailViewController.h"
 #import "UIImage+thumUIImage.h"
 #import "UIView+UIViewEx.h"
+#import "UrlStr.h"
+#import "JsonParser.h"
+#import "GetObj.h"
 
 @interface WaterFallViewController ()<TMQuiltViewDataSource,TMQuiltViewDelegate>
 {
@@ -35,38 +38,23 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-//        self.view.backgroundColor = [UIColor grayColor];
-        imageArr = [[NSArray alloc] initWithObjects:@"http://f.hiphotos.baidu.com/image/w%3D2048/sign=5492a2f38b13632715edc533a5b7a1ec/d8f9d72a6059252d9167232b359b033b5bb5b9a8.jpg",
-                    @"http://h.hiphotos.baidu.com/image/w%3D2048/sign=621e5d519358d109c4e3aeb2e560cdbf/b812c8fcc3cec3fd4349995ad788d43f879427ad.jpg",
-                    @"http://h.hiphotos.baidu.com/image/w%3D2048/sign=8710cb4c9e3df8dca63d8891f929708b/9f510fb30f2442a72eec381ed043ad4bd01302af.jpg",
-                    @"http://f.hiphotos.baidu.com/image/w%3D2048/sign=1438e3c3d01373f0f53f689f90374afb/8ad4b31c8701a18b42ad69f79f2f07082938fec0.jpg",
-                    @"http://b.hiphotos.baidu.com/image/w%3D2048/sign=8988a3c8faf2b211e42e824efeb86438/8435e5dde71190efef765764cf1b9d16fcfa60f8.jpg",
-                    @"http://a.hiphotos.baidu.com/image/w%3D2048/sign=272791418735e5dd902ca2df42fea6ef/810a19d8bc3eb1355b1fc6a8a41ea8d3fc1f44cc.jpg",
-                    @"http://c.hiphotos.baidu.com/image/w%3D2048/sign=1c77007b9152982205333ec3e3f27acb/11385343fbf2b211c947b9f2cb8065380cd78e24.jpg",
-                    @"http://d.hiphotos.baidu.com/image/w%3D2048/sign=47f36465f11f3a295ac8d2cead1dbd31/d0c8a786c9177f3eacae39b671cf3bc79e3d56f7.jpg",
-                    @"http://e.hiphotos.baidu.com/image/w%3D2048/sign=2b33c201a8ec8a13141a50e0c33b908f/500fd9f9d72a6059593207f42934349b033bba3a.jpg",
-                    @"http://g.hiphotos.baidu.com/image/w%3D2048/sign=2eea3a0b64380cd7e61ea5ed957cac34/a6efce1b9d16fdfa31c50355b58f8c5495ee7be4.jpg",
-                    @"http://d.hiphotos.baidu.com/image/w%3D2048/sign=47df0f578cb1cb133e693b13e96c574e/f9dcd100baa1cd1101fc1698b812c8fcc3ce2d3b.jpg",
-                    @"http://a.hiphotos.baidu.com/image/w%3D2048/sign=d986a654d01373f0f53f689f90374afb/8ad4b31c8701a18b8f132c609f2f07082838fe20.jpg",
-                    @"http://image.zcool.com.cn/4/51/1254197540187.jpg",
-                    @"http://image.zcool.com.cn/13/53/1254207528161.jpg",
-                    @"http://image.zcool.com.cn/33/27/1254195229836.jpg",
-                    @"http://image.zcool.com.cn/61/15/1254208808859.jpg",
-                    @"http://image.zcool.com.cn/17/27/1254197284816.jpg",
-                    @"http://image.zcool.com.cn/41/8/1254208151336.jpg",
-                    @"http://image.zcool.com.cn/35/14/1254197278957.jpg",
-                    @"http://image.zcool.com.cn/57/40/1254194821086.jpg",
-                    @"http://image.zcool.com.cn/23/54/m_1254197596189.jpg",nil];
-        
-//        imageArr = [[NSArray alloc] initWithObjects:@"http://image.zcool.com.cn/4/51/1254197540187.jpg",
-//                                                    @"http://image.zcool.com.cn/13/53/1254207528161.jpg",
-//                                                    @"http://image.zcool.com.cn/33/27/1254195229836.jpg",
-//                                                    @"http://image.zcool.com.cn/61/15/1254208808859.jpg",
-//                                                    @"http://image.zcool.com.cn/17/27/1254197284816.jpg",
-//                                                    @"http://image.zcool.com.cn/41/8/1254208151336.jpg",
-//                                                    @"http://image.zcool.com.cn/35/14/1254197278957.jpg",
-//                                                    @"http://image.zcool.com.cn/57/40/1254194821086.jpg",
-//                                                    @"http://image.zcool.com.cn/23/54/m_1254197596189.jpg",nil];
+        thirdTime = 1;
+        totalPage = @"1";
+        imageArr = [[NSArray alloc] initWithObjects:@"http://d.hiphotos.baidu.com/image/w%3D2048/sign=c839e1304936acaf59e091fc48e18c10/9825bc315c6034a85d091a88c9134954082376cb.jpg",
+                                                    @"http://e.hiphotos.baidu.com/image/w%3D2048/sign=5ac7acca3887e9504217f46c24005243/37d12f2eb9389b50a305435b8735e5dde6116ec5.jpg",
+                                                    @"http://c.hiphotos.baidu.com/image/w%3D2048/sign=7d423bfa7b310a55c424d9f4837d42a9/a8014c086e061d95800f963179f40ad162d9ca6a.jpg",
+                                                    @"http://d.hiphotos.baidu.com/image/w%3D2048/sign=8214425457fbb2fb342b5f127b7221a4/37d3d539b6003af3e17d9669372ac65c1138b6f0.jpg",
+                                                    @"http://d.hiphotos.baidu.com/image/w%3D2048/sign=599484b51c178a82ce3c78a0c23b728d/63d9f2d3572c11df725ec15a612762d0f703c238.jpg",
+                                                    @"http://h.hiphotos.baidu.com/image/w%3D2048/sign=64e12999f503918fd7d13aca65052797/242dd42a2834349b04fd10fccbea15ce37d3becb.jpg",
+                                                    @"http://f.hiphotos.baidu.com/image/w%3D2048/sign=7ae833780855b3199cf9857577918326/4d086e061d950a7bd72331bd08d162d9f2d3c9b1.jpg",
+                    @"http://g.hiphotos.baidu.com/image/w%3D2048/sign=b1cd9fb1a2ec08fa260014a76dd63c6d/2934349b033b5bb58f241bf034d3d539b700bcc8.jpg",
+                    @"http://b.hiphotos.baidu.com/image/w%3D2048/sign=436dd70dca95d143da76e32347c88302/dbb44aed2e738bd4b2d6893fa38b87d6267ff9cc.jpg",
+                    @"http://e.hiphotos.baidu.com/image/w%3D2048/sign=5148d1a32934349b74066985fdd214ce/2fdda3cc7cd98d10758c3c88203fb80e7bec902a.jpg",
+                    @"http://c.hiphotos.baidu.com/image/w%3D2048/sign=11b2f576f01fbe091c5ec4145f580d33/64380cd7912397ddcb3d52045b82b2b7d0a2876e.jpg",
+                    @"http://e.hiphotos.baidu.com/image/w%3D2048/sign=9f704512d60735fa91f049b9aa690eb3/f703738da977391287736268fa198618367ae266.jpg",
+                    @"http://d.hiphotos.baidu.com/image/w%3D2048/sign=65cc1e8e0d2442a7ae0efaa5e57bac4b/f9198618367adab4b1703f4e89d4b31c8701e41f.jpg",
+                    @"http://b.hiphotos.baidu.com/image/w%3D2048/sign=08f233a1f403738dde4a0b228723b151/a8ec8a13632762d046f0e8bea2ec08fa503dc6e1.jpg",
+                    @"http://e.hiphotos.baidu.com/image/w%3D2048/sign=8736bc2f9113b07ebdbd570838ef9023/e61190ef76c6a7efb2df9328fffaaf51f2de66c6.jpg",nil];
         
     }
     return self;
@@ -77,13 +65,110 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    [self initData];
     [self createTopView];
     [self createScrollView];
-    TMQuiltView *qtmView = (TMQuiltView *)[mainScrollView viewWithTag:100];
+    [self getData:cat_id];
+    
+    
+}
+
+- (void)initData
+{
+    pageNum = 0;
+    cat_id = 2;
+    urlStr = [[UrlStr alloc] init];
+    jsonParser = [[JsonParser alloc] init];
+    HUD = [[MBProgressHUD alloc] init];
+    _images = [[NSMutableArray alloc] init];
+    img_str_array = [[NSMutableArray alloc] init];
+}
+
+- (void)getData:(int)catid
+{
+    [self showWithLoding];
+    if (tempTag == catid+99) {
+        pageNum++;
+        if (pageNum>[totalPage intValue]) {
+            [self showWithTime:@"没有内容了"];
+            TMQuiltView *qtmView = (TMQuiltView *)[mainScrollView viewWithTag:tempTag];
+            [self removeFooterView];
+            [self testFinishedLoadData:qtmView];
+            return;
+        }
+    }
+    else
+    {
+        pageNum = 1;
+        if ([_images count]>0) {
+                [_images removeAllObjects];
+            }
+    }
+    
+    GetObj *getObj = [[GetObj alloc] init];
+    getObj.catID = [[dataArray objectAtIndex:catid-1] objectForKey:@"id"];
+    getObj.page = [NSString stringWithFormat:@"%d",pageNum];;
+    
+    tempTag = 99+catid;
+    NSString *productListURL = [urlStr returnURL:2 Obj: getObj];
+    [jsonParser parse:productListURL withDelegate:self onComplete:@selector(onConnectionSuccess:) onErrorComplete:@selector(onConnectionError) onNullComplete:@selector(onConnectionNull)];
+}
+
+- (void)onConnectionSuccess:(JsonParser *)jsonP
+{
+//    if ([_images count]>0) {
+//        [_images removeAllObjects];
+//    }
+    [img_str_array removeAllObjects];
+    NSDictionary *resultDicData = [jsonP getItems];
+    NSArray *productsData = [[NSArray alloc] initWithArray:[resultDicData objectForKey:@"productLists"]];
+    [_images addObjectsFromArray:productsData];
+    for (NSDictionary *imgStrDic in productsData) {
+       
+       NSString *imgStr = [imgStrDic objectForKey:@"image1"];
+       [img_str_array addObject:imgStr];
+        
+    }
+    totalPage = [resultDicData objectForKey:@"totalPages"];
+    
+    TMQuiltView *qtmView = (TMQuiltView *)[mainScrollView viewWithTag:tempTag];
     [self createHeaderView:qtmView];
     [self getNextPageView:qtmView];
     
-    
+    [HUD hide:YES];
+}
+
+- (void)onConnectionError
+{
+    [self showWithTime:@"网络出错！"];
+
+}
+
+- (void)onConnectionNull
+{
+    [self showWithTime:@"暂无内容"];
+}
+
+#pragma mark showHud
+
+- (void)showWithTime:(NSString *)lable
+{
+    [self.view addSubview:HUD];
+    HUD.delegate = self;
+    HUD.labelText = lable;
+    [HUD showWhileExecutingT:@selector(myTask) onTarget:self withObject:nil animated:YES];
+}
+
+- (void)showWithLoding
+{
+    [self.view addSubview:HUD];
+    HUD.delegate = self;
+    HUD.labelText = @"加载中...";
+    [HUD showWhileExecuting:@selector(myTask) onTarget:self withObject:nil animated:YES];
+}
+- (void)myTask {
+	// Do something usefull in here instead of sleeping ...
+    sleep(1);
 }
 
 - (void)createScrollView
@@ -92,9 +177,10 @@
     mainScrollView.pagingEnabled = YES;
     mainScrollView.delegate = self;
     mainScrollView.tag = 1000;
-    mainScrollView.contentSize = CGSizeMake(1024*3, 668);
+    mainScrollView.contentSize = CGSizeMake(1024*[dataArray count], 668);
+    mainScrollView.contentOffset = CGPointMake(1024, 0);
     [self.view addSubview:mainScrollView];
-    for (int i = 0; i<3; i++) {
+    for (int i = 0; i<[dataArray count]; i++) {
       TMQuiltView  *qtmView = [[TMQuiltView alloc] initWithFrame:CGRectMake(60+1024*i, 0, 1024-120, 768-100)];
         qtmView.delegate = self;
         qtmView.dataSource = self;
@@ -103,7 +189,7 @@
         //	qtmquitView.backgroundColor = [UIColor grayColor];
         [mainScrollView addSubview:qtmView];
         
-        if (i == 0) {
+        if (i == 1) {
             tempTag = qtmView.tag;
         }
         
@@ -120,10 +206,8 @@
 
 - (void)createTopView
 {
-//    UIScrollView *titleScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 1024, 500)];
     
-    
-    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 5, 50, 30)];
+    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 10, 50, 30)];
     [backButton setTitle:@"返回" forState:UIControlStateNormal];
     [backButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
@@ -147,45 +231,58 @@
     lineLabel.backgroundColor = [UIColor blackColor];
     [self.view addSubview:lineLabel];
     
-    //解析数据
-    NSDictionary *dic = [dataArray objectAtIndex:0];
+    NSArray *englishName = [[NSArray alloc] initWithObjects:@"Office",@"Household",@"Recreation",@"Retail",@"Hotel",@"Food",@"Treatment", nil];
     
-    cookLabel = [[UILabel alloc] initWithFrame:CGRectMake(90, lineLabel.top-30, 50, 30)];
-    cookLabel.text = [dic objectForKey:@"cname"];
-    cookLabel.textAlignment = NSTextAlignmentCenter;
-    cookLabel.textColor = [UIColor blackColor];
+    titleScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(60, lineLabel.top-33, 1024-120, 33)];
+    titleScrollView.delegate = self;
+    titleScrollView.tag = 2000;
+    titleScrollView.scrollEnabled = NO;
+    titleScrollView.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:titleScrollView];
+    titleScrollView.contentSize = CGSizeMake(904*3, 33);
+    titleScrollView.contentOffset = CGPointMake(331, 0);
+    flagLine = [[UILabel alloc] initWithFrame:CGRectMake(15+311+75, titleScrollView.top+30, 100, 3)];
+    flagLine.backgroundColor = [UIColor blackColor];
+    [self.view addSubview:flagLine];
     
-    houseLabel = [[UILabel alloc] initWithFrame:CGRectMake(425+60, lineLabel.top-30, 50, 30)];
-    houseLabel.text = [[dataArray objectAtIndex:1] objectForKey:@"cname"];
-    houseLabel.textAlignment = NSTextAlignmentCenter;
-    houseLabel.textColor = [UIColor blackColor];
+    for (int i = 0; i<[dataArray count]; i++) {
+//        cookLabel = [[UILabel alloc] initWithFrame:CGRectMake(30+(i+1)*331, 0, 70, 30)];
+//        cookLabel.text = [[dataArray objectAtIndex:i] objectForKey:@"cname"];
+//        cookLabel.textAlignment = NSTextAlignmentCenter;
+//        cookLabel.textColor = [UIColor blackColor];
+        cookLabel = [[UIButton alloc] initWithFrame:CGRectMake(30+(i+1)*331, 0, 70, 30)];
+        [cookLabel setTitle:[[dataArray objectAtIndex:i] objectForKey:@"cname"] forState:UIControlStateNormal];
+        cookLabel.tag = i + 99;
+        [cookLabel setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        cookLabel.backgroundColor = [UIColor clearColor];
+        cookLabel.titleLabel.font = [UIFont systemFontOfSize:16];
+        [cookLabel addTarget:self action:@selector(categoryTap:) forControlEvents:UIControlEventTouchUpInside];
+        [titleScrollView addSubview:cookLabel];
+        if (isForeign) {
+            cookLabel.frame = CGRectMake(30+(i+1)*331, 0, 90, 30);
+            flagLine.frame = CGRectMake(20+311+80, titleScrollView.top+30, 100, 3);
+//            cookLabel.text = [englishName objectAtIndex:i];
+            [cookLabel setTitle:[englishName objectAtIndex:i] forState:UIControlStateNormal];
+        }
+    }
     
-    officeLabel = [[UILabel alloc] initWithFrame:CGRectMake(904-40, lineLabel.top-30, 50, 30)];
-    officeLabel.right = 1024-90;
-    officeLabel.text =[[dataArray objectAtIndex:2] objectForKey:@"cname"];
-    officeLabel.textAlignment = NSTextAlignmentCenter;
-    officeLabel.textColor = [UIColor blackColor];
     if (isForeign == YES) {
         titleLabel1.text = @"Design";
-        titleLabel2.text = @"assistant";
-        cookLabel.text = @"food and beverage";
-        houseLabel.text = @"household";
-        officeLabel.text = @"office";
+        titleLabel2.text = @"Assistant";
+        
+        [backButton setTitle:@"back" forState:UIControlStateNormal];
         
         
         titleLabel1.frame = CGRectMake(445, 30, 60, 30);
         imgView.frame = CGRectMake(titleLabel1.right-10, 10, 50, 50);
         titleLabel2.frame = CGRectMake(titleLabel1.right-10+40, 30, 70, 30);
-        cookLabel.frame = CGRectMake(90, lineLabel.top-30, 150, 30);
-        houseLabel.frame = CGRectMake(425+60, lineLabel.top-30, 80, 30);
+//        houseLabel.frame = CGRectMake(425+60, lineLabel.top-30, 100, 30);
+//        officeLabel.frame = CGRectMake(lineLabel.right -100, lineLabel.top -30, 100, 30);
         
     }
     
     [self.view addSubview:titleLabel1];
     [self.view addSubview:titleLabel2];
-    [self.view addSubview:cookLabel];
-    [self.view addSubview:houseLabel];
-    [self.view addSubview:officeLabel];
     [self.view addSubview:imgView];
     
 }
@@ -194,6 +291,19 @@
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
+
+- (void)categoryTap:(UIButton *)btn
+{
+    int flag = btn.tag - 99;
+    [UIView animateWithDuration:0.5 animations:^{
+        titleScrollView.contentOffset = CGPointMake(flag*331, 0);
+        mainScrollView.contentOffset = CGPointMake(1024*flag, 0);
+    }];
+    
+    [self getData:flag];
+    
+}
+
 
 //＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 //初始化刷新视图
@@ -295,7 +405,7 @@
     }else if(aRefreshPos == EGORefreshFooter)
 	{
         // pull up to load more data
-        [self performSelector:@selector(getNextPageView:) withObject:qtmView afterDelay:2.0];
+        [self performSelector:@selector(addMorePage:) withObject:qtmView afterDelay:2.0];
     }
 	
 	// overide, the actual loading data operation is done in the subclass
@@ -314,8 +424,13 @@
 
 - (void)egoRefreshTableDidTriggerRefresh:(EGORefreshPos)aRefreshPos targetscrollView:(UIScrollView *)scrollView
 {
-	
-	[self beginToReloadData:aRefreshPos qtmViewScrollView:scrollView];
+	if (scrollView.tag == 1000) {
+        
+    }
+    else
+    {
+        [self beginToReloadData:aRefreshPos qtmViewScrollView:scrollView];
+    }
 	
 }
 
@@ -348,6 +463,15 @@
     
 }
 
+//翻页调用方法
+- (void)addMorePage:(TMQuiltView *)qtView
+{
+    if (qtView.tag == tempTag) {
+        
+        return [self getData:qtView.tag-99];
+    }
+}
+
 //加载调用的方法
 -(void)getNextPageView:(TMQuiltView *)qtView
 {
@@ -355,28 +479,28 @@
 //		[_images addObject:[NSString stringWithFormat:@"%d.jpeg", i % 10 + 1]];
 //	}
 //    [qtmquitView.infiniteScrollingView stopAnimating];
-    if (qtView.tag != tempTag) {
-        [_images removeAllObjects];
-        tempTag = qtView.tag;
-    }
-    [_images addObjectsFromArray:imageArr];
+    
+//    [_images addObjectsFromArray:imageArr];
 	[qtView reloadData];
     [self removeFooterView];
     [self testFinishedLoadData:qtView];
    
 }
 
-- (NSMutableArray *)images
-{
-    if (!_images)
-	{
-        _images = [[NSMutableArray alloc] initWithArray:imageArr];
-    }
-    return _images;
-}
+//- (NSMutableArray *)images
+//{
+//    if (!_images)
+//	{
+//        _images = [[NSMutableArray alloc] initWithArray:imageArr];
+//    }
+//    return _images;
+//}
 
 - (UIImageView *)imageAtIndexPath:(NSIndexPath *)indexPath {
     
+    if (indexPath.row>[self.images count]-1) {
+        return nil;
+    }
     NSString *imagePath = [[NSString alloc] initWithFormat:@"%@",[self.images objectAtIndex:indexPath.row]];
     NSString* cachesDirectory = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     NSString *imagePath1 = [[[[cachesDirectory stringByAppendingPathComponent:[[NSProcessInfo processInfo] processName]] stringByAppendingPathComponent:@"EGOCache"] copy] stringByAppendingPathComponent:[NSString stringWithFormat:@"EGOImageLoader-%u", [[imagePath description] hash]]];
@@ -404,13 +528,17 @@
     }
     
 //    cell.photoView.image = [self imageAtIndexPath:indexPath];
-    NSString *strImg = [self.images objectAtIndex:indexPath.row];
+    NSDictionary *proDic = [self.images objectAtIndex:indexPath.row];
+    NSString *strImg = [proDic objectForKey:@"image1"];
+    NSString *titleName = [proDic objectForKey:@"sdesc"];
     NSURL *url = [[NSURL alloc ] initWithString:strImg];
     cell.photoView.imageURL = url;
     if ([quiltView heightForCellAtIndexPath:indexPath]>50)
     {
         cell.titleLabel.hidden = NO;
-        cell.titleLabel.text = [NSString stringWithFormat:@"%d", indexPath.row];
+        cell.titleLabel.text = titleName;
+        cell.titleLabel.textColor = [UIColor blackColor];
+        cell.titleLabel.backgroundColor = [UIColor colorWithRed:200/255.0 green:200/255.0 blue:200/255.0 alpha:1];
     }
     else
     {
@@ -437,7 +565,16 @@
 - (CGFloat)quiltView:(TMQuiltView *)quiltView heightForCellAtIndexPath:(NSIndexPath *)indexPath
 {
 //    NSLog(@"%f",[self imageAtIndexPath:indexPath].size.height);
-    return [self imageAtIndexPath:indexPath].frame.size.height+40;
+    NSLog(@"Page:%d",indexPath.row);
+    if (indexPath.row>[self.images count]-1 || [self.images count] == 0) {
+        return 0.0;
+    }
+    NSDictionary *proDic = [self.images objectAtIndex:indexPath.row];
+    NSString *cellHeight = [proDic objectForKey:@"unit2"];
+    if ([cellHeight floatValue]<350) {
+        return [cellHeight floatValue]/1.5;
+    }
+    return [cellHeight floatValue]/3.0;
 }
 
 - (void)quiltView:(TMQuiltView *)quiltView didSelectCellAtIndexPath:(NSIndexPath *)indexPath
@@ -445,7 +582,9 @@
 	NSLog(@"index:%d",indexPath.row);
     WaterFallDetailViewController *waterFallDetailVC = [[WaterFallDetailViewController alloc] init];
     waterFallDetailVC.offset_H = indexPath.row;
-    waterFallDetailVC.urlArray = imageArr;
+    waterFallDetailVC.cat_id = [[[dataArray objectAtIndex:cat_id-1] objectForKey:@"id"] intValue];
+    waterFallDetailVC.urlArray = img_str_array;
+    waterFallDetailVC.isForeign = self.isForeign;
     
     [self.navigationController pushViewController:waterFallDetailVC animated:YES];
 }
@@ -456,6 +595,11 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
 
     if (scrollView.tag == 1000)
+    {
+        float flag = scrollView.contentOffset.x/1024.0;
+        titleScrollView.contentOffset = CGPointMake(flag*331, 0);
+    }
+    else if (scrollView.tag == 2000)
     {
         
     }
@@ -484,6 +628,10 @@
         
         
     }
+    else if (scrollView.tag == 2000)
+    {
+        
+    }
     else{
         if (_refreshHeaderView)
         {
@@ -503,40 +651,14 @@
     if (scrollView.tag == 1000)
     {
         
-            int flag = scrollView.contentOffset.x/1024;
-            NSLog(@"%d",flag);
-        switch (flag) {
-            case 0:
-            {
-                cookLabel.text = [[dataArray objectAtIndex:0] objectForKey:@"cname"];
-                houseLabel.text = [[dataArray objectAtIndex:1] objectForKey:@"cname"];
-                officeLabel.text = [[dataArray objectAtIndex:2] objectForKey:@"cname"];
-            }
-                
-                break;
-                
-            case 1:
-            {
-                cookLabel.text = [[dataArray objectAtIndex:3] objectForKey:@"cname"];
-                houseLabel.text = @"";
-                officeLabel.text = [[dataArray objectAtIndex:4] objectForKey:@"cname"];
-            }
-                
-                break;
-            case 2:
-            {
-                cookLabel.text = [[dataArray objectAtIndex:5] objectForKey:@"cname"];
-                houseLabel.text = @"";
-                officeLabel.text = [[dataArray objectAtIndex:6] objectForKey:@"cname"];
-            }
-                
-                break;
-            default:
-                break;
+        int flag = scrollView.contentOffset.x/1024;
+        cat_id = flag+1;
+        if (thirdTime!=flag) {
+           
+            [self getData:flag+1];
+            thirdTime = flag;
         }
-            TMQuiltView *qtmView = (TMQuiltView *)[mainScrollView viewWithTag:100+flag];
-            [self createHeaderView:qtmView];
-            [self getNextPageView:qtmView];
+        
         
         
         

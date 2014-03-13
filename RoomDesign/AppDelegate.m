@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "WaterFallViewController.h"
 #import "HomePageViewController.h"
+#import "PSCollectionView.h"
 
 @implementation AppDelegate
 

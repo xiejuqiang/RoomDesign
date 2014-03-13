@@ -10,14 +10,20 @@
 #import "MBProgressHUD.h"
 @class UrlStr;
 @class JsonParser;
+@class RecordDao;
+@class EGOImageView;
 @interface WaterFallDetailViewController : UIViewController<UIScrollViewDelegate,MBProgressHUDDelegate>
 {
     UrlStr *urlStr;
     JsonParser *jsonParser;
     NSArray *productsData;
+    RecordDao *recordDB;
+    EGOImageView *imageViewBig;//大图
 }
 
 @property (nonatomic,retain)NSArray *urlArray;
 @property (nonatomic,assign) int offset_H;
+@property (nonatomic,assign) BOOL isForeign;
+@property (nonatomic)int cat_id;
 
 @end

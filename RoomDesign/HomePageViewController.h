@@ -8,14 +8,19 @@
 
 #import <UIKit/UIKit.h>
 #import "MBProgressHUD.h"
+#import "PSCollectionView.h"
 @class JsonParser;
 @class UrlStr;
-@interface HomePageViewController : UIViewController<MBProgressHUDDelegate>
+@class RecordDao;
+@class PSCollectionView;
+@interface HomePageViewController : UIViewController<MBProgressHUDDelegate,UIScrollViewDelegate,PSCollectionViewDelegate,PSCollectionViewDataSource>
 {
     JsonParser *jsonParser;
     UrlStr *urlStr;
     MBProgressHUD *HUD;
+    RecordDao *recordDB;
     NSArray *resultDataArray;
+    PSCollectionView *collectionView;
 }
 
 @end

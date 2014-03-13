@@ -12,6 +12,9 @@
 #import "AboutViewController.h"
 #import "UrlStr.h"
 #import "JsonParser.h"
+#import "CollectViewController.h"
+#import "RecordDao.h"
+//#import "PSCollectionView.h"
 
 @interface HomePageViewController ()
 
@@ -28,6 +31,9 @@
         urlStr = [[UrlStr alloc] init];
         jsonParser = [[JsonParser alloc] init];
         resultDataArray = [[NSArray alloc] init];
+        //数据库
+        recordDB = [[RecordDao alloc]init];
+        [recordDB createDB:DATABASE_NAME];
     }
     return self;
 }
@@ -106,8 +112,46 @@
     [aboutButton addTarget:self action:@selector(aboutTap) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:aboutButton];
     
+    UIButton *collectButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 30)];
+    collectButton.bottom = 768-10;
+    collectButton.right = 1024-15;
+    [collectButton addTarget:self action:@selector(collectTap) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:collectButton];
+    
     [self getData];
     
+//    collectionView = [[PSCollectionView alloc] initWithFrame:CGRectZero];
+//    collectionView.delegate = self; // This is for UIScrollViewDelegate
+//    collectionView.collectionViewDelegate = self;
+//    collectionView.collectionViewDataSource = self;
+//    collectionView.backgroundColor = [UIColor clearColor];
+//    collectionView.autoresizingMask = ~UIViewAutoresizingNone;
+//    collectionView.numColsLandscape = 4;
+//    [collectionView reloadData];
+
+}
+
+#pragma mark -
+#pragma mark PS Delegate and DataSource
+
+- (Class)collectionView:(PSCollectionView *)collectionView cellClassForRowAtIndex:(NSInteger)index {
+    return [PSCollectionViewCell class];
+}
+
+- (NSInteger)numberOfRowsInCollectionView:(PSCollectionView *)collectionView {
+    return 1;
+}
+
+
+- (CGFloat)collectionView:(PSCollectionView *)collectionView heightForRowAtIndex:(NSInteger)index {
+    return 100.0;
+}
+
+- (PSCollectionViewCell *)collectionView:(PSCollectionView *)collectionView cellForRowAtIndex:(NSInteger)index
+{
+    PSCollectionViewCell *cell = [[PSCollectionViewCell alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
+    cell.backgroundColor = [UIColor redColor];
+    return cell;
 }
 
 - (void)buttonTap:(UIButton *)btn
@@ -128,6 +172,15 @@
 {
     AboutViewController *aboutVC = [[AboutViewController alloc] init];
     [self.navigationController pushViewController:aboutVC animated:YES];
+}
+
+- (void)collectTap
+{
+    NSArray *resultItem = [recordDB resultSet:COLLECT_TABLENAME Order:nil LimitCount:0];
+    CollectViewController *collectVC = [[CollectViewController alloc] init];
+    collectVC.imageArr = resultItem;
+    [self.navigationController pushViewController:collectVC animated:YES];
+    
 }
 
 - (void)didReceiveMemoryWarning
