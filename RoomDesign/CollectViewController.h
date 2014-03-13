@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "EGORefreshTableHeaderView.h"
 #import "EGORefreshTableFooterView.h"
+@class RecordDao;
 @interface CollectViewController : UIViewController<EGORefreshTableDelegate>
 {
     //EGOHeader
@@ -16,6 +17,7 @@
     //EGOFoot
     EGORefreshTableFooterView *_refreshFooterView;
     //
+    RecordDao *recordDB;
     BOOL _reloading;
 }
 @property (nonatomic, retain) NSMutableArray *images;

@@ -15,6 +15,7 @@
 #import "UIView+UIViewEx.h"
 #import "CollectDBItem.h"
 #import "WaterFallDetailViewController.h"
+#import "RecordDao.h"
 
 @interface CollectViewController ()<TMQuiltViewDataSource,TMQuiltViewDelegate>
 {
@@ -48,6 +49,12 @@
     [backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:backButton];
     
+    UIButton *collectButton = [[UIButton alloc] initWithFrame:CGRectMake(1024-70, 30, 60, 30)];
+    [collectButton setTitle:@"清除" forState:UIControlStateNormal];
+    [collectButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [collectButton addTarget:self action:@selector(clearTap) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:collectButton];
+    
     qtmquitView = [[TMQuiltView alloc] initWithFrame:CGRectMake(60, 100, 1024-120, 768-100)];
     qtmquitView.delegate = self;
     qtmquitView.dataSource = self;
@@ -71,6 +78,13 @@
     collectName.textColor = [UIColor blackColor];
     collectName.textAlignment = NSTextAlignmentCenter;
     [self.view addSubview:collectName];
+}
+
+- (void)clearTap
+{
+    NSArray *resultItem = [recordDB deleteAtIndex:COLLECT_TABLENAME CloValue:nil];
+    self.imageArr = resultItem;
+     [self getNextPageView];
 }
 
 - (void)back

@@ -14,6 +14,7 @@
 @class UrlStr;
 @class JsonParser;
 @class MBProgressHUD;
+@class RecordDao;
 @interface WaterFallViewController : UIViewController<EGORefreshTableDelegate,MBProgressHUDDelegate>
 {
     //EGOHeader
@@ -26,6 +27,7 @@
     UrlStr *urlStr;
     JsonParser *jsonParser;
     MBProgressHUD *HUD;
+    RecordDao *recordDB;
     
     UIScrollView *mainScrollView;
     UIScrollView *titleScrollView;

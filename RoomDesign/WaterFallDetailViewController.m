@@ -86,8 +86,8 @@
     titleLabel1.textAlignment = NSTextAlignmentCenter;
     titleLabel1.textColor = [UIColor blackColor];
     
-    UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"home_stone@2x.png"]];
-    imgView.frame = CGRectMake(titleLabel1.right-10, 10, 50, 50);
+    UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon.png.png"]];
+    imgView.frame = CGRectMake(titleLabel1.right-10, 20, 40, 40);
     
     
     UILabel *titleLabel2 = [[UILabel alloc] initWithFrame:CGRectMake(425+30+65, 30, 50, 30)];
@@ -133,13 +133,13 @@
 //    [self.view addSubview:officeLabel];
     [self.view addSubview:imgView];
     
-    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 10, 50, 30)];
+    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(10, 30, 50, 30)];
     [backButton setTitle:@"返回" forState:UIControlStateNormal];
     [backButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:backButton];
     
-    UIButton *collectButton = [[UIButton alloc] initWithFrame:CGRectMake(1024-65, 10, 60, 30)];
+    UIButton *collectButton = [[UIButton alloc] initWithFrame:CGRectMake(1024-70, 30, 60, 30)];
     [collectButton setTitle:@"收藏" forState:UIControlStateNormal];
     [collectButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [collectButton addTarget:self action:@selector(collectItem:) forControlEvents:UIControlEventTouchUpInside];
@@ -192,16 +192,21 @@
     }
     
     NSArray *imagesArray = [[productsData objectAtIndex:offset_H] objectForKey:@"image_array"];
+    NSMutableArray *imgArr = [[NSMutableArray alloc] init];
+    for (NSString *str in imagesArray) {
+        if ([str isEqualToString:@""] == NO) {
+            [imgArr addObject:str];
+        }
+    }
     
-    for (int j = 0; j <[imagesArray count]; j++) {
+    for (int j = 0; j <[imgArr count]; j++) {
         imageViewBig = [[EGOImageView alloc] init];
         imageViewBig.userInteractionEnabled = YES;
         imageViewBig.clipsToBounds = YES;
         imageViewBig.contentMode = UIViewContentModeScaleAspectFill;
         imageViewBig.frame = CGRectMake(0, 600*j, 720, 600);
-        if ([[imagesArray objectAtIndex:j] isEqualToString:@""]==NO) {
-            imageViewBig.imageURL = [[NSURL alloc] initWithString:[imagesArray objectAtIndex:j]];
-        }
+        imageViewBig.imageURL = [[NSURL alloc] initWithString:[imgArr objectAtIndex:j]];
+        
         
         imageViewBig.contentMode = UIViewContentModeScaleToFill;
         [leftScrollView addSubview:imageViewBig];
