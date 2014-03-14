@@ -71,20 +71,30 @@
     lineLabel.backgroundColor = [UIColor blackColor];
     [self.view addSubview:lineLabel];
     
-    UILabel *collectName = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 50, 30)];
-    collectName.bottom = 90-2;
-    collectName.left = (1024-50)/2.0;
-    collectName.text = @"收藏";
-    collectName.textColor = [UIColor blackColor];
-    collectName.textAlignment = NSTextAlignmentCenter;
-    [self.view addSubview:collectName];
+    UILabel *titleLabel1 = [[UILabel alloc] initWithFrame:CGRectMake(445, 30, 50, 30)];
+    titleLabel1.text = @"设计";
+    titleLabel1.textAlignment = NSTextAlignmentCenter;
+    titleLabel1.textColor = [UIColor blackColor];
+    
+    UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon.png"]];
+    imgView.frame = CGRectMake(titleLabel1.right-10, 20, 40, 40);
+    
+    
+    UILabel *titleLabel2 = [[UILabel alloc] initWithFrame:CGRectMake(425+30+65, 30, 50, 30)];
+    titleLabel2.text = @"助手";
+    titleLabel2.textAlignment = NSTextAlignmentCenter;
+    titleLabel2.textColor = [UIColor blackColor];
+    
+    [self.view addSubview:titleLabel1];
+    [self.view addSubview:titleLabel2];
+    [self.view addSubview:imgView];
 }
 
 - (void)clearTap
 {
-    NSArray *resultItem = [recordDB deleteAtIndex:COLLECT_TABLENAME CloValue:nil];
-    self.imageArr = resultItem;
-     [self getNextPageView];
+    NSArray *resultItem = [recordDB deleteAtIndex:COLLECT_TABLENAME CloValue:0];
+    self.images = [[NSMutableArray alloc] initWithArray:resultItem];
+    [self getNextPageView];
 }
 
 - (void)back

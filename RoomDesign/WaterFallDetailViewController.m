@@ -34,6 +34,7 @@
 @synthesize offset_H;
 @synthesize isForeign;
 @synthesize cat_id = _cat_id;
+@synthesize isCollect;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -42,7 +43,7 @@
         // Custom initialization
         urlStr = [[UrlStr alloc] init];
         jsonParser = [[JsonParser alloc] init];
-        
+        isCollect = NO;
         //数据库
         recordDB = [[RecordDao alloc]init];
         [recordDB createDB:DATABASE_NAME];
@@ -52,6 +53,7 @@
 
 - (void)getData
 {
+    [self showWithLoding];
     GetObj *getObj = [[GetObj alloc] init];
     getObj.catID = [NSString stringWithFormat:@"%d",_cat_id];
     getObj.page = @"1";
@@ -61,6 +63,7 @@
 
 - (void)onConnectionSuccess:(JsonParser *)jsonP
 {
+    [HUD hide:YES];
     NSDictionary *resultDicData = [jsonP getItems];
     productsData = [[NSArray alloc] initWithArray:[resultDicData objectForKey:@"productLists"]];
     [self createView:offset_H];
@@ -70,8 +73,17 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    [self getData];
-    [self createTopView];
+    if (isCollect == YES) {
+        productsData = urlArray;
+        [self createTopView];
+        [self createView:offset_H];
+    }
+    else
+    {
+        [self getData];
+        [self createTopView];
+    }
+    
 
     
     
@@ -86,16 +98,16 @@
     titleLabel1.textAlignment = NSTextAlignmentCenter;
     titleLabel1.textColor = [UIColor blackColor];
     
-    UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon.png.png"]];
+    UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon.png"]];
     imgView.frame = CGRectMake(titleLabel1.right-10, 20, 40, 40);
     
     
     UILabel *titleLabel2 = [[UILabel alloc] initWithFrame:CGRectMake(425+30+65, 30, 50, 30)];
-    titleLabel2.text = @"帮手";
+    titleLabel2.text = @"助手";
     titleLabel2.textAlignment = NSTextAlignmentCenter;
     titleLabel2.textColor = [UIColor blackColor];
     
-    UILabel *lineLabel = [[UILabel alloc] initWithFrame:CGRectMake(60, 90, 1024-120, 2)];
+    UILabel *lineLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 90, 1024-40, 2)];
     lineLabel.backgroundColor = [UIColor blackColor];
     [self.view addSubview:lineLabel];
     
@@ -138,16 +150,47 @@
     [backButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:backButton];
+    if (isCollect) {
+        UIButton *clearUpButton = [[UIButton alloc] initWithFrame:CGRectMake(1024-70, 30, 60, 30)];
+        [clearUpButton setTitle:@"清除" forState:UIControlStateNormal];
+        [clearUpButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [clearUpButton addTarget:self action:@selector(clearTap) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:clearUpButton];
+    }
+    else
+    {
+        UIButton *collectButton = [[UIButton alloc] initWithFrame:CGRectMake(1024-70, 30, 60, 30)];
+        [collectButton setTitle:@"收藏" forState:UIControlStateNormal];
+        [collectButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [collectButton addTarget:self action:@selector(collectItem:) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:collectButton];
+    }
     
-    UIButton *collectButton = [[UIButton alloc] initWithFrame:CGRectMake(1024-70, 30, 60, 30)];
-    [collectButton setTitle:@"收藏" forState:UIControlStateNormal];
-    [collectButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [collectButton addTarget:self action:@selector(collectItem:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:collectButton];
-    
-    if (isForeign) {
-        [backButton setTitle:@"back" forState:UIControlStateNormal];
-        [collectButton setTitle:@"collect" forState:UIControlStateNormal];
+//    
+//    if (isForeign) {
+//        [backButton setTitle:@"back" forState:UIControlStateNormal];
+//        [collectButton setTitle:@"collect" forState:UIControlStateNormal];
+//    }
+}
+
+- (void)clearTap
+{
+    UIAlertView *alertV = [[UIAlertView alloc] initWithTitle:@"是否清空收藏" message:nil delegate:self cancelButtonTitle:@"否" otherButtonTitles:@"是", nil];
+    [alertV show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0) {
+        
+    }
+    else
+    {
+         [recordDB deleteAtIndex:COLLECT_TABLENAME CloValue:0];
+        [leftScrollView removeAllSubviews];
+        [rightScrollView removeAllSubviews];
+        [self showWithTime:@"清除成功"];
+        
     }
 }
 
@@ -231,20 +274,24 @@
 - (void)tapBg:(UITapGestureRecognizer *)recongnizer
 {
     int tag = recongnizer.view.tag-100;
+    offset_H = tag;
     int left_offsetH = 0;
     [leftScrollView removeAllSubviews];
     bgTileView.frame = CGRectMake(0, 166.5*tag, 183, 180);
     NSArray *imagesArray = [[productsData objectAtIndex:tag] objectForKey:@"image_array"];
-    for (int i = 0; i<[imagesArray count]; i++) {
+    NSMutableArray *imgArr = [[NSMutableArray alloc] init];
+    for (NSString *str in imagesArray) {
+        if ([str isEqualToString:@""] == NO) {
+            [imgArr addObject:str];
+        }
+    }
+    for (int i = 0; i<[imgArr count]; i++) {
         imageViewBig = [[EGOImageView alloc] init];
         imageViewBig.userInteractionEnabled = YES;
         imageViewBig.clipsToBounds = YES;
         imageViewBig.contentMode = UIViewContentModeScaleAspectFill;
         imageViewBig.frame = CGRectMake(0, 600*i, 720, 600);
-        if ([[imagesArray objectAtIndex:i] isEqualToString:@""]==NO) {
-            imageViewBig.imageURL = [[NSURL alloc] initWithString:[imagesArray objectAtIndex:i]];
-        }
-        
+        imageViewBig.imageURL = [[NSURL alloc] initWithString:[imgArr objectAtIndex:i]];
         imageViewBig.contentMode = UIViewContentModeScaleToFill;
         [leftScrollView addSubview:imageViewBig];
         left_offsetH = imageViewBig.frame.origin.y;
@@ -255,32 +302,92 @@
 //收藏点击事件
 - (void)collectItem:(UIButton *)btn
 {
+    NSString *str = @"";
+    NSMutableArray *tempArray = [[NSMutableArray alloc] init];
+    NSMutableArray *myTempArray =[[NSMutableArray alloc] init];
+    [tempArray addObject:[productsData objectAtIndex:offset_H]];
+    for (NSString *imgStr in [[tempArray objectAtIndex:0] objectForKey:@"image_array"]) {
+        str = [str stringByAppendingString:[imgStr stringByAppendingString:@","]];
+        if ([imgStr isEqualToString:@""] == NO) {
+            NSString* cachesDirectory = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+            NSString *imagePath1 = [[[[cachesDirectory stringByAppendingPathComponent:[[NSProcessInfo processInfo] processName]] stringByAppendingPathComponent:@"EGOCache"] copy] stringByAppendingPathComponent:[NSString stringWithFormat:@"EGOImageLoader-%u", [[imgStr description] hash]]];
+            UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageWithContentsOfFile:imagePath1]];
+            ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+            
+            [library writeImageToSavedPhotosAlbum:[imgView.image CGImage] orientation:(ALAssetOrientation)[imgView.image imageOrientation] completionBlock:^(NSURL *assetURL, NSError *error){
+                if (error) {
+                    // TODO: error handling
+                } else {
+                    // TODO: success handling
+                    NSLog(@"SUCCESS");
+                    
+                }
+            }];
+            
+        }
+    }
+
+    NSArray *collectClosArray = [[NSArray alloc] initWithObjects:[[tempArray objectAtIndex:0] objectForKey:@"id"], [[tempArray objectAtIndex:0] objectForKey:@"image1"],str,nil];
+    BOOL *tips = NO;
+    for (CollectDBItem *item in [recordDB resultSet:COLLECT_TABLENAME Order:nil LimitCount:0]) {
+        if ([[collectClosArray objectAtIndex:0] isEqualToString:item.catid]) {
+            tips =YES;
+        }
+    }
+    
+    if (tips == NO) {
+        UIAlertView *alertV = [[UIAlertView alloc] initWithTitle:@"图片已经加入本地图库里" message:nil delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alertV show];
+    }
+    
+   [recordDB insertAtTable:COLLECT_TABLENAME Clos:collectClosArray];
+    NSArray *resultItem = [recordDB resultSet:COLLECT_TABLENAME Order:nil LimitCount:0];
+    
+    for (CollectDBItem *item in resultItem) {
+        NSArray *img_array = [item.imgArr componentsSeparatedByString:@","];
+        NSDictionary *dic = [[NSDictionary alloc] initWithObjectsAndKeys:item.catid,@"id",item.thumb,@"image1",img_array,@"image_array", nil];
+        [myTempArray addObject:dic];
+    }
     
    
+    WaterFallDetailViewController *waterVC = [[WaterFallDetailViewController alloc] init];
+    waterVC.isCollect = YES;
+    waterVC.urlArray = myTempArray;
+    waterVC.offset_H = 0;
+    [self.navigationController pushViewController:waterVC animated:YES];
+    
+//    NSArray *collectClosArray = [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"%d",offset_H], [urlArray objectAtIndex:offset_H],nil];
+//    [recordDB insertAtTable:COLLECT_TABLENAME Clos:collectClosArray];
+//    NSArray *resultItem = [recordDB resultSet:COLLECT_TABLENAME Order:nil LimitCount:0];
+//    CollectViewController *collectVC = [[CollectViewController alloc] init];
+//    collectVC.imageArr = resultItem;
+//    [self.navigationController pushViewController:collectVC animated:YES];
+//    CollectDBItem *item = [resultItem objectAtIndex:0];
+//   NSString *imagePath =item.thumb;
+    
+    
+}
 
-    
-    NSArray *collectClosArray = [[NSArray alloc] initWithObjects:[NSString stringWithFormat:@"%d",offset_H], [urlArray objectAtIndex:offset_H],nil];
-    [recordDB insertAtTable:COLLECT_TABLENAME Clos:collectClosArray];
-    NSArray *resultItem = [recordDB resultSet:COLLECT_TABLENAME Order:nil LimitCount:0];
-    CollectViewController *collectVC = [[CollectViewController alloc] init];
-    collectVC.imageArr = resultItem;
-    [self.navigationController pushViewController:collectVC animated:YES];
-    CollectDBItem *item = [resultItem objectAtIndex:0];
-    NSString *imagePath =item.thumb;
-    NSString* cachesDirectory = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSString *imagePath1 = [[[[cachesDirectory stringByAppendingPathComponent:[[NSProcessInfo processInfo] processName]] stringByAppendingPathComponent:@"EGOCache"] copy] stringByAppendingPathComponent:[NSString stringWithFormat:@"EGOImageLoader-%u", [[imagePath description] hash]]];
-    UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageWithContentsOfFile:imagePath1]];
-    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-    
-    [library writeImageToSavedPhotosAlbum:[imgView.image CGImage] orientation:(ALAssetOrientation)[imgView.image imageOrientation] completionBlock:^(NSURL *assetURL, NSError *error){
-        if (error) {
-            // TODO: error handling
-        } else {
-            // TODO: success handling
-            NSLog(@"SUCCESS");
-        }
-    }];
-    
+#pragma mark showHud
+
+- (void)showWithTime:(NSString *)lable
+{
+    [self.view addSubview:HUD];
+    HUD.delegate = self;
+    HUD.labelText = lable;
+    [HUD showWhileExecutingT:@selector(myTask) onTarget:self withObject:nil animated:YES];
+}
+
+- (void)showWithLoding
+{
+    [self.view addSubview:HUD];
+    HUD.delegate = self;
+    HUD.labelText = @"加载中...";
+    [HUD showWhileExecuting:@selector(myTask) onTarget:self withObject:nil animated:YES];
+}
+- (void)myTask {
+	// Do something usefull in here instead of sleeping ...
+    sleep(1);
 }
 
 - (void)back

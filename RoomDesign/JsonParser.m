@@ -100,13 +100,17 @@
             if([returnDic count] >0)
             {
                 if ([parentDelegate respondsToSelector:onCompleteCallback]) {
-                    [parentDelegate performSelector:onCompleteCallback withObject:self];
+                    SuppressPerformSelectorLeakWarning(
+                                                       [parentDelegate performSelector:onCompleteCallback withObject:self];
+                                                       );
                 }
             }
             else
             {
                 if ([parentDelegate respondsToSelector:onNullCompleteCallback]) {
-                    [parentDelegate performSelector:onNullCompleteCallback withObject:self];
+                    SuppressPerformSelectorLeakWarning(
+                                                       [parentDelegate performSelector:onNullCompleteCallback withObject:self];
+                                                       );
                 }
             }
         }
@@ -114,7 +118,9 @@
     else
     {
         if ([parentDelegate respondsToSelector:onNullCompleteCallback]) {
-            [parentDelegate performSelector:onNullCompleteCallback withObject:self];
+            SuppressPerformSelectorLeakWarning(
+                                               [parentDelegate performSelector:onNullCompleteCallback withObject:self];
+                                               );
         }
     }
 }
@@ -129,7 +135,9 @@
 //    [parentDelegate performSelector:onErrorCompleteCallback withObject:self];
 //#pragma clang diagnostic pop
     if ([parentDelegate respondsToSelector:onErrorCompleteCallback]) {
-        [parentDelegate performSelector:onErrorCompleteCallback withObject:self];
+        SuppressPerformSelectorLeakWarning(
+                                           [parentDelegate performSelector:onErrorCompleteCallback withObject:self];
+                                           );
     }
     NSLog(@"error %@",error);
 }

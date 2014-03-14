@@ -24,17 +24,19 @@
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-//    WaterFallViewController *waterfallVC = [[WaterFallViewController alloc] init];
+    WaterFallViewController *waterfallVC = [[WaterFallViewController alloc] init];
    
     
-    HomePageViewController *homePageVC = [[HomePageViewController alloc] init];
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:homePageVC];
+//    HomePageViewController *homePageVC = [[HomePageViewController alloc] init];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:waterfallVC];
     self.window.rootViewController = nav;
     [nav setNavigationBarHidden:YES];
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;
 }
+
+
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {

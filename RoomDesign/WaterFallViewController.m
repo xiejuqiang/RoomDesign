@@ -21,6 +21,8 @@
 #import "GetObj.h"
 #import "CollectViewController.h"
 #import "RecordDao.h"
+#import "AboutViewController.h"
+#import "CollectDBItem.h"
 
 @interface WaterFallViewController ()<TMQuiltViewDataSource,TMQuiltViewDelegate>
 {
@@ -68,11 +70,30 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     [self initData];
+    [self getData];
+    
+    
+    
+    
+}
+
+- (void)getData
+{
+    [self showWithLoding];
+    NSString *categoryUrl = [urlStr returnURL:1 Obj:nil];
+    [jsonParser parse:categoryUrl withDelegate:self onComplete:@selector(connectionSuccess:) onErrorComplete:@selector(connectionError) onNullComplete:@selector(connectionNull)];
+    
+}
+
+- (void)connectionSuccess:(JsonParser *)jsonP
+{
+    NSArray *resultData = [jsonP getItems];
+    self.dataArray = resultData;
+    NSLog(@"%@",resultData);
+//    [HUD hide:YES];
     [self createTopView];
     [self createScrollView];
     [self getData:cat_id];
-    
-    
 }
 
 - (void)initData
@@ -186,7 +207,7 @@
     mainScrollView.contentOffset = CGPointMake(1024, 0);
     [self.view addSubview:mainScrollView];
     for (int i = 0; i<[dataArray count]; i++) {
-      TMQuiltView  *qtmView = [[TMQuiltView alloc] initWithFrame:CGRectMake(60+1024*i, 0, 1024-120, 768-100)];
+      TMQuiltView  *qtmView = [[TMQuiltView alloc] initWithFrame:CGRectMake(10+1024*i, 0, 1024-20, 768-100)];
         qtmView.delegate = self;
         qtmView.dataSource = self;
         qtmView.tag = i+100;
@@ -213,9 +234,9 @@
 {
     
     UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(10, 30, 50, 30)];
-    [backButton setTitle:@"返回" forState:UIControlStateNormal];
+    [backButton setTitle:@"更多" forState:UIControlStateNormal];
     [backButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+    [backButton addTarget:self action:@selector(more) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:backButton];
     
     UILabel *titleLabel1 = [[UILabel alloc] initWithFrame:CGRectMake(445, 30, 50, 30)];
@@ -228,11 +249,11 @@
     
     
     UILabel *titleLabel2 = [[UILabel alloc] initWithFrame:CGRectMake(425+30+65, 30, 50, 30)];
-    titleLabel2.text = @"帮手";
+    titleLabel2.text = @"助手";
     titleLabel2.textAlignment = NSTextAlignmentCenter;
     titleLabel2.textColor = [UIColor blackColor];
     
-    UILabel *lineLabel = [[UILabel alloc] initWithFrame:CGRectMake(60, 90, 1024-120, 2)];
+    UILabel *lineLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 90, 1024-40, 2)];
     lineLabel.backgroundColor = [UIColor blackColor];
     [self.view addSubview:lineLabel];
     
@@ -252,7 +273,7 @@
     [self.view addSubview:titleScrollView];
     titleScrollView.contentSize = CGSizeMake(904*3, 33);
     titleScrollView.contentOffset = CGPointMake(331, 0);
-    flagLine = [[UILabel alloc] initWithFrame:CGRectMake(15+356+75, titleScrollView.top+30, 100, 3)];
+    flagLine = [[UILabel alloc] initWithFrame:CGRectMake(15+360+75, titleScrollView.top+30, 100, 3)];
     flagLine.backgroundColor = [UIColor blackColor];
     [self.view addSubview:flagLine];
     
@@ -261,13 +282,13 @@
 //        cookLabel.text = [[dataArray objectAtIndex:i] objectForKey:@"cname"];
 //        cookLabel.textAlignment = NSTextAlignmentCenter;
 //        cookLabel.textColor = [UIColor blackColor];
-        cookLabel = [[UIButton alloc] initWithFrame:CGRectMake(30+(i+1)*376, 0, 70, 30)];
+        cookLabel = [[UIButton alloc] initWithFrame:CGRectMake(30+(i+1)*380, 0, 70, 30)];
         [cookLabel setTitle:[[dataArray objectAtIndex:i] objectForKey:@"cname"] forState:UIControlStateNormal];
         cookLabel.tag = i + 99;
         [cookLabel setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         cookLabel.backgroundColor = [UIColor clearColor];
         cookLabel.titleLabel.font = [UIFont systemFontOfSize:16];
-        [cookLabel addTarget:self action:@selector(categoryTap:) forControlEvents:UIControlEventTouchUpInside];
+//        [cookLabel addTarget:self action:@selector(categoryTap:) forControlEvents:UIControlEventTouchUpInside];
         [titleScrollView addSubview:cookLabel];
         if (isForeign) {
             cookLabel.frame = CGRectMake(30+(i+1)*331, 0, 90, 30);
@@ -301,10 +322,33 @@
 - (void)collectTap
 {
     NSArray *resultItem = [recordDB resultSet:COLLECT_TABLENAME Order:nil LimitCount:0];
-    CollectViewController *collectVC = [[CollectViewController alloc] init];
-    collectVC.imageArr = resultItem;
-    [self.navigationController pushViewController:collectVC animated:YES];
+    if ([resultItem count]>0) {
+        NSMutableArray *myTempArray =[[NSMutableArray alloc] init];
+        for (CollectDBItem *item in resultItem) {
+            NSArray *img_array = [item.imgArr componentsSeparatedByString:@","];
+            NSDictionary *dic = [[NSDictionary alloc] initWithObjectsAndKeys:item.catid,@"id",item.thumb,@"image1",img_array,@"image_array", nil];
+            [myTempArray addObject:dic];
+        }
+        
+        
+        WaterFallDetailViewController *waterVC = [[WaterFallDetailViewController alloc] init];
+        waterVC.isCollect = YES;
+        waterVC.urlArray = myTempArray;
+        waterVC.offset_H = 0;
+        [self.navigationController pushViewController:waterVC animated:YES];
+    }
+    else
+    {
+        [self showWithTime:@"暂无收藏内容"];
+    }
+   
     
+}
+
+- (void)more
+{
+    AboutViewController *aboutVC = [[AboutViewController alloc] init];
+    [self.navigationController pushViewController:aboutVC animated:YES];
 }
 
 - (void)back
@@ -617,7 +661,7 @@
     if (scrollView.tag == 1000)
     {
         float flag = scrollView.contentOffset.x/1024.0;
-        titleScrollView.contentOffset = CGPointMake(flag*376, 0);
+        titleScrollView.contentOffset = CGPointMake(flag*380, 0);
     }
     else if (scrollView.tag == 2000)
     {

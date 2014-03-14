@@ -12,6 +12,7 @@
 
 @property (nonatomic, retain) NSString *catid;
 @property (nonatomic, retain) NSString *thumb;
+@property (nonatomic, retain) NSString *imgArr;
 
 - (void)initData:(NSArray *)dataArray;
 @end

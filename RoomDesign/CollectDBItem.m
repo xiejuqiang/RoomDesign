@@ -11,13 +11,14 @@
 @implementation CollectDBItem
 @synthesize catid;
 @synthesize thumb;
-
+@synthesize imgArr;
 //注意顺序要跟数据库字段创建顺序一致
 - (void)initData:(NSArray *)dataArray
 {
     
     self.catid = [dataArray objectAtIndex:0];
     self.thumb = [dataArray objectAtIndex:1];
+    self.imgArr = [dataArray objectAtIndex:2];
 
 }
 
