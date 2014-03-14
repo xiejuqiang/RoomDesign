@@ -19,6 +19,8 @@
 #import "UrlStr.h"
 #import "JsonParser.h"
 #import "GetObj.h"
+#import "CollectViewController.h"
+#import "RecordDao.h"
 
 @interface WaterFallViewController ()<TMQuiltViewDataSource,TMQuiltViewDelegate>
 {
@@ -82,6 +84,9 @@
     HUD = [[MBProgressHUD alloc] init];
     _images = [[NSMutableArray alloc] init];
     img_str_array = [[NSMutableArray alloc] init];
+    
+    recordDB = [[RecordDao alloc]init];
+    [recordDB createDB:DATABASE_NAME];
 }
 
 - (void)getData:(int)catid
@@ -207,7 +212,7 @@
 - (void)createTopView
 {
     
-    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 10, 50, 30)];
+    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(10, 30, 50, 30)];
     [backButton setTitle:@"返回" forState:UIControlStateNormal];
     [backButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
@@ -218,8 +223,8 @@
     titleLabel1.textAlignment = NSTextAlignmentCenter;
     titleLabel1.textColor = [UIColor blackColor];
     
-    UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"home_stone@2x.png"]];
-    imgView.frame = CGRectMake(titleLabel1.right-10, 10, 50, 50);
+    UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon.png"]];
+    imgView.frame = CGRectMake(titleLabel1.right-10, 20, 40, 40);
     
     
     UILabel *titleLabel2 = [[UILabel alloc] initWithFrame:CGRectMake(425+30+65, 30, 50, 30)];
@@ -231,6 +236,12 @@
     lineLabel.backgroundColor = [UIColor blackColor];
     [self.view addSubview:lineLabel];
     
+    UIButton *collectButton = [[UIButton alloc] initWithFrame:CGRectMake(1024-70, 30, 60, 30)];
+    [collectButton setTitle:@"收藏" forState:UIControlStateNormal];
+    [collectButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [collectButton addTarget:self action:@selector(collectTap) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:collectButton];
+    
     NSArray *englishName = [[NSArray alloc] initWithObjects:@"Office",@"Household",@"Recreation",@"Retail",@"Hotel",@"Food",@"Treatment", nil];
     
     titleScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(60, lineLabel.top-33, 1024-120, 33)];
@@ -241,7 +252,7 @@
     [self.view addSubview:titleScrollView];
     titleScrollView.contentSize = CGSizeMake(904*3, 33);
     titleScrollView.contentOffset = CGPointMake(331, 0);
-    flagLine = [[UILabel alloc] initWithFrame:CGRectMake(15+311+75, titleScrollView.top+30, 100, 3)];
+    flagLine = [[UILabel alloc] initWithFrame:CGRectMake(15+356+75, titleScrollView.top+30, 100, 3)];
     flagLine.backgroundColor = [UIColor blackColor];
     [self.view addSubview:flagLine];
     
@@ -250,7 +261,7 @@
 //        cookLabel.text = [[dataArray objectAtIndex:i] objectForKey:@"cname"];
 //        cookLabel.textAlignment = NSTextAlignmentCenter;
 //        cookLabel.textColor = [UIColor blackColor];
-        cookLabel = [[UIButton alloc] initWithFrame:CGRectMake(30+(i+1)*331, 0, 70, 30)];
+        cookLabel = [[UIButton alloc] initWithFrame:CGRectMake(30+(i+1)*376, 0, 70, 30)];
         [cookLabel setTitle:[[dataArray objectAtIndex:i] objectForKey:@"cname"] forState:UIControlStateNormal];
         cookLabel.tag = i + 99;
         [cookLabel setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -284,6 +295,15 @@
     [self.view addSubview:titleLabel1];
     [self.view addSubview:titleLabel2];
     [self.view addSubview:imgView];
+    
+}
+
+- (void)collectTap
+{
+    NSArray *resultItem = [recordDB resultSet:COLLECT_TABLENAME Order:nil LimitCount:0];
+    CollectViewController *collectVC = [[CollectViewController alloc] init];
+    collectVC.imageArr = resultItem;
+    [self.navigationController pushViewController:collectVC animated:YES];
     
 }
 
@@ -597,7 +617,7 @@
     if (scrollView.tag == 1000)
     {
         float flag = scrollView.contentOffset.x/1024.0;
-        titleScrollView.contentOffset = CGPointMake(flag*331, 0);
+        titleScrollView.contentOffset = CGPointMake(flag*376, 0);
     }
     else if (scrollView.tag == 2000)
     {
