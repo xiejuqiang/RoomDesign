@@ -620,7 +620,7 @@
     if ([[UIDevice currentDevice] orientation] == UIDeviceOrientationLandscapeLeft
         || [[UIDevice currentDevice] orientation] == UIDeviceOrientationLandscapeRight)
 	{
-        return 3;
+        return 5;
     } else {
         return 5;
     }
