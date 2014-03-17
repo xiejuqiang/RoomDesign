@@ -18,8 +18,9 @@
     JsonParser *jsonParser;
     NSArray *productsData;
     RecordDao *recordDB;
-    EGOImageView *imageViewBig;//大图
+//    EGOImageView *imageViewBig;//大图
     MBProgressHUD *HUD;
+    int pageNum;
 }
 
 @property (nonatomic,retain)NSArray *urlArray;

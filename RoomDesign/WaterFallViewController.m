@@ -245,7 +245,7 @@
     titleLabel1.textColor = [UIColor blackColor];
     
     UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon.png"]];
-    imgView.frame = CGRectMake(titleLabel1.right-10, 20, 40, 40);
+    imgView.frame = CGRectMake(titleLabel1.right-7, 20, 40, 40);
     
     
     UILabel *titleLabel2 = [[UILabel alloc] initWithFrame:CGRectMake(425+30+65, 30, 50, 30)];
@@ -271,7 +271,7 @@
     titleScrollView.scrollEnabled = NO;
     titleScrollView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:titleScrollView];
-    titleScrollView.contentSize = CGSizeMake(904*3, 33);
+    titleScrollView.contentSize = CGSizeMake(904*(([dataArray count]+2)/3+1), 33);
     titleScrollView.contentOffset = CGPointMake(331, 0);
     flagLine = [[UILabel alloc] initWithFrame:CGRectMake(15+360+75, titleScrollView.top+30, 100, 3)];
     flagLine.backgroundColor = [UIColor blackColor];

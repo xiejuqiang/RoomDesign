@@ -45,7 +45,9 @@
         jsonParser = [[JsonParser alloc] init];
         isCollect = NO;
         //数据库
+        pageNum = 1;
         recordDB = [[RecordDao alloc]init];
+        HUD = [[MBProgressHUD alloc] init];
         [recordDB createDB:DATABASE_NAME];
     }
     return self;
@@ -56,7 +58,7 @@
     [self showWithLoding];
     GetObj *getObj = [[GetObj alloc] init];
     getObj.catID = [NSString stringWithFormat:@"%d",_cat_id];
-    getObj.page = @"1";
+    getObj.page = [NSString stringWithFormat:@"%d",pageNum];
     NSString *productListURL = [urlStr returnURL:2 Obj: getObj];
     [jsonParser parse:productListURL withDelegate:self onComplete:@selector(onConnectionSuccess:) onErrorComplete:@selector(onConnectionError) onNullComplete:@selector(onConnectionNull)];
 }
@@ -73,6 +75,8 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    pageNum = offset_H/10 +1;
+    
     if (isCollect == YES) {
         productsData = urlArray;
         [self createTopView];
@@ -80,6 +84,7 @@
     }
     else
     {
+        offset_H = offset_H%10;
         [self getData];
         [self createTopView];
     }
@@ -99,7 +104,7 @@
     titleLabel1.textColor = [UIColor blackColor];
     
     UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon.png"]];
-    imgView.frame = CGRectMake(titleLabel1.right-10, 20, 40, 40);
+    imgView.frame = CGRectMake(titleLabel1.right-7, 20, 40, 40);
     
     
     UILabel *titleLabel2 = [[UILabel alloc] initWithFrame:CGRectMake(425+30+65, 30, 50, 30)];
@@ -175,8 +180,16 @@
 
 - (void)clearTap
 {
-    UIAlertView *alertV = [[UIAlertView alloc] initWithTitle:@"是否清空收藏" message:nil delegate:self cancelButtonTitle:@"否" otherButtonTitles:@"是", nil];
-    [alertV show];
+    NSArray *itemArray = [recordDB resultSet:COLLECT_TABLENAME Order:nil LimitCount:10];
+    if ([itemArray count]>0) {
+        UIAlertView *alertV = [[UIAlertView alloc] initWithTitle:@"是否清空收藏" message:nil delegate:self cancelButtonTitle:@"否" otherButtonTitles:@"是", nil];
+        [alertV show];
+    }
+    else
+    {
+        [self showWithTime:@"收藏无内容"];
+    }
+    
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -243,7 +256,7 @@
     }
     
     for (int j = 0; j <[imgArr count]; j++) {
-        imageViewBig = [[EGOImageView alloc] init];
+        EGOImageView *imageViewBig = [[EGOImageView alloc] init];
         imageViewBig.userInteractionEnabled = YES;
         imageViewBig.clipsToBounds = YES;
         imageViewBig.contentMode = UIViewContentModeScaleAspectFill;
@@ -286,17 +299,18 @@
         }
     }
     for (int i = 0; i<[imgArr count]; i++) {
-        imageViewBig = [[EGOImageView alloc] init];
+        EGOImageView *imageViewBig = [[EGOImageView alloc] init];
         imageViewBig.userInteractionEnabled = YES;
         imageViewBig.clipsToBounds = YES;
         imageViewBig.contentMode = UIViewContentModeScaleAspectFill;
         imageViewBig.frame = CGRectMake(0, 600*i, 720+70, 600);
         imageViewBig.imageURL = [[NSURL alloc] initWithString:[imgArr objectAtIndex:i]];
-        imageViewBig.contentMode = UIViewContentModeScaleToFill;
+        imageViewBig.contentMode = UIViewContentModeScaleAspectFill;
         [leftScrollView addSubview:imageViewBig];
         left_offsetH = imageViewBig.frame.origin.y;
     }
     leftScrollView.contentSize = CGSizeMake(720+70, left_offsetH+600);
+    leftScrollView.contentOffset = CGPointMake(0, 0);
 }
 
 //收藏点击事件
@@ -328,7 +342,7 @@
     }
 
     NSArray *collectClosArray = [[NSArray alloc] initWithObjects:[[tempArray objectAtIndex:0] objectForKey:@"id"], [[tempArray objectAtIndex:0] objectForKey:@"image1"],str,nil];
-    BOOL *tips = NO;
+    BOOL *tips = NO;\
     for (CollectDBItem *item in [recordDB resultSet:COLLECT_TABLENAME Order:nil LimitCount:0]) {
         if ([[collectClosArray objectAtIndex:0] isEqualToString:item.catid]) {
             tips =YES;
