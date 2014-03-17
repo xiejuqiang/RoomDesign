@@ -196,13 +196,13 @@
 
 - (void)createView:(int)nId
 {
-    leftScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(60, 120, 720, 600)];
+    leftScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(20, 120, 720+70, 600)];
     leftScrollView.tag = 100;
     leftScrollView.delegate = self;
     leftScrollView.pagingEnabled = YES;
     [self.view addSubview:leftScrollView];
     
-    rightScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(790, 120, 768-585, 600)];
+    rightScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(790+30, 120, 768-585, 600)];
     rightScrollView.tag = 200;
     rightScrollView.delegate = self;
     [self.view addSubview:rightScrollView];
@@ -247,7 +247,7 @@
         imageViewBig.userInteractionEnabled = YES;
         imageViewBig.clipsToBounds = YES;
         imageViewBig.contentMode = UIViewContentModeScaleAspectFill;
-        imageViewBig.frame = CGRectMake(0, 600*j, 720, 600);
+        imageViewBig.frame = CGRectMake(0, 600*j, 720+70, 600);
         imageViewBig.imageURL = [[NSURL alloc] initWithString:[imgArr objectAtIndex:j]];
         
         
@@ -265,7 +265,7 @@
         rightScrollView.contentOffset = CGPointMake(0, 162*offset_H);
     }
     
-    leftScrollView.contentSize = CGSizeMake(720, left_offsetH+600);
+    leftScrollView.contentSize = CGSizeMake(720+70, left_offsetH+600);
     leftScrollView.contentOffset = CGPointMake(0, 0);
     
 }
@@ -290,13 +290,13 @@
         imageViewBig.userInteractionEnabled = YES;
         imageViewBig.clipsToBounds = YES;
         imageViewBig.contentMode = UIViewContentModeScaleAspectFill;
-        imageViewBig.frame = CGRectMake(0, 600*i, 720, 600);
+        imageViewBig.frame = CGRectMake(0, 600*i, 720+70, 600);
         imageViewBig.imageURL = [[NSURL alloc] initWithString:[imgArr objectAtIndex:i]];
         imageViewBig.contentMode = UIViewContentModeScaleToFill;
         [leftScrollView addSubview:imageViewBig];
         left_offsetH = imageViewBig.frame.origin.y;
     }
-    leftScrollView.contentSize = CGSizeMake(720, left_offsetH+600);
+    leftScrollView.contentSize = CGSizeMake(720+70, left_offsetH+600);
 }
 
 //收藏点击事件
