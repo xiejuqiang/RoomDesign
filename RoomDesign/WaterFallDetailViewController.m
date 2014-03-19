@@ -49,6 +49,8 @@
         recordDB = [[RecordDao alloc]init];
         HUD = [[MBProgressHUD alloc] init];
         [recordDB createDB:DATABASE_NAME];
+        imgViewTempArray = [[NSMutableArray alloc] init];
+        imgURLArray = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -262,8 +264,7 @@
         imageViewBig.contentMode = UIViewContentModeScaleAspectFill;
         imageViewBig.frame = CGRectMake(0, 600*j, 720+70, 600);
         imageViewBig.imageURL = [[NSURL alloc] initWithString:[imgArr objectAtIndex:j]];
-        
-        
+        [imgViewTempArray addObject:imageViewBig];
         imageViewBig.contentMode = UIViewContentModeScaleToFill;
         [leftScrollView addSubview:imageViewBig];
         left_offsetH = imageViewBig.frame.origin.y;
@@ -289,6 +290,11 @@
     int tag = recongnizer.view.tag-100;
     offset_H = tag;
     int left_offsetH = 0;
+    for (int i = 0; i<[imgViewTempArray count];i++) {
+        EGOImageView *imgV = [imgViewTempArray objectAtIndex:i];
+        [imgV cancelImageLoad];
+    }
+    [imgViewTempArray removeAllObjects];
     [leftScrollView removeAllSubviews];
     bgTileView.frame = CGRectMake(0, 166.5*tag, 183, 180);
     NSArray *imagesArray = [[productsData objectAtIndex:tag] objectForKey:@"image_array"];
@@ -306,6 +312,7 @@
         imageViewBig.frame = CGRectMake(0, 600*i, 720+70, 600);
         imageViewBig.imageURL = [[NSURL alloc] initWithString:[imgArr objectAtIndex:i]];
         imageViewBig.contentMode = UIViewContentModeScaleAspectFill;
+        [imgViewTempArray addObject:imageViewBig];
         [leftScrollView addSubview:imageViewBig];
         left_offsetH = imageViewBig.frame.origin.y;
     }

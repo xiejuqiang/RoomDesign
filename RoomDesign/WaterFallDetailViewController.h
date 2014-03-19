@@ -21,6 +21,8 @@
 //    EGOImageView *imageViewBig;//大图
     MBProgressHUD *HUD;
     int pageNum;
+    NSMutableArray *imgViewTempArray;//保存大图的数组
+    NSMutableArray *imgURLArray;//保存大图的URL
 }
 
 @property (nonatomic,retain)NSArray *urlArray;

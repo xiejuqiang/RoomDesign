@@ -64,7 +64,7 @@
 		1875036F183F049900FAF311 /* TMQuiltView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1875034D183F049900FAF311 /* TMQuiltView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		18750370183F049900FAF311 /* TMQuiltViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1875034F183F049900FAF311 /* TMQuiltViewCell.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		18750371183F049900FAF311 /* TMQuiltViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18750351183F049900FAF311 /* TMQuiltViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		18750372183F049900FAF311 /* WaterFallDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18750353183F049900FAF311 /* WaterFallDetailViewController.m */; };
+		18750372183F049900FAF311 /* WaterFallDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18750353183F049900FAF311 /* WaterFallDetailViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		18750373183F049900FAF311 /* WaterFallViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 18750355183F049900FAF311 /* WaterFallViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		18750374183F049900FAF311 /* whiteArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 18750356183F049900FAF311 /* whiteArrow.png */; };
 		18750375183F049900FAF311 /* whiteArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 18750357183F049900FAF311 /* whiteArrow@2x.png */; };
