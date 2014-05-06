@@ -110,7 +110,7 @@
     
     
     UILabel *titleLabel2 = [[UILabel alloc] initWithFrame:CGRectMake(425+30+65, 30, 50, 30)];
-    titleLabel2.text = @"助手";
+    titleLabel2.text = @"助理";
     titleLabel2.textAlignment = NSTextAlignmentCenter;
     titleLabel2.textColor = [UIColor blackColor];
     
@@ -258,16 +258,17 @@
     }
     
     for (int j = 0; j <[imgArr count]; j++) {
-        EGOImageView *imageViewBig = [[EGOImageView alloc] init];
+        EGOImageView *imageViewBig = [[EGOImageView alloc] initWithPlaceholderImage:[UIImage imageNamed:@"imageDefault.png"]];
         imageViewBig.userInteractionEnabled = YES;
+        imageViewBig.isUse = NO;
         imageViewBig.clipsToBounds = YES;
         imageViewBig.contentMode = UIViewContentModeScaleAspectFill;
         imageViewBig.frame = CGRectMake(0, 600*j, 720+70, 600);
         imageViewBig.imageURL = [[NSURL alloc] initWithString:[imgArr objectAtIndex:j]];
         [imgViewTempArray addObject:imageViewBig];
-        imageViewBig.contentMode = UIViewContentModeScaleToFill;
         [leftScrollView addSubview:imageViewBig];
         left_offsetH = imageViewBig.frame.origin.y;
+        
     }
     
     rightScrollView.contentSize = CGSizeMake(183, offsetH+161);
@@ -305,13 +306,13 @@
         }
     }
     for (int i = 0; i<[imgArr count]; i++) {
-        EGOImageView *imageViewBig = [[EGOImageView alloc] init];
+        EGOImageView *imageViewBig = [[EGOImageView alloc] initWithPlaceholderImage:[UIImage imageNamed:@"imageDefault.png"]];
         imageViewBig.userInteractionEnabled = YES;
+        imageViewBig.isUse = NO;
         imageViewBig.clipsToBounds = YES;
         imageViewBig.contentMode = UIViewContentModeScaleAspectFill;
         imageViewBig.frame = CGRectMake(0, 600*i, 720+70, 600);
         imageViewBig.imageURL = [[NSURL alloc] initWithString:[imgArr objectAtIndex:i]];
-        imageViewBig.contentMode = UIViewContentModeScaleAspectFill;
         [imgViewTempArray addObject:imageViewBig];
         [leftScrollView addSubview:imageViewBig];
         left_offsetH = imageViewBig.frame.origin.y;

@@ -249,7 +249,7 @@
     
     
     UILabel *titleLabel2 = [[UILabel alloc] initWithFrame:CGRectMake(425+30+65, 30, 50, 30)];
-    titleLabel2.text = @"助手";
+    titleLabel2.text = @"助理";
     titleLabel2.textAlignment = NSTextAlignmentCenter;
     titleLabel2.textColor = [UIColor blackColor];
     
@@ -630,15 +630,16 @@
 {
 //    NSLog(@"%f",[self imageAtIndexPath:indexPath].size.height);
     NSLog(@"Page:%d",indexPath.row);
-    if (indexPath.row>[self.images count]-1 || [self.images count] == 0) {
-        return 0.0;
-    }
-    NSDictionary *proDic = [self.images objectAtIndex:indexPath.row];
-    NSString *cellHeight = [proDic objectForKey:@"unit2"];
-    if ([cellHeight floatValue]<350) {
-        return [cellHeight floatValue]/1.5;
-    }
-    return [cellHeight floatValue]/3.0;
+//    if (indexPath.row>[self.images count]-1 || [self.images count] == 0) {
+//        return 0.0;
+//    }
+//    NSDictionary *proDic = [self.images objectAtIndex:indexPath.row];
+//    NSString *cellHeight = [proDic objectForKey:@"unit2"];
+//    if ([cellHeight floatValue]<350) {
+//        return [cellHeight floatValue]/1.5;
+//    }
+//    return [cellHeight floatValue]/3.0;
+    return 300;
 }
 
 - (void)quiltView:(TMQuiltView *)quiltView didSelectCellAtIndexPath:(NSIndexPath *)indexPath
