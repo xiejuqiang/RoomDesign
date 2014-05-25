@@ -27,13 +27,12 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"more.jpg"]];
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"more.png"]];
     imageView.userInteractionEnabled = YES;
     [self.view addSubview:imageView];
     
-    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(100, 33, 50, 50)];
-    [backButton setTitle:@"" forState:UIControlStateNormal];
-    backButton.backgroundColor = [UIColor clearColor];
+    UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(10, 30, 50, 30)];
+    [backButton setTitle:@"返回" forState:UIControlStateNormal];
     [backButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [backButton addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:backButton];

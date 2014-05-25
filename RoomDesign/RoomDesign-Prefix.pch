@@ -12,3 +12,4 @@
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
 #endif
+#define AppStorURL @"https://itunes.apple.com/us/app/she-ji-zhu-li/id844768379?ls=1&mt=8"

@@ -10,6 +10,7 @@
 #import "WaterFallViewController.h"
 #import "HomePageViewController.h"
 #import "PSCollectionView.h"
+#import "Appdate.h"
 
 @implementation AppDelegate
 
@@ -24,9 +25,21 @@
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-    WaterFallViewController *waterfallVC = [[WaterFallViewController alloc] init];
-   
+    //version update
     
+    Appdate* appdate = [Appdate appdateWithAppleId:844768379];
+    appdate.delegate = self;
+    
+#if NS_BLOCKS_AVAILABLE
+    [appdate checkNowWithBlock: ^(NSError* error, NSDictionary* appInfo, BOOL updateAvailable) {
+        if (!error)
+        {
+           
+        }
+    }];
+#endif
+    
+    WaterFallViewController *waterfallVC = [[WaterFallViewController alloc] init];
 //    HomePageViewController *homePageVC = [[HomePageViewController alloc] init];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:waterfallVC];
     self.window.rootViewController = nav;
@@ -68,6 +81,36 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationLandscapeLeft || interfaceOrientation == UIInterfaceOrientationLandscapeRight);
+}
+
+#pragma mark -
+#pragma mark Appdate Delegate
+//==============================================================================
+- (void) appdateComplete: (NSDictionary*) appInfo updateAvailable: (BOOL) updateAvailable
+{
+    NSLog(@"%@",appInfo);
+    if (updateAvailable) {
+        UIAlertView *alertV = [[UIAlertView alloc] initWithTitle:@"更新" message:@"发现新版本，是否更新?" delegate:self cancelButtonTitle:@"更新" otherButtonTitles:@"取消", nil];
+        [alertV show];
+        
+    }
+}
+
+- (void) appdateFailed: (NSError*) error
+{
+    
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0) {
+        NSURL *url = [NSURL URLWithString:AppStorURL];
+        [[UIApplication sharedApplication] openURL:url];
+    }
+    else
+    {
+        
+    }
 }
 
 @end

@@ -245,11 +245,11 @@
     titleLabel1.textColor = [UIColor blackColor];
     
     UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"icon.png"]];
-    imgView.frame = CGRectMake(titleLabel1.right-10, 20, 40, 40);
+    imgView.frame = CGRectMake(titleLabel1.right-7, 20, 40, 40);
     
     
     UILabel *titleLabel2 = [[UILabel alloc] initWithFrame:CGRectMake(425+30+65, 30, 50, 30)];
-    titleLabel2.text = @"助手";
+    titleLabel2.text = @"助理";
     titleLabel2.textAlignment = NSTextAlignmentCenter;
     titleLabel2.textColor = [UIColor blackColor];
     
@@ -271,7 +271,7 @@
     titleScrollView.scrollEnabled = NO;
     titleScrollView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:titleScrollView];
-    titleScrollView.contentSize = CGSizeMake(904*3, 33);
+    titleScrollView.contentSize = CGSizeMake(904*(([dataArray count]+2)/3+1), 33);
     titleScrollView.contentOffset = CGPointMake(331, 0);
     flagLine = [[UILabel alloc] initWithFrame:CGRectMake(15+360+75, titleScrollView.top+30, 100, 3)];
     flagLine.backgroundColor = [UIColor blackColor];
@@ -620,9 +620,9 @@
     if ([[UIDevice currentDevice] orientation] == UIDeviceOrientationLandscapeLeft
         || [[UIDevice currentDevice] orientation] == UIDeviceOrientationLandscapeRight)
 	{
-        return 5;
+        return 3;
     } else {
-        return 5;
+        return 3;
     }
 }
 
@@ -630,15 +630,16 @@
 {
 //    NSLog(@"%f",[self imageAtIndexPath:indexPath].size.height);
     NSLog(@"Page:%d",indexPath.row);
-    if (indexPath.row>[self.images count]-1 || [self.images count] == 0) {
-        return 0.0;
-    }
-    NSDictionary *proDic = [self.images objectAtIndex:indexPath.row];
-    NSString *cellHeight = [proDic objectForKey:@"unit2"];
-    if ([cellHeight floatValue]<350) {
-        return [cellHeight floatValue]/1.5;
-    }
-    return [cellHeight floatValue]/3.0;
+//    if (indexPath.row>[self.images count]-1 || [self.images count] == 0) {
+//        return 0.0;
+//    }
+//    NSDictionary *proDic = [self.images objectAtIndex:indexPath.row];
+//    NSString *cellHeight = [proDic objectForKey:@"unit2"];
+//    if ([cellHeight floatValue]<350) {
+//        return [cellHeight floatValue]/1.5;
+//    }
+//    return [cellHeight floatValue]/3.0;
+    return 300;
 }
 
 - (void)quiltView:(TMQuiltView *)quiltView didSelectCellAtIndexPath:(NSIndexPath *)indexPath
